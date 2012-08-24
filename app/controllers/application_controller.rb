@@ -1,6 +1,17 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
+  before_filter :set_locale
+
+  # Set the default language on every page load, or use url param if present.
+  def set_locale
+    ActiveRecord::Base.connection.uncached do
+
+      # Update current locale.
+      I18n.locale = current_locale
+    end
+  end
+
   # Returns current locale
   def current_locale
     # Order of importance:
@@ -23,13 +34,25 @@ class ApplicationController < ActionController::Base
       locale = params[:locale] # 1
     end
 
-    # Update current locale.
-    I18n.locale = locale
-
     locale
   end
 
   protected
+
+  def extract_locale_from_accept_language_header
+    # NOTE: There are better ways to do this,
+    # please see http://guides.rubyonrails.org/i18n.html
+    # for a list of gems.
+    #
+
+    # Sometimes, especially during testing in capybara, the request object is not defined,
+    # creating an exception. Let's catch the exception and return nil.
+    begin
+      return request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first
+    rescue
+      return nil
+    end
+  end
 
   # Will add url param locale to each link.
   # Rails calls this for every call to url_for(), which is used for every link_to etc.
