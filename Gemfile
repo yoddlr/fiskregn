@@ -7,9 +7,6 @@ gem 'rails', '3.2.8'
 
 gem 'bcrypt-ruby'
 
-gem 'sqlite3'
-
-
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -22,6 +19,7 @@ end
 gem 'jquery-rails'
 
 group :test, :development do
+  gem 'sqlite3'
   gem 'faker'
   gem 'rspec-rails'
   gem 'factory_girl_rails'
