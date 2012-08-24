@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
     if cookies.has_key? :locale
       locale = cookies[:locale] # 0
     elsif params[:locale].nil? || params[:locale] == ''
-      browser_language = extract_locale_from_accept_language_header(request)
+      browser_language = extract_locale_from_accept_language_header
 
       if defined? browser_language
         locale = browser_language  # 2
