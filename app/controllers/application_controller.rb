@@ -1,20 +1,41 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  protected
+  # Returns current locale
+  def current_locale
+    # Order of importance:
+    # 0. user settings
+    # 1. url-param
+    # 2. browser_language
+    # 3. default_locale  (en)
 
-  def set_i18n_locale_from_params
-    if params[:locale]
-      if I18n.available_locales.include?(params[:locale].to_sym)
-        I18n.locale = params[:locale]
-      else
-        flash.now[:notice] = "#{params[:locale]} translation not available"
-        logger.error flash.now[:notice]
+    locale = I18n.default_locale # 3
+
+    if cookies.has_key? :locale
+      locale = cookies[:locale] # 0
+    elsif params[:locale].nil? || params[:locale] == ''
+      browser_language = extract_locale_from_accept_language_header(request)
+
+      if defined? browser_language
+        locale = browser_language  # 2
       end
+    else
+      locale = params[:locale] # 1
     end
+
+    # Update current locale.
+    I18n.locale = locale
+
+    locale
   end
 
-  def default_url_options
-    { locale: I18n.locale }
+  protected
+
+  # Will add url param locale to each link.
+  # Rails calls this for every call to url_for(), which is used for every link_to etc.
+  def default_url_options(options={})
+    logger.debug "default_url_options is passed options: #{options.inspect}\n"
+
+    { :locale => I18n.locale }
   end
 end
