@@ -1,4 +1,8 @@
-# i18n Localization for swedish
-
-en:
-  hello: "Hej värld"
+sv:
+  email: "email"
+  forgot_your_password: "glömt lösenord"
+  hello: "Hej världen"
+  password: "lösenord"
+  remember_me: "spara"
+  sign_in: "logga in"
+  sign_up: "skapa konto"

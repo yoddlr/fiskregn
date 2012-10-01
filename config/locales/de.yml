@@ -1,2 +1,8 @@
 de:
+  email: "email"
+  forgot_your_password: "password vergessen"
   hello: "Hallo Welt"
+  password: "password"
+  remember_me: "speichern"
+  sign_in: "einloggen"
+  sign_up: "registrieren"
