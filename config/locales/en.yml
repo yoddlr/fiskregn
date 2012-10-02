@@ -1,4 +1,5 @@
 en:
+  changing_password: "changing password"
   email: "email"
   forgot_your_password: "forgot your password"
   hello: "Hello world"
