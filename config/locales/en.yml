@@ -9,7 +9,7 @@ en:
   password: "password"
   password_confirmation: "password confirmation"
   remember_me: "remember me"
-  sign_in: "sign in"
+  sign_in: "Sign in"
   signed_in_as: "signed in as"
   sign_up: "sign up"
   sign_out: "sign out"

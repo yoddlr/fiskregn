@@ -9,7 +9,7 @@ de:
   password: "password"
   password_confirmation: "password Bestätigung"
   remember_me: "speichern"
-  sign_in: "einloggen"
+  sign_in: "Einloggen"
   signed_in_as: "eingeloggt als"
   sign_up: "registrieren"
   sign_out: "ausloggen"

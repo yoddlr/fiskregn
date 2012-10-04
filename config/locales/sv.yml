@@ -9,7 +9,7 @@ sv:
   password: "lösenord"
   password_confirmation: "bekräftelse av lösenord"
   remember_me: "spara"
-  sign_in: "logga in"
+  sign_in: "Logga in"
   signed_in_as: "inloggad som"
   sign_up: "skapa konto"
   sign_out: "logga ut"
