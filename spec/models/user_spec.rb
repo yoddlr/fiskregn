@@ -11,12 +11,19 @@ describe User do
       @user = build :user
     end
     
-    it "requires an email" do
-      @user.email = nil
-      expect(@user).to_not be_valid
+    describe 'Email' do
+      it "requires an email" do
+        @user.email = nil
+        expect(@user).to_not be_valid
+      end
+      it "is unique" do
+        previous_user = create :user
+        @user.email = previous_user.email
+        expect(@user).to_not be_valid
+      end
     end
     
-    describe 'a valid password' do
+    describe 'Password' do
       it "has at least 6 characters" do
         build(:user, password: '123ab').should_not be_valid
       end
