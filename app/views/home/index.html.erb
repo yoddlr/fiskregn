@@ -2,11 +2,11 @@
 
 <div id="user_nav">
   <% if user_signed_in? %>
-    <%= I18n.t('.signed_in_as').capitalize %>
-    <%= current_user.email %>. <%= I18n.t('.not_you').capitalize %>
-    <%= link_to I18n.t('.sign_out').capitalize, destroy_user_session_path, :method => :delete %>
+    <%= I18n.t('.signed_in_as') %>
+    <%= current_user.email %>. <%= I18n.t('.not_you') %>
+    <%= link_to I18n.t('.sign_out'), destroy_user_session_path, :method => :delete %>
   <% else %>
-    <%= I18n.t('.not_signed_in').capitalize %>.
-    <%= link_to I18n.t('.sign_up').capitalize, new_user_registration_path %> <%= I18n.t('.or') %> <%= link_to I18n.t('.sign_in').capitalize, new_user_session_path %>
+    <%= I18n.t('.not_signed_in') %>.
+    <%= link_to I18n.t('.sign_up'), new_user_registration_path %> <%= I18n.t('.or') %> <%= link_to I18n.t('.sign_in'), new_user_session_path %>
   <% end %>
 </div>
