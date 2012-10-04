@@ -26,3 +26,35 @@ end
 Then /^I see the users public information$/ do
   expect(page).to have_content(@user.email)
 end
+
+Given /^I have an account$/ do
+  @my_account = FactoryGirl.create :user
+end
+
+Given /^I am logged in$/ do
+  visit('/users/sign_in')
+  fill_in 'user_email', with: @my_account.email
+  fill_in 'user_password', with: @my_account.password
+  click_button 'Sign in'
+end
+
+When /^I edit my (.*)$/ do |info|
+  if info == 'password'
+    @my_new_password = 'b4racuda'
+    @old_value = User.find(@my_account).encrypted_password
+    visit(edit_user_registration_path(@my_account))
+    fill_in 'user[password]', with: @my_new_password
+    fill_in 'user[password_confirmation]', with: @my_new_password
+  end
+end
+
+When /^authenticate with my password$/ do
+  fill_in 'user[current_password]', with: @my_account.password
+  click_button 'Update'
+end
+
+Then /^my (\w+) is updated$/ do |info|
+  if info == 'password'
+    expect(User.find(@my_account).encrypted_password).to_not eql @old_value
+  end
+end
