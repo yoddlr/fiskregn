@@ -31,7 +31,7 @@ Given /^I have an account$/ do
   @my_account = FactoryGirl.create :user
 end
 
-Given /^I am logged in$/ do
+Given /^I (?:log|have logged) in$/ do
   visit('/users/sign_in')
   fill_in 'user_email', with: @my_account.email
   fill_in 'user_password', with: @my_account.password
