@@ -7,7 +7,7 @@ de:
   not_you: "Nicht Sie?"
   or: "oder"
   password: "password"
-  password_confirmation: "password Bestätigung"
+  password_confirmation: "Password Bestätigung"
   remember_me: "speichern"
   sign_in: "Einloggen"
   signed_in_as: "Eingeloggt als"
