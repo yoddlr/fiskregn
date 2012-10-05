@@ -1,7 +1,9 @@
 de:
   changing_password: "password ändern"
   email: "email"
-  forgot_your_password: "password vergessen"
+  did_not_receive_confirmation_instructions: "Bestätigungsinstruktionen nich erhalten?"
+  did_not_receive_unlock_instructions: "Aufschließinstruktionen nicht erhalten?"
+  forgot_your_password: "Password vergessen"
   hello: "Hallo Welt"
   not_signed_in: "Nicht eingeloggt"
   not_you: "Nicht Sie?"
@@ -10,6 +12,7 @@ de:
   password_confirmation: "Password Bestätigung"
   remember_me: "speichern"
   sign_in: "Einloggen"
+  sign_in_with: "Einloggen via"
   signed_in_as: "Eingeloggt als"
   sign_up: "Registrieren"
   sign_out: "Ausloggen"
