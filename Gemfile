@@ -33,6 +33,6 @@ group :test do
   gem 'database_cleaner'
 end
 
-group :production
+group :production do
   gem 'pg'
 end
