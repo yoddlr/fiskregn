@@ -32,3 +32,7 @@ group :test do
   gem 'capybara-webkit'
   gem 'database_cleaner'
 end
+
+group :production
+  gem 'pg'
+end
