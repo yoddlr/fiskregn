@@ -1,7 +1,11 @@
 Fiskregn::Application.routes.draw do
+
   # Localise all and everything
   scope '(:locale)' do
     get "home/index"
+  
+    get "contents/new", as: 'new_content'
+    resources :contents
   
     devise_for :users
     resources :users

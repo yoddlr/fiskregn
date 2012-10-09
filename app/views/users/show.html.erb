@@ -1,3 +1,11 @@
 <h1><%= I18n.t('.user_profile') %></h1>
 <%= @user.email %>
 <%= link_to I18n.t('.change_your_password'), edit_user_registration_path %>
+
+<section id="content">
+  <ul>
+    <% @contents.each do |content| %>
+    <li><p><%= content.data %></p></li>
+    <% end %>
+  </ul>
+</section>
