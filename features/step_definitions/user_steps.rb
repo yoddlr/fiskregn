@@ -32,7 +32,7 @@ Given /^I have an account$/ do
 end
 
 Given /^I (?:log|have logged) in$/ do
-  visit('/users/sign_in')
+  visit('/en/users/sign_in')
   fill_in 'user_email', with: @my_account.email
   fill_in 'user_password', with: @my_account.password
   click_button 'Sign in'
@@ -50,7 +50,7 @@ end
 
 When /^authenticate with my password$/ do
   fill_in 'user[current_password]', with: @my_account.password
-  click_button 'Update'
+  click_button 'submit'
 end
 
 Then /^my (\w+) is updated$/ do |info|
