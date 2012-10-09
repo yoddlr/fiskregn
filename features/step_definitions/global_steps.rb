@@ -1,4 +1,4 @@
-Given /^there is user accounts$/ do
+Given /^there are user accounts$/ do
   create :user
 end
 
