@@ -14,6 +14,7 @@ en:
   did_not_receive_confirmation_instructions: "Didn't receive confirmation instructions?"
   did_not_receive_unlock_instructions: "Didn't receive unlock instructions?"
   edit: "Edit"
+  edit_user: "Edit user"
   email: "email"
   forgot_your_password: "Forgot your password"
   hello: "Hello world"
