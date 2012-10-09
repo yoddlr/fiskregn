@@ -1,2 +1,19 @@
 <h1>Home#index</h1>
 
+<div id="user_nav">
+  <% if user_signed_in? %>
+    <%= I18n.t('.signed_in_as') %>
+    <%= link_to current_user.email, user_path(current_user) %>. <%= I18n.t('.not_you') %>
+    <%= link_to I18n.t('.sign_out'), destroy_user_session_path, :method => :delete %>
+  <% else %>
+    <%= I18n.t('.not_signed_in') %>.
+    <%= link_to I18n.t('.sign_up'), new_user_registration_path %> <%= I18n.t('.or') %> <%= link_to I18n.t('.sign_in'), new_user_session_path %>
+  <% end %>
+</div>
+
+
+<ul id="users">
+<% @users.each do |user| %>
+  <li><%= link_to user.email, user_path(user) %></li>
+<% end %>
+</ul>
