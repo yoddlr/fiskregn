@@ -1,6 +1,7 @@
 class ContentsController < ApplicationController
   
   def new
+    redirect_to root_url unless user_signed_in?
     @content = Content.new
   end
   
