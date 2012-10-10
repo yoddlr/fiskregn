@@ -1,4 +1,5 @@
 de:
+  add_content: "Inhalt hinzufügen"
   cancel_my_account: "Konto beenden"
   change_my_password: "Password ändern"
   change_your_password: "Password ändern"
@@ -10,6 +11,8 @@ de:
   confirm_my_account: "Konto bestätigen"
   confirm_new_password: "Neues Password bestätigen"
   confirm_through_link_below: "Bestätigung mit Link unten:"
+  content_not_saved: "Inhalt nicht gespeichert"
+  content_saved: "Inhalt gespeichert"
   current_password: "Jetztiges Password"
   did_not_receive_confirmation_instructions: "Bestätigungsinstruktionen nich erhalten?"
   did_not_receive_unlock_instructions: "Aufschließinstruktionen nicht erhalten?"

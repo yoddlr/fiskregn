@@ -1,4 +1,5 @@
 en:
+  add_content: "Add content"
   cancel_my_account: "Cancel my account"
   change_my_password: "Change my password"
   change_your_password: "Change your password"
@@ -10,6 +11,8 @@ en:
   confirm_my_account: "Confirm my account"
   confirm_new_password: "Confirm new password"
   confirm_through_link_below: "You can confirm your account email through the link below:"
+  content_not_saved: "Content not saved"
+  content_saved: "Content saved"
   current_password: "Current password"
   did_not_receive_confirmation_instructions: "Didn't receive confirmation instructions?"
   did_not_receive_unlock_instructions: "Didn't receive unlock instructions?"
