@@ -6,12 +6,14 @@ describe ContentsController do
     
     describe 'as signed in user' do
       before :each do
-        @user = create :user
-        
+        # Thanx - https://github.com/plataformatec/devise/wiki/How-To:-Controllers-and-Views-tests-with-Rails-3-(and-rspec)
+        @request.env["devise.mapping"] = Devise.mappings[:user]
+        @user = FactoryGirl.create(:user)
+        sign_in @user
       end
     
       it "returns http success" do
-        user_logged_in?.stub( true)
+        # Since signed in, it shall be possible to create new content
         get 'new', user: @user.id
         response.should be_success
       end
