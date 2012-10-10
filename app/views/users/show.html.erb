@@ -1,11 +1,13 @@
-<h1><%= I18n.t('.user_profile') %></h1>
+<h1 xmlns="http://www.w3.org/1999/html"><%= I18n.t('.user_profile') %></h1>
 <%= @user.email %>
 <%= link_to I18n.t('.change_your_password'), edit_user_registration_path %>
 
 <section id="content">
-  <ul>
+  <p><table>
     <% @contents.each do |content| %>
-    <li><p><%= content.data %></p></li>
+      <tr>
+        <%= render :partial => "contents/show", :locals => { :content => content } %>
+      </tr>
     <% end %>
-  </ul>
+  </table></p>
 </section>

@@ -6,6 +6,6 @@ Feature: Global wall
   In order to browse the site
   
   Scenario: List all users
-    Given there is user accounts
+    Given there are user accounts
     When I visit the global wall
     Then I get a list of all users
