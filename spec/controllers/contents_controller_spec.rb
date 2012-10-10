@@ -32,7 +32,6 @@ describe ContentsController do
     describe 'as guest user' do
       it "should redirect away from create content form" do
         get :new
-        ALog.debug response
         expect(response).to redirect_to root_url
       end
     end
