@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe ContentsController do
 
-  describe "GET 'new'" do
+  describe "GET #new" do
     
     describe 'as signed in user' do
       before :each do
@@ -34,6 +34,25 @@ describe ContentsController do
         get :new
         expect(response).to redirect_to root_url
       end
+    end
+  end
+  
+  describe "GET #edit" do
+    before :each do
+      @content = create :content
+      get :edit, id: @content.id
+    end
+    
+    it "returns the new form" do
+      expect(response).to render_template :new
+    end
+    
+    it "assigns @content to chosen content" do
+      expect(assigns(:content)).to eql @content
+    end
+    
+    it "returns HTTP success" do
+      expect(response).to be_success
     end
   end
 end
