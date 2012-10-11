@@ -1,5 +1,7 @@
 en:
   add_content: "Add content"
+  are_you_sure: "Are you sure?"
+  back: "Back"
   cancel_my_account: "Cancel my account"
   change_my_password: "Change my password"
   change_your_password: "Change your password"
@@ -39,6 +41,7 @@ en:
   sign_out: "Sign out"
   sign_up: "Sign up"
   submit: "Submit"
+  unhappy: "Unhappy?"
   unlock_my_account: "Unlock my account"
   user_profile: "User profile"
   your_account_has_been_locked: "Your account has been locked due to an excessive amount of unsuccessful sign in attempts."

@@ -1,5 +1,7 @@
 sv:
   add_content: "Lägg till innehåll"
+  are_you_sure: "Är du säker?"
+  back: "Tillbaka"
   cancel_my_account: "Avsluta konto"
   change_my_password: "Ändra lösenord"
   change_your_password: "ändra lösenord"
@@ -39,6 +41,7 @@ sv:
   sign_out: "Logga ut"
   sign_up: "Skapa konto"
   submit: "Skicka"
+  unhappy: "Missnöjd?"
   unlock_my_account: "Lås upp konto"
   user_profile: "Användarprofil"
   your_account_has_been_locked: "Kontot har spärrats p.g.a. stort antal misslyckade inloggningsförsök."

@@ -20,6 +20,6 @@
 
 <h3><%= I18n.t('.cancel_my_account') %></h3>
 
-<p>Unhappy? <%= link_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete %>.</p>
+<p><%= I18n.t('.unhappy') %> <%= link_to I18n.t('.cancel_my_account'), registration_path(resource_name), :data => { :confirm => I18n.t('.are_you_sure') }, :method => :delete %>.</p>
 
-<%= link_to "Back", :back %>
+<%= link_to I18n.t('.back'), :back %>

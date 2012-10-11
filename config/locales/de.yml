@@ -1,5 +1,7 @@
 de:
   add_content: "Inhalt hinzufügen"
+  are_you_sure: "Sind Sie sicher?"
+  back: "Zurück"
   cancel_my_account: "Konto beenden"
   change_my_password: "Password ändern"
   change_your_password: "Password ändern"
@@ -39,6 +41,7 @@ de:
   sign_out: "Ausloggen"
   sign_up: "Registrieren"
   submit: "Abschicken"
+  unhappy: "Unzufrieden?"
   unlock_my_account: "Konto aufschließen"
   user_profile: "Benutzerprofil"
   your_account_has_been_locked: "Ihr Konto wurde, wegen hoher Anzahl misslungener Anmeldeversuche, gesperrt."
