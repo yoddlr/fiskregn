@@ -7,7 +7,7 @@ Feature: Update account information
   Scenario Outline: Edit information
   
     Given I have an account
-      And I have logged in
+      And I have signed in
     When I edit my <info>
       And authenticate with my password
     Then my <info> is updated

@@ -31,13 +31,6 @@ Given /^I have an account$/ do
   @my_account = FactoryGirl.create :user
 end
 
-Given /^I (?:log|have logged) in$/ do
-  visit('/en/users/sign_in')
-  fill_in 'user_email', with: @my_account.email
-  fill_in 'user_password', with: @my_account.password
-  click_button 'Sign in'
-end
-
 When /^I edit my (.*)$/ do |info|
   if info == 'password'
     @my_new_password = 'b4racuda'

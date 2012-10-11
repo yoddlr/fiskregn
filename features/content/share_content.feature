@@ -7,6 +7,6 @@ Feature: Share content
   
   Scenario: Share content to my wall
     Given I have an account
-      And I have logged in
+      And I have signed in
     When I share content
     Then it shows up on my wall

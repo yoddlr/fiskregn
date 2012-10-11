@@ -21,3 +21,15 @@ Then /^the content is updated$/ do
   visit(content_path('sv', @my_account.contents.last))
   expect(page).to have_content(@updated_data)
 end
+
+When /^I delete the content$/ do
+  @delete_content = @my_account.contents.last
+  @deleted_data = @delete_content.data
+  visit(content_path('sv', @delete_content))
+  click_button 'delete'
+end
+
+Then /^the content is deleted$/ do
+  visit(content_path('sv', @delete_content))
+  expect(page).to_not have_content @deleted_data
+end
