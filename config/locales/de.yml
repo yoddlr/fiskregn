@@ -31,7 +31,7 @@ de:
   or: "oder"
   password_confirmation: "Password Bestätigung"
   password: "Password"
-  remember_me: "speichern"
+  remember_me: "Speichern"
   resend_confirmation_instructions: "Bestätigungsinstruktionen erneut senden"
   resend_unlock_instructions: "Aufschließinstruktionen erneut senden"
   send_me_reset_password_instructions: "Mir Password Zurücksetzungsinstruktionen senden"
