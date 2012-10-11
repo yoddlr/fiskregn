@@ -20,9 +20,12 @@ class ContentsController < ApplicationController
   end
   
   def edit
-    redirect_to root_url unless user_signed_in?
-    @content = Content.find(params[:id])
-    render :new
+    if user_signed_in?
+      @content = Content.find(params[:id])
+      render  :new
+    else
+      redirect_to root_url
+    end
   end
   
   def update
