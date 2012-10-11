@@ -4,11 +4,9 @@
 <%= link_to I18n.t('.add_content'), new_content_path %>
 
 <section id="content">
-  <p><table>
-    <% @contents.each do |content| %>
-      <tr>
-        <%= render :partial => "contents/show", :locals => { :content => content } %>
-      </tr>
-    <% end %>
-  </table></p>
+  <ul>
+  <% @contents.each do |content| %>
+    <li><%= render content %></li>
+  <% end %>
+  </ul>
 </section>
