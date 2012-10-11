@@ -1,5 +1,7 @@
 class ContentsController < ApplicationController
   
+  rescue_from ActiveRecord::RecordNotFound, :with => :record_not_found
+  
   def new
     redirect_to root_url unless user_signed_in?
     @content = Content.new
@@ -39,5 +41,18 @@ class ContentsController < ApplicationController
   
   def show
     @content = Content.find(params[:id])
+  end
+  
+  def destroy
+    @content = Content.find(params[:id])
+    if @content.destroy
+      redirect_to root_url, notice: I18n.t('.content_deleted')
+    else
+      redirect_to show_content_path(@content), notice: I18n.t('.content_not_deleted')
+    end
+  end
+  
+  def record_not_found
+    redirect_to root_url, alert: I18n.t('.content_not_found')
   end
 end

@@ -26,7 +26,7 @@ When /^I delete the content$/ do
   @delete_content = @my_account.contents.last
   @deleted_data = @delete_content.data
   visit(content_path('sv', @delete_content))
-  click_button 'delete'
+  click_link 'Delete'
 end
 
 Then /^the content is deleted$/ do

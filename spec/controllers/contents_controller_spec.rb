@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe ContentsController do
+
     describe 'as signed in user' do
       before :each do
         # Thanx - https://github.com/plataformatec/devise/wiki/How-To:-Controllers-and-Views-tests-with-Rails-3-(and-rspec)
@@ -45,20 +46,46 @@ describe ContentsController do
           expect(response).to be_success
         end
       end
+      
+      describe "DELETE #destroy" do
+        before :each do
+            @content = create :content, user: @user
+        end
+        
+        it "assigns @content to requested content" do
+          delete :destroy, id: @content.id
+          expect(assigns :content ).to eql @content
+        end
+        
+        it "deletes the requested content" do
+          delete :destroy, id:@content.id
+          expect(Content.all).to_not include(@content)
+        end
+      end
     end
   
     describe 'as guest user' do
+      after :each do
+        expect(response).to redirect_to root_url
+      end
+      
       describe 'GET #edit' do
         it "should redirect away from edit content form" do
           @content = create :content
           get :edit, id: @content.id
-          expect(response).to redirect_to root_url
         end
       end
+
       describe 'GET #new' do
         it "should redirect away from create content form" do
           get :new
-          expect(response).to redirect_to root_url
+        end
+      end
+
+      describe 'DELETE #destroy' do
+        it "should redirect away from delete content" do
+          @content = create :content
+          delete :destroy, id: @content.id
         end
       end
     end

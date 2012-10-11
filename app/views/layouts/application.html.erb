@@ -10,6 +10,13 @@
   <aside>
     <%= render :partial => "home/account_status" %>
   </aside>
+  <% [:info, :error, :notice].each do |key| %>
+    <% if flash[key] %>
+    <div class="<%= key %>" id="flash">
+      <%= flash[key] %>
+    </div>
+    <% end %>
+  <% end %>
 
   <%= yield %>
 
