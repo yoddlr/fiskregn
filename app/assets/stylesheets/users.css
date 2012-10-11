@@ -4,4 +4,14 @@
 */
 ul {
   list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+li.manage {
+  float: left;
+}
+
+section {
+  clear:left;
+  margin :1em;
 }
