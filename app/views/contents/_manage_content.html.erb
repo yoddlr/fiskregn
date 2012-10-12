@@ -1,4 +1,6 @@
 <ul class="manage_content">
+  <!-- When replying, id of this content will be the parent_id for the reply. -->
+  <li><%= link_to 'Reply', new_content_path(:parent_id=> @content.id) %></li>
   <li><%= link_to 'Edit', edit_content_path(@content) %></li>
   <li><%= link_to 'Delete', @content, method: :delete, data: { confirm: 'Are you sure?' } %></li>
 </ul>

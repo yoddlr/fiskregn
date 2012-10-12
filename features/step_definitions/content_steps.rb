@@ -33,3 +33,21 @@ Then /^the content is deleted$/ do
   visit(content_path('sv', @delete_content))
   expect(page).to_not have_content @deleted_data
 end
+
+Given /^There is content$/ do
+  # FIXME: Make sure different user does this. Or is that a different test?
+  @parent_content = Content.create!(:data => 'Parent data')
+end
+
+When /^I reply to content$/ do
+  visit(content_path('sv', @parent_content))
+  click_link 'Reply'
+  @child_data = 'Child data'
+  fill_in :data, with: @child_data
+  click_button 'submit'
+end
+
+Then /^reply has parent content$/ do
+  visit(content_path('sv', @my_account.contents.last))
+  expect(@my_account.contents.last.parent_id).to eql(@parent_content.id)
+end

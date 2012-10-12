@@ -5,11 +5,12 @@ class ContentsController < ApplicationController
   def new
     redirect_to root_url unless user_signed_in?
     @content = Content.new
+    @content.parent_id = params[:parent_id]
   end
   
   def create
     if current_user
-      @content = Content.new(data: params[:content][:data], user_id: current_user.id)
+      @content = Content.new(data: params[:content][:data], user_id: current_user.id, parent_id: params[:content][:parent_id])
       if @content.save
         redirect_to user_path(current_user), notice: I18n.t('.content_saved')
       else
