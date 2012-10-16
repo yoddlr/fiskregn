@@ -1,5 +1,6 @@
 When /^I (?:share|have) content$/ do
-  visit(new_content_path(user: @my_account))
+  # visit(new_content_path(user: @my_account))
+  visit('/sv/contents/new')
   @data = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
   fill_in :data, with: @data
   click_button 'submit'
@@ -30,13 +31,13 @@ When /^I delete the content$/ do
 end
 
 Then /^the content is deleted$/ do
-  visit(content_path('sv', @delete_content))
-  expect(page).to_not have_content @deleted_data
+  expect(Content.all).to_not include(@delete_content)
 end
 
 Given /^There is content$/ do
   # FIXME: Make sure different user does this. Or is that a different test?
-  @parent_content = Content.create!(:data => 'Parent data')
+  # @parent_content = Content.create!(:data => 'Parent data')
+  @parent_content = create :content, user: User.first
 end
 
 When /^I reply to content$/ do
@@ -48,6 +49,5 @@ When /^I reply to content$/ do
 end
 
 Then /^reply has parent content$/ do
-  visit(content_path('sv', @my_account.contents.last))
-  expect(@my_account.contents.last.parent_id).to eql(@parent_content.id)
+  expect(@my_account.contents.last.parent).to eql(@parent_content)
 end

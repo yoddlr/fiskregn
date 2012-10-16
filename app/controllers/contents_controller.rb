@@ -14,7 +14,11 @@ class ContentsController < ApplicationController
       @content.user = current_user
       # @content.parent = Content.find(params[:content][:parent_id]) if params[:content][:parent_id]
       if @content.save
+        if @content.parent
+          redirect_to content_path(@content.parent), notice: I18n.t('.content_saved')
+        else
         redirect_to user_path(current_user), notice: I18n.t('.content_saved')
+        end
       else
         render_template :new, alert: I18n.t('.content_not_saved')
       end
