@@ -3,7 +3,7 @@ Given /^there are user accounts$/ do
 end
 
 When /^I visit the global wall$/ do
-  visit('/home')
+  visit('/')
 end
 
 Then /^I get a list of all users$/ do

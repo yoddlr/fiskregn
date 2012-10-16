@@ -1,4 +1,4 @@
-@global
+@global @wall @locations
 Feature: Global wall
 
   As a guest

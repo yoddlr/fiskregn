@@ -6,7 +6,9 @@ Fiskregn::Application.routes.draw do
   
     get "contents/new", as: 'new_content' 
     resources :contents
-  
+
+    get "/home" => 'users#home'
+    
     devise_for :users
     resources :users
   
@@ -68,6 +70,7 @@ Fiskregn::Application.routes.draw do
     # match ':controller(/:action(/:id))(.:format)'
 
     root :to => "home#index"
+    
   end
 
 end
