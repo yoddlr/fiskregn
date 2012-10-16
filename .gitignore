@@ -25,3 +25,5 @@ pickle-email-*.html
 .DS_Store
 
 app/models/a_log.rb
+
+/app/models/a_log.rb
