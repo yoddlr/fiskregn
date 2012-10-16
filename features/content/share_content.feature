@@ -1,4 +1,4 @@
-@content
+@content @share
 Feature: Share content
 
   As a user

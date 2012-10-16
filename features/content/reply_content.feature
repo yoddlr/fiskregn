@@ -1,4 +1,4 @@
-@content
+@content @reply
 Feature: Reply to content
 
   As a signed in user
