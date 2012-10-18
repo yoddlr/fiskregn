@@ -16,7 +16,7 @@ Then /^a new personal account is created$/ do
 end
 
 Given /^a user account$/ do
-  @user = FactoryGirl.create :user
+  @user = FactoryGirl.create :user, email: 'stranger@dom.com'
 end
 
 When /^I visit the users profile page$/ do

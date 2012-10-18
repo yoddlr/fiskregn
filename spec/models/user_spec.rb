@@ -40,4 +40,7 @@ describe User do
       end
     end
   end
+  describe "Location" do
+    pending
+  end
 end

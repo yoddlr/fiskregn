@@ -5,5 +5,8 @@ describe Content do
     content = build :content
     expect(content).to be_valid
   end
-    
+
+  describe "Location" do
+    pending
+  end
 end

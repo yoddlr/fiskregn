@@ -51,3 +51,16 @@ end
 Then /^reply has parent content$/ do
   expect(@my_account.contents.last.parent).to eql(@parent_content)
 end
+
+When /^I share content to a user's wall$/ do
+  visit(user_path('sv',@user))
+  click_link 'add_content'
+  @wall_data = 'Shared to wall'
+  fill_in :data, with: @wall_data
+  click_button 'submit'
+end
+
+Then /^the content shows up on the user's wall$/ do
+  visit(user_path('sv',@user))
+  expect(page).to have_content(@wall_data)
+end

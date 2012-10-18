@@ -1,5 +1,6 @@
 <%= form_for @content do |c| %>
-<%= c.hidden_field :parent_id %>
+  <%= c.hidden_field :parent_id %>
+  <%= hidden_field_tag :location_id, @location_id %>  
   <%= c.label :data %>
   <%= c.text_field :data %>
   <%= c.submit I18n.t('.submit'), id: 'submit'%>

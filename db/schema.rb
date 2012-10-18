@@ -11,7 +11,12 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121015122329) do
+ActiveRecord::Schema.define(:version => 20121018130936) do
+
+  create_table "content_to_location", :force => true do |t|
+    t.integer "content_id"
+    t.integer "location_id"
+  end
 
   create_table "contents", :force => true do |t|
     t.string   "data"
@@ -19,6 +24,15 @@ ActiveRecord::Schema.define(:version => 20121015122329) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.integer  "parent_id"
+  end
+
+  create_table "contents_locations", :force => true do |t|
+    t.integer "content_id"
+    t.integer "location_id"
+  end
+
+  create_table "locations", :force => true do |t|
+    t.integer "user_id"
   end
 
   create_table "users", :force => true do |t|

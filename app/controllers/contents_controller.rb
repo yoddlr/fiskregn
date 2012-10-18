@@ -6,12 +6,17 @@ class ContentsController < ApplicationController
     redirect_to root_url unless user_signed_in?
     @content = Content.new
     @content.parent_id = params[:parent_id]if params[:parent_id]
+    # @content.add_location(Location.find(params[:location])) if params[:location]
+    @location_id = params[:location] || current_user.location.id
+    ALog.debug @location_id
   end
   
   def create
+    ALog.debug params
     if current_user
-      @content = Content.new(params[:content])
+      @content = Content.new(params[:content]) 
       @content.user = current_user
+      @content.add_location(Location.find(params[:location_id])) if params[:location_id].length > 0 
       # @content.parent = Content.find(params[:content][:parent_id]) if params[:content][:parent_id]
       if @content.save
         if @content.parent

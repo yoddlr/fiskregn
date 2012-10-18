@@ -6,11 +6,20 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :location
   # attr_accessible :title, :body
   
   validates :email, presence: true, uniqueness: true
   validates :password, confirmation: true, length: {minimum: 6}, format: {with: /.*(^[A-z]+.*[0-9]+.*$)|(^[0-9]+.*[A-z]+.*$)/}
   
   has_many :contents
+  has_one :location
+  
+  after_create :create_location
+  
+  def create_location
+    location = Location.new
+    location.user_id = self.id
+    location.save
+  end
 end
