@@ -27,7 +27,7 @@ When /^I delete the content$/ do
   @delete_content = @my_account.contents.last
   @deleted_data = @delete_content.data
   visit(content_path('sv', @delete_content))
-  click_link 'Delete'
+  click_link 'delete'
 end
 
 Then /^the content is deleted$/ do
@@ -42,7 +42,7 @@ end
 
 When /^I reply to content$/ do
   visit(content_path('sv', @parent_content))
-  click_link 'Reply'
+  click_link 'reply'
   @child_data = 'Child data'
   fill_in :data, with: @child_data
   click_button 'submit'
