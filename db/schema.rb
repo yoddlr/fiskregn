@@ -13,11 +13,6 @@
 
 ActiveRecord::Schema.define(:version => 20121018130936) do
 
-  create_table "content_to_location", :force => true do |t|
-    t.integer "content_id"
-    t.integer "location_id"
-  end
-
   create_table "contents", :force => true do |t|
     t.string   "data"
     t.integer  "user_id"

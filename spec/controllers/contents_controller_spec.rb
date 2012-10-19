@@ -13,17 +13,17 @@ describe ContentsController do
       describe "GET #new" do    
         it "returns http success" do
           # Since signed in, it shall be possible to create new content
-          get 'new', user: @user.id
+          get 'new', user: @user.id, location: @user.location
           response.should be_success
         end
     
         it "assigns @content to a new Content object" do
-          get 'new', user: @user.id
+          get 'new', user: @user.id, location: @user.location
           expect(assigns(:content)).to be_a_new(Content)
         end
     
         it 'renders the new content template' do
-          get :new, user: @user.id
+          get :new, user: @user.id, location: @user.location
           expect(response).to render_template :new
         end
       end
@@ -66,7 +66,8 @@ describe ContentsController do
   
     describe 'as guest user' do
       after :each do
-        expect(response).to redirect_to root_url
+        # expect(response).to redirect_to root_url
+        expect(response).to raise_error
       end
       
       describe 'GET #edit' do

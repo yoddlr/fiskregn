@@ -26,6 +26,7 @@ de:
   forgot_your_password: "Password vergessen"
   hello: "Hallo Welt"
   leave_blank: "leer lassen wenn Sie nicht ändern möchten"
+  must_be_signed_in_to_create_contents: "Sie müssen eingeloggt sein um Inhalte hinzufügen zu können"
   need_your_current_password: "Ihr jetztiges Password wird benötigt um die Änderung zu bestätigen"
   new_password: "Neues Password"
   no_replies: "Noch keine Kommentare"

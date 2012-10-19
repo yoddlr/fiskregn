@@ -26,6 +26,7 @@ sv:
   forgot_your_password: "Glömt lösenord"
   hello: "Hej världen"
   leave_blank: "lämna blankt om du inte vill ändra"
+  must_be_signed_in_to_create_contents: "Inloggning krävs för att lägga till innehåll"
   need_your_current_password: "vi behöver nuvarande lösenord för bekräfta ändringar"
   new_password: "Nytt lösenord"
   no_replies: "Ännu inga kommentarer"
