@@ -19,7 +19,7 @@ class ContentsController < ApplicationController
   end
   
   def create
-    if current_user # params[:location_id]
+    if current_user
       # Attempted target location, defaulting to current user's location
       # Psychopathically changing param name from location to location_id :-|
       @location_id = params[:location_id] || current_user.location.id
@@ -56,6 +56,19 @@ class ContentsController < ApplicationController
       redirect_to root_url, notice: I18n.t('.content_updated')
     else
       render action: "edit", notice: I18n.t('.content_not_updated')
+    end
+  end
+
+  def post
+    @content = Content.find(params[:id])
+    if params[:contents]
+      # Second time around - having selected location in contents post form
+      @content.add_location(Location.find(params[:contents][:location]))
+      redirect_to content_path(@content.parent), notice: I18n.t('.content_posted')
+    else
+      # First time around
+      # Enable post to all not already having this content
+      @locations = Location.all - @content.locations
     end
   end
   

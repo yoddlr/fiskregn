@@ -62,3 +62,12 @@ Then /^the content shows up on the user's wall$/ do
   visit(user_path('sv',@user))
   expect(page).to have_content(@wall_data)
 end
+
+When /^I post content to target$/ do
+  @target_user = FactoryGirl.create :user, email: 'target@user.com'
+  @target_content = FactoryGirl.create :content, user: @my_account, data: 'target data'
+  visit(content_path('sv',@target_content))
+  click_link 'post'
+  page.select(@target_user.email, :from => "contents_location")
+  click_button 'submit'
+end
