@@ -64,7 +64,7 @@ class ContentsController < ApplicationController
     if params[:contents]
       # Second time around - having selected location in contents post form
       @content.add_location(Location.find(params[:contents][:location]))
-      redirect_to content_path(@content.parent), notice: I18n.t('.content_posted')
+      redirect_to content_path(@content), notice: I18n.t('.content_posted')
     else
       # First time around
       # Enable post to all not already having this content
