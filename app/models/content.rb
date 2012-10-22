@@ -9,7 +9,7 @@ class Content < ActiveRecord::Base
   has_and_belongs_to_many :locations
   
   def add_location(location)
-    locations << location
+    locations << location unless locations.include?(location)
   end
   
   def remove_location(location)
@@ -17,7 +17,7 @@ class Content < ActiveRecord::Base
   end
   
   def add_users_location(user)
-    locations << user.location
+    locations << user.location unless locations.include?(user.location)
   end
   
   def remove_users_location(user)
