@@ -35,8 +35,6 @@ Then /^the content is deleted$/ do
 end
 
 Given /^There is content$/ do
-  # FIXME: Make sure different user does this. Or is that a different test?
-  # @parent_content = Content.create!(:data => 'Parent data')
   @parent_content = create :content, user: User.first
 end
 
