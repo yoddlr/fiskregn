@@ -17,6 +17,7 @@ de:
   content_not_saved: "Inhalt nicht gespeichert"
   content_published: "Inhalt veröffentlicht"
   content_saved: "Inhalt gespeichert"
+  content_withdrawn: "Inhalt zurückgenommen"
   current_password: "Jetztiges Password"
   did_not_receive_confirmation_instructions: "Bestätigungsinstruktionen nich erhalten?"
   did_not_receive_unlock_instructions: "Aufschließinstruktionen nicht erhalten?"
@@ -53,3 +54,4 @@ de:
   unlock_my_account: "Konto aufschließen"
   user_profile: "Benutzerprofil"
   your_account_has_been_locked: "Ihr Konto wurde, wegen hoher Anzahl misslungener Anmeldeversuche, gesperrt."
+  withdraw: "Zurücknehmen"

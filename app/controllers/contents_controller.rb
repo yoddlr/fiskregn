@@ -62,14 +62,30 @@ class ContentsController < ApplicationController
   def publish
     @content = Content.find(params[:id])
     if params[:contents]
-      # Second time around - having selected location in contents post form
+      # Second time around - having selected location in contents publication form
       @content.add_location(Location.find(params[:contents][:location]))
       redirect_to content_path(@content), notice: I18n.t('.content_published')
     else
       # First time around
-      # Enable post to all not already having this content
+      # Enable publication of this content to locations
       @locations = Location.all - @content.locations
       @action = 'publish'
+    end
+  end
+
+  def withdraw
+    @content = Content.find(params[:id])
+    if params[:contents]
+      # Second time around - having selected location in contents publication form
+      @content.remove_location(Location.find(params[:contents][:location]))
+      redirect_to content_path(@content), notice: I18n.t('.content_withdrawn')
+    else
+      # First time around
+      # Enable withdrawal from locations having published this content
+      @locations = @content.locations
+      @action = 'withdraw'
+      # Same template to select publisher both for publication and withdrawal
+      render :action => 'publish'
     end
   end
   

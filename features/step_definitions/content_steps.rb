@@ -78,3 +78,15 @@ Then /^it shows up on target wall$/ do
   visit(user_path('sv',@target_user))
   expect(page).to have_content(@target_data)
 end
+
+When /^I withdraw content from target$/ do
+  visit(content_path('sv',@target_content))
+  click_link 'withdraw'
+  page.select(@target_user.email, :from => "contents_location")
+  click_button 'submit'
+end
+
+Then /^it does not show up on target wall$/ do
+  visit(user_path('sv',@target_user))
+  expect(page).to_not have_content(@target_data)
+end

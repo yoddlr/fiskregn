@@ -8,6 +8,9 @@ Fiskregn::Application.routes.draw do
     # Enabling publishing of content to a location
     get "contents/:id/publish" => 'contents#publish', as: 'publish_content'
     put "contents/:id/publish" => 'contents#publish', as: 'publish_content'
+    # Enabling withdrawing of content to a location
+    get "contents/:id/withdraw" => 'contents#withdraw', as: 'withdraw_content'
+    put "contents/:id/withdraw" => 'contents#withdraw', as: 'withdraw_content'
     resources :contents
 
     get "/home" => 'users#home'
