@@ -69,6 +69,7 @@ class ContentsController < ApplicationController
       # First time around
       # Enable post to all not already having this content
       @locations = Location.all - @content.locations
+      @action = 'publish'
     end
   end
   
