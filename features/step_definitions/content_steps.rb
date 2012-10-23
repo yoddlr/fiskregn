@@ -65,9 +65,16 @@ end
 
 When /^I publish content to target$/ do
   @target_user = FactoryGirl.create :user, email: 'target@user.com'
-  @target_content = FactoryGirl.create :content, user: @my_account, data: 'target data'
+  @target_data = 'target data'
+  @target_content = FactoryGirl.create :content, user: @my_account, data: @target_data
   visit(content_path('sv',@target_content))
   click_link 'publish'
   page.select(@target_user.email, :from => "contents_location")
   click_button 'submit'
+end
+
+Then /^it shows up on target wall$/ do
+  # FIXME: Implement this one and "the content shows up on the user's wall" as one single parameterised step
+  visit(user_path('sv',@target_user))
+  expect(page).to have_content(@target_data)
 end
