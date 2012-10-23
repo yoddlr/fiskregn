@@ -2,7 +2,7 @@
   <!-- When replying, id of this content will be the parent_id for the reply. -->
   <!-- FIXME: Location of reply shall be same as what it replies to!-->
   <li><%= link_to I18n.t('.reply'), new_content_path(:parent_id => @content.id), id: 'reply' %></li>
-  <li><%= link_to I18n.t('.post'), post_content_path(@content), id: 'post' %></li>
+  <li><%= link_to I18n.t('.publish'), publish_content_path(@content), id: 'publish' %></li>
   <li><%= link_to I18n.t('.edit'), edit_content_path(@content), id: 'edit' %></li>
   <li><%= link_to I18n.t('.delete'), @content, method: :delete, data: { confirm: 'Are you sure?' } , id: 'delete'%></li>
 </ul>

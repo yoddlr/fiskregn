@@ -15,5 +15,5 @@ Feature: Share content
     Given There is content
       And I have an account
       And I have signed in
-    When I post content to target
+    When I publish content to target
     Then it shows up on target wall

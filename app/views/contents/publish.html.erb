@@ -1,4 +1,4 @@
-<%= form_for @content, :url => {:action => 'post'} do |c| %>
+<%= form_for @content, :url => {:action => 'publish'} do |c| %>
   <%= select('contents', 'location', @locations.collect {|l| [l.user.email, l.id]} ) %>
   <%= c.submit I18n.t('.submit'), id: 'submit'%>
 <% end %>

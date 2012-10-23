@@ -5,9 +5,9 @@ Fiskregn::Application.routes.draw do
     get "home/index"
   
     get "contents/new", as: 'new_content' 
-    # Enabling posting of content to a location
-    get "contents/:id/post" => 'contents#post', as: 'post_content'
-    put "contents/:id/post" => 'contents#post', as: 'post_content'
+    # Enabling publishing of content to a location
+    get "contents/:id/publish" => 'contents#publish', as: 'publish_content'
+    put "contents/:id/publish" => 'contents#publish', as: 'publish_content'
     resources :contents
 
     get "/home" => 'users#home'
