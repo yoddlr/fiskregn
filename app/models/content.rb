@@ -1,5 +1,5 @@
 class Content < ActiveRecord::Base
-  attr_accessible :data, :user, :parent_id, :parent, :locations
+  attr_accessible :text, :user, :parent_id, :parent, :locations
   
   belongs_to :user 
 

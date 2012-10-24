@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :content do
-    data Faker::Lorem.sentences(sentence_count = 3, supplemental = false)
+    text Faker::Lorem.sentences(sentence_count = 3, supplemental = false)
     user
     factory :reply do
       parent :content

@@ -2,10 +2,10 @@
   <hgroup>
     <h1>ID: <%= @content.id %></h1>
     <% if @content.parent %>
-      <h3>in reply to: <%= link_to @content.parent.data, @content.parent %></h3>
+      <h3>in reply to: <%= link_to @content.parent.text, @content.parent %></h3>
     <% end %>
   </hgroup>
-  <p><%= @content.data %></p>
+  <p><%= @content.text %></p>
   <section id="replies">
     <h4><%= I18n.t('.replies') %></h4>
     <% if @content.children %>

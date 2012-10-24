@@ -5,5 +5,5 @@
   <li><%= link_to I18n.t('.publish'), publish_content_path(@content), id: 'publish' %></li>
   <li><%= link_to I18n.t('.withdraw'), withdraw_content_path(@content), id: 'withdraw' %></li>
   <li><%= link_to I18n.t('.edit'), edit_content_path(@content), id: 'edit' %></li>
-  <li><%= link_to I18n.t('.delete'), @content, method: :delete, data: { confirm: 'Are you sure?' } , id: 'delete'%></li>
+  <li><%= link_to I18n.t('.delete'), @content, method: :delete, text: { confirm: 'Are you sure?' } , id: 'delete'%></li>
 </ul>
