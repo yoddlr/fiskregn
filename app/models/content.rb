@@ -9,7 +9,9 @@ class Content < ActiveRecord::Base
   has_and_belongs_to_many :locations
 
   def description
-    I18n.t('.content_removed_message')
+    # TODO: Change code so it uses the text_content as well.
+    :text
+    # I18n.t('.content_removed_message')
   end
 
   def publish_to_location(location)
