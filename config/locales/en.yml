@@ -19,6 +19,7 @@ en:
   content_published: "Content published"
   content_saved: "Content saved"
   content_withdrawn: "Content withdrawn"
+  content_removed_message: "Content removed"
   current_password: "Current password"
   delete: "Delete"
   did_not_receive_confirmation_instructions: "Didn't receive confirmation instructions?"

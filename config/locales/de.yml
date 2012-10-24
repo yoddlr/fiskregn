@@ -19,6 +19,7 @@ de:
   content_published: "Inhalt veröffentlicht"
   content_saved: "Inhalt gespeichert"
   content_withdrawn: "Inhalt zurückgenommen"
+  content_removed_message: "Inhalt pingvinat"
   current_password: "Jetztiges Password"
   did_not_receive_confirmation_instructions: "Bestätigungsinstruktionen nich erhalten?"
   did_not_receive_unlock_instructions: "Aufschließinstruktionen nicht erhalten?"

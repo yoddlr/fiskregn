@@ -20,6 +20,7 @@ sv:
   content_retracted: "Innehåll återtaget"
   content_saved: "Innehåll sparat"
   content_withdrawn: "Innehåll återtaget"
+  content_removed_message: "Innehåll borttaget"
   current_password: "Nuvarande lösenord"
   delete: "Radera"
   did_not_receive_confirmation_instructions: "Ej fått bekräftelseinstruktioner?"

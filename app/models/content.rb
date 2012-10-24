@@ -7,7 +7,11 @@ class Content < ActiveRecord::Base
   has_many :children, :class_name => 'Content', :foreign_key => :parent_id
   
   has_and_belongs_to_many :locations
-  
+
+  def description
+    I18n.t('.content_removed_message')
+  end
+
   def publish_to_location(location)
     locations << location unless locations.include?(location)
   end
