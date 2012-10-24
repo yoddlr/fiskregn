@@ -1,5 +1,5 @@
 class TextContent < Content
   def description
-    :text
+    self.text
   end
 end

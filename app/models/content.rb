@@ -10,7 +10,7 @@ class Content < ActiveRecord::Base
 
   def description
     # TODO: Change code so it uses the text_content as well.
-    :text
+    self.text
     # I18n.t('.content_removed_message')
   end
 
