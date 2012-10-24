@@ -8,19 +8,19 @@ class Content < ActiveRecord::Base
   
   has_and_belongs_to_many :locations
   
-  def add_location(location)
+  def publish_to_location(location)
     locations << location unless locations.include?(location)
   end
   
-  def remove_location(location)
+  def withdraw_from_location(location)
     locations.delete(location)
   end
   
-  def add_users_location(user)
+  def publish_to_users_location(user)
     locations << user.location unless locations.include?(user.location)
   end
   
-  def remove_users_location(user)
+  def withdraw_from_users_location(user)
     locations.delete(user.location)
   end
 end

@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe ContentsController do
 
-    describe 'as signed in user' do
+    context 'as signed in user' do
       before :each do
         # Thanx - https://github.com/plataformatec/devise/wiki/How-To:-Controllers-and-Views-tests-with-Rails-3-(and-rspec)
         @request.env["devise.mapping"] = Devise.mappings[:user]
@@ -64,7 +64,7 @@ describe ContentsController do
       end
     end
   
-    describe 'as guest user' do
+    context 'as guest user' do
       after :each do
         # expect(response).to redirect_to root_url
         expect(response).to raise_error

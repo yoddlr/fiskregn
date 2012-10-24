@@ -9,7 +9,7 @@ class ContentsController < ApplicationController
       @location_id = params[:location] || current_user.location.id
       @content = Content.new
       @content.parent_id = params[:parent_id] if params[:parent_id]
-      @content.add_location(Location.find(@location_id))
+      @content.publish_to_location(Location.find(@location_id))
     elsif params[:location]
       # Back to attempted target location if not signed in
       redirect_to user_path(User.find(Location.find(params[:location]).user_id)), notice: I18n.t('.must_be_signed_in_to_create_contents')
@@ -25,7 +25,7 @@ class ContentsController < ApplicationController
       @location_id = params[:location_id] || current_user.location.id
       @content = Content.new(params[:content])
       @content.user = current_user
-      @content.add_location(Location.find(@location_id))
+      @content.publish_to_location(Location.find(@location_id))
       if @content.save
         if @content.parent
           # Saving content as a reply
@@ -63,7 +63,7 @@ class ContentsController < ApplicationController
     @content = Content.find(params[:id])
     if params[:contents]
       # Second time around - having selected location in contents publication form
-      @content.add_location(Location.find(params[:contents][:location]))
+      @content.publish_to_location(Location.find(params[:contents][:location]))
       redirect_to content_path(@content), notice: I18n.t('.content_published')
     else
       # First time around
@@ -77,7 +77,7 @@ class ContentsController < ApplicationController
     @content = Content.find(params[:id])
     if params[:contents]
       # Second time around - having selected location in contents publication form
-      @content.remove_location(Location.find(params[:contents][:location]))
+      @content.withdraw_from_location(Location.find(params[:contents][:location]))
       redirect_to content_path(@content), notice: I18n.t('.content_withdrawn')
     else
       # First time around
