@@ -7,7 +7,11 @@ gem 'rails-i18n'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'bcrypt-ruby'
+
+# gem 'bcrypt-ruby'
+
+# provides validation messages to generated forms
+gem 'dynamic_form'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -25,6 +29,12 @@ group :test, :development do
   gem 'faker'
   gem 'rspec-rails'
   gem 'factory_girl_rails'
+  # Guard plugins
+  gem 'guard-rspec'
+  gem 'guard-cucumber'
+  # Notifications for guard
+  gem 'rb-fsevent', :require => false if RUBY_PLATFORM =~ /darwin/i
+  gem 'growl' if RUBY_PLATFORM =~ /darwin/i # notification framework for osx
 end
 
 group :test do
@@ -34,5 +44,5 @@ group :test do
 end
 
 group :production do
-  gem 'pg'
+  gem 'pg' # gem for postgresql
 end
