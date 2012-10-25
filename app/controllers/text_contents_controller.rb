@@ -59,7 +59,6 @@ class TextContentsController < ContentsController
       @content.save!
       redirect_to root_url, notice: I18n.t('.content_deleted')
     else
-      ALog.debug 'not deleted'
       redirect_to show_content_path(@content), notice: I18n.t('.content_not_deleted')
     end
   end
