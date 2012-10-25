@@ -47,7 +47,8 @@ class ContentsController < ApplicationController
   
   def destroy
     @content = Content.find(params[:id])
-    if @content.destroy
+    deletable = (@children == nil) || (@children.empty?)
+    if deletable && @content.destroy
       redirect_to root_url, notice: I18n.t('.content_deleted')
     else
       redirect_to show_content_path(@content), notice: I18n.t('.content_not_deleted')
