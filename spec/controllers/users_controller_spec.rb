@@ -23,7 +23,7 @@ describe UsersController do
       user_content = create :text_content, user: @user, text: 'Gurksalladdin'
     end
     
-    it "assign @contents to current users contents" do
+    it "assign @contents to current user's contents" do
       get :home
       expect(assigns :contents).to eq @user.contents
     end
