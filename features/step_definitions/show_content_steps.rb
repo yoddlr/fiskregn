@@ -1,5 +1,5 @@
 Given /^there is content$/ do
-  @content = create :content, text: 'innehall'
+  @content = create :text_content, text: 'innehaall'
 end
 
 When /^I visit the contents page$/ do
@@ -19,9 +19,9 @@ Given /^the content has a reply$/ do
 end
 
 Then /^I see a link to the parent content$/ do
-  expect(page).to have_content('innehall')
+  expect(page).to have_content('innehaall')
 end
 
 Then /^I also see the reply$/ do
-  expect(page).to have_content(@reply.text)
+  expect(page).to have_content(@reply.description)
 end
