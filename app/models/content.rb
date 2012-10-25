@@ -1,7 +1,11 @@
 class Content < ActiveRecord::Base
+
+  acts_as_taggable
+  acts_as_taggable_on :text
+
   attr_accessible :user, :parent_id, :parent, :locations
-  
-  belongs_to :user 
+
+  belongs_to :user
 
   belongs_to :parent, :class_name => 'Content'
   has_many :children, :class_name => 'Content', :foreign_key => :parent_id
