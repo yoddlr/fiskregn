@@ -66,7 +66,7 @@ end
 When /^I publish content to target$/ do
   @target_user = FactoryGirl.create :user, email: 'target@user.com'
   @target_text = 'target text'
-  @target_content = FactoryGirl.create :content, user: @my_account, text: @target_text
+  @target_content = FactoryGirl.create :text_content, user: @my_account, text: @target_text
   visit(content_path('sv',@target_content))
   click_link 'publish'
   page.select(@target_user.email, :from => "contents_location")
