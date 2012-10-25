@@ -1,6 +1,4 @@
 class Content < ActiveRecord::Base
-  acts_as_taggable
-  acts_as_taggable_on :text
 
   attr_accessible :user, :parent_id, :parent, :locations
 
