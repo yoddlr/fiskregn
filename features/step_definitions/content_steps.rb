@@ -1,6 +1,6 @@
 When /^I (?:share|have) content$/ do
   # visit(new_content_path(user: @my_account))
-  visit("/sv/contents/new?location=#{@my_account.location.id}")
+  visit("/sv/text_contents/new?location=#{@my_account.location.id}")
   @text = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
   fill_in :data, with: @text
   click_button 'submit'
@@ -12,7 +12,7 @@ Then /^it shows up on my wall$/ do
 end
 
 When /^I update the content$/ do
-  visit(edit_content_path('sv', @my_account.contents.last))
+  visit(edit_text_content_path('sv', @my_account.contents.last))
   @updated_text = 'No longer only ipsum'
   fill_in :text, with: @updated_text
   click_button 'submit'

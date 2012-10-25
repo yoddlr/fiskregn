@@ -4,14 +4,17 @@ Fiskregn::Application.routes.draw do
   scope '(:locale)' do
     get "home/index"
   
-    get "contents/new", as: 'new_content' 
-    # Enabling publishing of content to a location
+    # Viewing of generic content
+    get "contents/:id" => 'contents#show', as: 'content'
+    # Enabling publishing of (generic) content to a location
     get "contents/:id/publish" => 'contents#publish', as: 'publish_content'
     put "contents/:id/publish" => 'contents#publish', as: 'publish_content'
-    # Enabling withdrawing of content to a location
+    # Enabling withdrawing of (generic) content to a location
     get "contents/:id/withdraw" => 'contents#withdraw', as: 'withdraw_content'
     put "contents/:id/withdraw" => 'contents#withdraw', as: 'withdraw_content'
-    resources :contents
+    # CRUD for TextContent
+    get "text_contents/new", as: 'new_text_content' 
+    resources :text_contents
 
     get "/home" => 'users#home'
     
