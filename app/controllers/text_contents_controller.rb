@@ -21,7 +21,7 @@ class TextContentsController < ContentsController
       # Attempted target location, defaulting to current user's location
       # Psychopathically changing param name from location to location_id :-|
       @location_id = params[:location_id] || current_user.location.id
-      @content = TextContent.new(params[:content])
+      @content = TextContent.new(params[:text_content])
       @content.user = current_user
       @content.publish_to_location(Location.find(@location_id))
       if @content.save
@@ -41,7 +41,7 @@ class TextContentsController < ContentsController
 
   def update
     @content = Content.find(params[:id])
-    if @content.update_attributes(params[:content])
+    if @content.update_attributes(params[:text_content])
       redirect_to root_url, notice: I18n.t('.content_updated')
     else
       render action: "edit", notice: I18n.t('.content_not_updated')
