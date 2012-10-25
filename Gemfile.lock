@@ -76,6 +76,7 @@ GEM
     ffi (1.1.5)
     gherkin (2.11.2)
       json (>= 1.4.6)
+    growl (1.0.3)
     guard (1.5.0)
       listen (>= 0.4.2)
       lumberjack (>= 1.0.2)
@@ -138,6 +139,7 @@ GEM
       rdoc (~> 3.4)
       thor (>= 0.14.6, < 2.0)
     rake (0.9.2.2)
+    rb-fsevent (0.9.2)
     rdoc (3.12)
       json (~> 1.4)
     rspec (2.11.0)
@@ -191,12 +193,14 @@ DEPENDENCIES
   dynamic_form
   factory_girl_rails
   faker
+  growl
   guard-cucumber
   guard-rspec
   jquery-rails
   pg
   rails (= 3.2.8)
   rails-i18n
+  rb-fsevent
   rspec-rails
   sqlite3
   uglifier (>= 1.0.3)
