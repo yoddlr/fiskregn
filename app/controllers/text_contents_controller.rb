@@ -48,4 +48,20 @@ class TextContentsController < ContentsController
     end
   end
 
+  def destroy
+    @content = Content.find(params[:id])
+    if @content.children.empty?
+      super
+    elsif
+      # Virtual suicide - drop all class specific data of this object, and revert type
+      @content.text = nil
+      @content.type = nil
+      @content.save!
+      redirect_to root_url, notice: I18n.t('.content_deleted')
+    else
+      ALog.debug 'not deleted'
+      redirect_to show_content_path(@content), notice: I18n.t('.content_not_deleted')
+    end
+  end
+
 end

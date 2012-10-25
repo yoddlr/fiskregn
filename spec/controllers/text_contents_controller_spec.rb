@@ -77,7 +77,8 @@ describe TextContentsController do
 
         it "fails to delete content with children" do
           delete :destroy, id:@content.id
-          expect(Content.all).to include(@content)
+          # Reverting to root type => content exists but no longer the same
+          expect(Content.find(@content.id)).to_not be nil
         end
 
       end
