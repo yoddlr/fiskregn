@@ -1,7 +1,5 @@
 class Content < ActiveRecord::Base
 
-  acts_as_taggable
-
   attr_accessible :user, :parent_id, :parent, :locations
 
   belongs_to :user
