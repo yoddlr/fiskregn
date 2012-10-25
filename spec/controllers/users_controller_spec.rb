@@ -20,7 +20,7 @@ describe UsersController do
       @request.env["devise.mapping"] = Devise.mappings[:user]
       @user = FactoryGirl.create(:user)
       sign_in @user
-      user_content = create :content, user: @user, text: 'Gurksalladdin'
+      user_content = create :text_content, user: @user, text: 'Gurksalladdin'
     end
     
     it "assign @contents to current users contents" do
