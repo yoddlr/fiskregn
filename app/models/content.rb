@@ -1,10 +1,11 @@
 class Content < ActiveRecord::Base
+
   acts_as_taggable
   acts_as_taggable_on :text
 
-  attr_accessible :text, :user, :parent_id, :parent, :locations
+  attr_accessible :user, :parent_id, :parent, :locations
 
-  belongs_to :user 
+  belongs_to :user
 
   belongs_to :parent, :class_name => 'Content'
   has_many :children, :class_name => 'Content', :foreign_key => :parent_id
@@ -12,9 +13,7 @@ class Content < ActiveRecord::Base
   has_and_belongs_to_many :locations
 
   def description
-    # TODO: Change code so it uses the text_content as well.
-    self.text
-    # I18n.t('.content_removed_message')
+    I18n.t('.content_deleted')
   end
 
   def publish_to_location(location)

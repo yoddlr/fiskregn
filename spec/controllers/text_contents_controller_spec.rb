@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ContentsController do
+describe TextContentsController do
 
     context 'as signed in user' do
       before :each do
@@ -17,9 +17,9 @@ describe ContentsController do
           response.should be_success
         end
     
-        it "assigns @content to a new Content object" do
+        it "assigns @content to a new TextContent object" do
           get 'new', user: @user.id, location: @user.location
-          expect(assigns(:content)).to be_a_new(Content)
+          expect(assigns(:content)).to be_a_new(TextContent)
         end
     
         it 'renders the new content template' do
@@ -30,7 +30,7 @@ describe ContentsController do
   
       describe "GET #edit" do
         before :each do
-            @content = create :content, user: @user
+            @content = create :text_content, user: @user
             get :edit, id: @content.id
         end
     
@@ -49,7 +49,7 @@ describe ContentsController do
       
       describe "DELETE #destroy" do
         before :each do
-            @content = create :content, user: @user
+            @content = create :text_content, user: @user
         end
         
         it "assigns @content to requested content" do
