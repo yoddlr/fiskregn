@@ -62,6 +62,25 @@ describe TextContentsController do
           expect(Content.all).to_not include(@content)
         end
       end
+
+      describe "DELETE #destroy" do
+        before :each do
+          @content = create :text_content, user: @user
+
+          @child = create :text_content, user: @user
+          @content.children << @child
+        end
+
+        it "@content should have child @child" do
+          expect(@content.children).to include(@child)
+        end
+
+        it "fails to delete content with children" do
+          delete :destroy, id:@content.id
+          expect(Content.all).to include(@content)
+        end
+
+      end
     end
   
     context 'as guest user' do
