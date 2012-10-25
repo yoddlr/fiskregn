@@ -1,9 +1,9 @@
 <h1 xmlns="http://www.w3.org/1999/html"><%= I18n.t('.user_profile') %></h1>
 <%= @user.email %>
 <%= link_to I18n.t('.change_your_password'), edit_user_registration_path %>
-<%= link_to I18n.t('.add_content'), new_content_path(location: @user.location), id: 'add_content' %>
+<!-- TODO: Provisions for adding different kinds of content -->
+<%= link_to I18n.t('.add_content'), new_text_content_path(location: @user.location), id: 'add_content' %>
 
-<p>Användarens Pingvin</p>
-<%= render @user.location.contents %>
+<%= render partial: 'contents/content', collection: @user.location.contents %>
 
 </section>
