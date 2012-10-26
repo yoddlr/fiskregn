@@ -5,7 +5,7 @@ Fiskregn::Application.routes.draw do
     get "home/index"
   
     # Viewing of generic content
-    get "contents/:id" => 'contents#show', as: 'content', as: 'show_content'
+    get "contents/:id" => 'contents#show', as: 'content'
     # Enabling publishing of (generic) content to a location
     get "contents/:id/publish" => 'contents#publish', as: 'publish_content'
     put "contents/:id/publish" => 'contents#publish', as: 'publish_content'
