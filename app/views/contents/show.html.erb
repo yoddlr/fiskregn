@@ -1,6 +1,15 @@
 <article>
   <hgroup>
     <h1>ID: <%= @content.id %></h1>
+    <%= form_for @content do |c| %>
+      <div class="field">
+        <%= c.label :tag_list, "Tags (separated by commas)" %>
+        <%= c.text_field :tag_list %>
+      </div>
+      <div class="actions">
+        <%= c.submit I18n.t('.submit'), id: 'submit'%>
+      </div>
+    <% end %>
     <% if @content.parent %>
       <h3>in reply to: <%= link_to @content.parent.text, @content.parent %></h3>
     <% end %>
