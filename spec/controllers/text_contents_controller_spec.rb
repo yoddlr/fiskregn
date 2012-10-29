@@ -92,7 +92,7 @@ describe TextContentsController do
       
       describe 'GET #edit' do
         it "should redirect away from edit content form" do
-          @content = create :content
+          @content = create :text_content
           get :edit, id: @content.id
         end
       end
@@ -105,7 +105,7 @@ describe TextContentsController do
 
       describe 'DELETE #destroy' do
         it "should redirect away from delete content" do
-          @content = create :content
+          @content = create :text_content
           delete :destroy, id: @content.id
         end
       end

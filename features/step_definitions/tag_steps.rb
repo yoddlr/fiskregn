@@ -3,6 +3,7 @@ When /^I tag the content$/ do
   @tag = 'Taggety-tag'
   fill_in :tag_list, with: @tag
   click_button 'submit'
+  save_page
 end
 
 Then /^the content has the tag$/ do

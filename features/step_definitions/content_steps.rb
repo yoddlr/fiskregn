@@ -35,7 +35,7 @@ Then /^the content is deleted$/ do
 end
 
 Given /^There is content$/ do
-  @parent_content = create :content, user: User.first
+  @parent_content = create :text_content, user: User.first
 end
 
 When /^I reply to content$/ do

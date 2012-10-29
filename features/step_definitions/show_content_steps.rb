@@ -15,7 +15,7 @@ Then /^I see the content$/ do
 end
 
 Given /^the content has a reply$/ do
-  @reply = create :reply, text: 'svar', parent: @content, user: User.last
+  @reply = create :text_reply, text: 'svar', parent: @content, user: User.last
 end
 
 Then /^I see a link to the parent content$/ do
