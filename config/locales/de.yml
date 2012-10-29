@@ -14,6 +14,7 @@ de:
   confirm_new_password: "Neues Password bestätigen"
   confirm_through_link_below: "Bestätigung mit Link unten:"
   content_deleted: "Inhalt gelöscht"
+  content_not_deleted: "Inhalt nicht gelöscht"
   content_not_found: "Inhalt nicht gefunden"
   content_not_saved: "Inhalt nicht gespeichert"
   content_published: "Inhalt veröffentlicht"

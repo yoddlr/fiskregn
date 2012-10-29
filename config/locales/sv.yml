@@ -14,6 +14,7 @@ sv:
   confirm_new_password: "Bekräfta nytt lösenord"
   confirm_through_link_below: "Bekräfta med nedanstående länk:"
   content_deleted: "Innehåll borttaget"
+  content_not_deleted: "Innehåll ej borttaget"
   content_not_found: "Innehåll kunde inte hittas"
   content_not_saved: "Innehåll inte sparat"
   content_published: "Innehåll publicerat"
