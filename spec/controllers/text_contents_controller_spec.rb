@@ -28,7 +28,7 @@ describe TextContentsController do
         end
       end
       
-      describe "POST #create" do        
+      describe "POST #create" do    
         context "stand alone content" do
           before :each do
             @stand_alone = attributes_for :text_content
@@ -47,9 +47,6 @@ describe TextContentsController do
         end
         
         context "reply" do
-          
-          
-          
           before :each do
             # FactoryGirl.attributes_for(:text_reply) can't seem to return proper parent to controller
             @parent = create :text_content, user: @user
@@ -93,13 +90,37 @@ describe TextContentsController do
         end
       end
 
-      describe "PUT #edit" do
+      describe "PUT #update" do
+        
+        before :each do
+          @content = create :text_content, user: @user
+        end
+        
+        it "assigns @content as current content" do
+          put :update,id:@content, content: @content
+          expect(assigns :content).to eq @content
+        end
+        
+        it "updates the content" do
+          new_text = 'new text string'
+          put :update,id:@content, text_content: { text: new_text }
+          @content.reload
+          expect(@content.text).to eq new_text
+        end
+        
+        it "does not update content if owned by other user" do
+          content = create :text_content
+          new_text = 'new text string'
+          put :update,id:content, text_content: { text: new_text }
+          content.reload
+          expect(content.text).to_not eq new_text
+        end
         
       end
       
       describe "DELETE #destroy" do
         before :each do
-            @content = create :text_content, user: @user
+          @content = create :text_content, user: @user
         end
         
         it "assigns @content to requested content" do
@@ -110,6 +131,13 @@ describe TextContentsController do
         it "deletes the requested content" do
           delete :destroy, id:@content.id
           expect(Content.all).to_not include(@content)
+        end
+        
+        it "can only be deleted by owner" do
+          text = 'Text to delete'
+          content = create :text_content, text: text
+          delete :destroy, id:content.id
+          expect(Content.find(content).text).to eq text
         end
       end
 
@@ -130,7 +158,14 @@ describe TextContentsController do
           # Reverting to root type => content exists but no longer the same
           expect(Content.find(@content.id)).to_not be nil
         end
-
+        
+        it "can only be deleted by owner" do
+          text = 'Text to delete'
+          content = create :text_content, text: text
+          child = create :text_content, parent: content
+          delete :destroy, id:content.id
+          expect(Content.find(content).text).to eq text
+        end
       end
     end
   

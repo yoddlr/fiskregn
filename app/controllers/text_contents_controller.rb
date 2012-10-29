@@ -40,21 +40,25 @@ class TextContentsController < ContentsController
   end
 
   def update
-    if current_user
-      @content = Content.find(params[:id])
+    @content = Content.find(params[:id])
+    if current_user && @content.user == current_user
       if @content.update_attributes(params[:text_content])
         redirect_to root_url, notice: I18n.t('.content_updated')
       else
         render action: "edit", notice: I18n.t('.content_not_updated')
       end
+    elsif current_user
+      # signed in user does not own content
+      redirect_to root_path, notice: I18n.t('.only_owner_allowed_to_modify_contents')      
     else
+      # not signed in
       redirect_to root_path, notice: I18n.t('.must_be_signed_in_to_modify_contents')
     end
   end
 
   def destroy
-    if current_user
-      @content = Content.find(params[:id])
+    @content = Content.find(params[:id])
+    if current_user && @content.user == current_user
       if @content.children.empty?
         super
       else
@@ -68,7 +72,11 @@ class TextContentsController < ContentsController
           redirect_to content_path(@content), notice: I18n.t('.content_not_deleted')
         end
       end
+    elsif current_user
+      # signed in user does not own content
+      redirect_to root_path, notice: I18n.t('.only_owner_allowed_to_modify_contents')      
     else
+      # not signed in
       redirect_to root_path, notice: I18n.t('.must_be_signed_in_to_delete_contents')
     end
   end
