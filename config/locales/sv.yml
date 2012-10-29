@@ -40,6 +40,8 @@ sv:
   no_replies: "Ännu inga kommentarer"
   not_signed_in: "Inte inloggad"
   not_you: "Inte ni?"
+  only_ownwr_allowed_to_delete_content: "Innehåll kan bara tas bort av sin ägare"
+  only_ownwr_allowed_to_modify_content: "Innehåll kan bara ändras av sin ägare"
   or: "eller"
   password_confirmation: "Bekräftelse av lösenord"
   password: "lösenord"

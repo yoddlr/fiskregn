@@ -39,6 +39,8 @@ de:
   no_replies: "Noch keine Kommentare"
   not_signed_in: "Nicht eingeloggt"
   not_you: "Nicht Sie?"
+  only_ownwr_allowed_to_delete_content: "Nur Eigentümer darf Inhalt löschen"
+  only_ownwr_allowed_to_modify_content: "Nur Eigentümer darf Inhalt ändern"
   or: "oder"
   password_confirmation: "Password Bestätigung"
   password: "Password"
