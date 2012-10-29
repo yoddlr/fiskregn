@@ -31,9 +31,8 @@ group :test, :development do
   gem 'faker'
   gem 'rspec-rails'
   gem 'factory_girl_rails'
-  # Guard plugins
-  gem 'guard-rspec'
-  gem 'guard-cucumber'
+  gem 'guard-rspec' # automatically run tests based on filechange
+  gem 'guard-spork' # speed up testing by providing a test envirionment
   # Notifications for guard
   gem 'rb-fsevent', :require => false if RUBY_PLATFORM =~ /darwin/i
   gem 'growl' if RUBY_PLATFORM =~ /darwin/i # notification framework for osx
