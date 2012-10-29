@@ -53,7 +53,7 @@ describe TextContentsController do
           before :each do
             # FactoryGirl.attributes_for(:text_reply) can't seem to return proper parent to controller
             @parent = create :text_content, user: @user
-            @reply = attributes_for( :text_reply, parent_id: @parent.id)
+            @reply = attributes_for( :text_content, parent_id: @parent.id)
           end
           
           it "saves the new text content" do
@@ -91,6 +91,10 @@ describe TextContentsController do
         it "returns HTTP success" do
           expect(response).to be_success
         end
+      end
+
+      describe "PUT #edit" do
+        
       end
       
       describe "DELETE #destroy" do
