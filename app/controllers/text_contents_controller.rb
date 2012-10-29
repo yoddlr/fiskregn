@@ -52,14 +52,16 @@ class TextContentsController < ContentsController
     @content = Content.find(params[:id])
     if @content.children.empty?
       super
-    elsif
+    else
       # Virtual suicide - drop all class specific data of this object, and revert type
       @content.text = nil
+      @content.tag_list.clear
       @content.type = nil
-      @content.save!
-      redirect_to root_url, notice: I18n.t('.content_deleted')
-    else
-      redirect_to content_path(@content), notice: I18n.t('.content_not_deleted')
+      if @content.save
+        redirect_to root_url, notice: I18n.t('.content_deleted')
+      else
+        redirect_to content_path(@content), notice: I18n.t('.content_not_deleted')
+      end
     end
   end
 
