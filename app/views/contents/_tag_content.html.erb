@@ -1,0 +1,10 @@
+<!-- Form for tagging content. Typically to be used from show, edit or new. -->
+<%= form_for @content do |c| %>
+  <div class="field">
+    <%= c.label :tag_list, "Tags (separated by commas)" %>
+    <%= c.text_field :tag_list %>
+  </div>
+  <div class="actions">
+    <%= c.submit I18n.t('.submit'), id: 'submit'%>
+  </div>
+<% end %>
