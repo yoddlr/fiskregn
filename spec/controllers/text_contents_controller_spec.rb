@@ -27,6 +27,52 @@ describe TextContentsController do
           expect(response).to render_template :new
         end
       end
+      
+      describe "POST #create" do        
+        context "stand alone content" do
+          before :each do
+            @stand_alone = attributes_for :text_content
+          end
+          
+          it "saves the new text content" do
+            expect{
+              post :create, text_content: @stand_alone
+            }.to change{ Content.all.count}.by(1)
+          end
+          
+          it "redirects to signed in users location" do
+            post :create, text_content: @stand_alone
+            expect(response).to redirect_to user_path(@user)
+          end
+        end
+        
+        context "reply" do
+          
+          
+          
+          before :each do
+            # FactoryGirl.attributes_for(:text_reply) can't seem to return proper parent to controller
+            @parent = create :text_content, user: @user
+            @reply = attributes_for( :text_reply, parent_id: @parent.id)
+          end
+          
+          it "saves the new text content" do
+            expect{
+              post :create, text_content: @reply
+            }.to change{ Content.all.count}.by(1)
+          end
+          
+          it "has one parent" do
+              post :create, text_content: @reply
+            expect(@user.contents.last.parent).to eq @parent
+          end
+          
+          it "redirects to the parent content" do
+              post :create, text_content: @reply
+            expect(response).to redirect_to content_path(@parent)
+          end
+        end
+      end
   
       describe "GET #edit" do
         before :each do
@@ -63,7 +109,7 @@ describe TextContentsController do
         end
       end
 
-      describe "DELETE #destroy" do
+      describe "DELETE #destroy with children" do
         before :each do
           @content = create :text_content, user: @user
 

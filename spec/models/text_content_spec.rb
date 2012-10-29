@@ -7,7 +7,6 @@ describe TextContent do
   end
 
   describe "Location" do
-    pending
   end
 
   describe 'Tag list' do
