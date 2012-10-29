@@ -40,28 +40,36 @@ class TextContentsController < ContentsController
   end
 
   def update
-    @content = Content.find(params[:id])
-    if @content.update_attributes(params[:text_content])
-      redirect_to root_url, notice: I18n.t('.content_updated')
+    if current_user
+      @content = Content.find(params[:id])
+      if @content.update_attributes(params[:text_content])
+        redirect_to root_url, notice: I18n.t('.content_updated')
+      else
+        render action: "edit", notice: I18n.t('.content_not_updated')
+      end
     else
-      render action: "edit", notice: I18n.t('.content_not_updated')
+      redirect_to root_path, notice: I18n.t('.must_be_signed_in_to_modify_contents')
     end
   end
 
   def destroy
-    @content = Content.find(params[:id])
-    if @content.children.empty?
-      super
-    else
-      # Virtual suicide - drop all class specific data of this object, and revert type
-      @content.text = nil
-      @content.tag_list.clear
-      @content.type = nil
-      if @content.save
-        redirect_to root_url, notice: I18n.t('.content_deleted')
+    if current_user
+      @content = Content.find(params[:id])
+      if @content.children.empty?
+        super
       else
-        redirect_to content_path(@content), notice: I18n.t('.content_not_deleted')
+        # Virtual suicide - drop all class specific data of this object, and revert type
+        @content.text = nil
+        @content.tag_list.clear
+        @content.type = nil
+        if @content.save
+          redirect_to root_url, notice: I18n.t('.content_deleted')
+        else
+          redirect_to content_path(@content), notice: I18n.t('.content_not_deleted')
+        end
       end
+    else
+      redirect_to root_path, notice: I18n.t('.must_be_signed_in_to_delete_contents')
     end
   end
 

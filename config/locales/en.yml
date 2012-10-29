@@ -32,6 +32,8 @@ en:
   hello: "Hello world"
   leave_blank: "leave blank if you don't want to change it"
   must_be_signed_in_to_create_contents: "Must be signed in to create contents"
+  must_be_signed_in_to_delete_contents: "Must be signed in to delete contents"
+  must_be_signed_in_to_modify_contents: "Must be signed in to modify contents"
   need_your_current_password: "we need your current password to confirm your changes"
   new_password: "New password"
   no_replies: "No replies"

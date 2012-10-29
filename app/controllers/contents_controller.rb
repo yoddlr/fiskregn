@@ -12,32 +12,40 @@ class ContentsController < ApplicationController
   end
 
   def publish
-    @content = Content.find(params[:id])
-    if params[:contents]
-      # Second time around - having selected location in contents publication form
-      @content.publish_to_location(Location.find(params[:contents][:location]))
-      redirect_to content_path(@content), notice: I18n.t('.content_published')
+    if current_user
+      @content = Content.find(params[:id])
+      if params[:contents]
+        # Second time around - having selected location in contents publication form
+        @content.publish_to_location(Location.find(params[:contents][:location]))
+        redirect_to content_path(@content), notice: I18n.t('.content_published')
+      else
+        # First time around
+        # Enable publication of this content to locations
+        @locations = Location.all - @content.locations
+        @action = 'publish'
+      end
     else
-      # First time around
-      # Enable publication of this content to locations
-      @locations = Location.all - @content.locations
-      @action = 'publish'
+      redirect_to root_path, notice: I18n.t('.must_be_signed_in_to_modify_contents')
     end
   end
 
   def withdraw
-    @content = Content.find(params[:id])
-    if params[:contents]
-      # Second time around - having selected location in contents publication form
-      @content.withdraw_from_location(Location.find(params[:contents][:location]))
-      redirect_to content_path(@content), notice: I18n.t('.content_withdrawn')
+    if current_user
+      @content = Content.find(params[:id])
+      if params[:contents]
+        # Second time around - having selected location in contents publication form
+        @content.withdraw_from_location(Location.find(params[:contents][:location]))
+        redirect_to content_path(@content), notice: I18n.t('.content_withdrawn')
+      else
+        # First time around
+        # Enable withdrawal from locations having published this content
+        @locations = @content.locations
+        @action = 'withdraw'
+        # Same template to select publisher both for publication and withdrawal
+        render :action => 'publish'
+      end
     else
-      # First time around
-      # Enable withdrawal from locations having published this content
-      @locations = @content.locations
-      @action = 'withdraw'
-      # Same template to select publisher both for publication and withdrawal
-      render :action => 'publish'
+      redirect_to root_path, notice: I18n.t('.must_be_signed_in_to_modify_contents')
     end
   end
   
@@ -46,13 +54,17 @@ class ContentsController < ApplicationController
   end
   
   def destroy
-    @content = Content.find(params[:id])
+    if current_user
+      @content = Content.find(params[:id])
 
-    if @content.children.empty?
-      @content.destroy
-      redirect_to root_url, notice: I18n.t('.content_deleted')
+      if @content.children.empty?
+        @content.destroy
+        redirect_to root_url, notice: I18n.t('.content_deleted')
+      else
+        redirect_to content_path(@content), notice: I18n.t('.content_not_deleted')
+      end
     else
-      redirect_to content_path(@content), notice: I18n.t('.content_not_deleted')
+      redirect_to root_path, notice: I18n.t('.must_be_signed_in_to_delete_contents')
     end
   end
   
