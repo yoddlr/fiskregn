@@ -65,7 +65,10 @@ class ContentsController < ApplicationController
         end
       end
       @content = Content.find(params[:id])
+      # (Re)assign tags to content
       @content.tag_list = tag_list
+      # Set current user as tagger in the context tags
+      current_user.tag(@content, :with => tag_list, :on => 'tags')
       @content.save
       render :action => 'show'
     else
