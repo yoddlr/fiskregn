@@ -6,7 +6,10 @@ require 'rake'
 namespace :db do
   task :clean_tags => :environment do
     ActsAsTaggableOn::Tag.all.each do |tag|
-      puts tag
+      unless ActsAsTaggableOn::Tagging.find_by_tag_id(tag.id)
+        puts 'Deleting tag' + tag.name
+        tag.destroy
+      end
     end
   end
 end
