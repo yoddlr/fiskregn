@@ -14,6 +14,9 @@ class User < ActiveRecord::Base
   
   has_many :contents
   has_one :location
+
+  # Identifies user who tags as part of the acts-as-taggable-on gem
+  acts_as_tagger
   
   after_create :create_location
   

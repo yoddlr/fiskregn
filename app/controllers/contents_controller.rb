@@ -52,6 +52,26 @@ class ContentsController < ApplicationController
   def show
     @content = Content.find(params[:id])
   end
+
+  def tag
+    if current_user
+      @content = Content.find(params[:id])
+      # Default tags are the ones that are or are not already there
+      tag_list = @content.tag_list
+      params.values.each do |value|
+        if value.kind_of?(Hash) && value.keys
+          # Tag list embedded with hash key 'tag_list' somewhere in params
+          tag_list = value['tag_list']
+        end
+      end
+      @content = Content.find(params[:id])
+      @content.tag_list = tag_list
+      @content.save
+      render :action => 'show'
+    else
+      redirect_to root_path, notice: I18n.t('.must_be_signed_in_to_modify_contents')
+    end
+  end
   
   def destroy
     if current_user
