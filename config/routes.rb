@@ -6,8 +6,10 @@ Fiskregn::Application.routes.draw do
   
     # Viewing of generic content
     get "contents/:id" => 'contents#show', as: 'content'
-    # Tagging of generic content
-    put "contents/:id/tag" => 'contents#tag'
+
+    # Tagging of content
+    put "contents/:id/tag" => 'contents#tag', as: 'tag_content'
+
     # Enabling publishing of (generic) content to a location
     get "contents/:id/publish" => 'contents#publish', as: 'publish_content'
     put "contents/:id/publish" => 'contents#publish', as: 'publish_content'
