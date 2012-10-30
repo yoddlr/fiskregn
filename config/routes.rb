@@ -16,8 +16,8 @@ Fiskregn::Application.routes.draw do
     # Enabling withdrawing of (generic) content to a location
     get "contents/:id/withdraw" => 'contents#withdraw', as: 'withdraw_content'
     put "contents/:id/withdraw" => 'contents#withdraw', as: 'withdraw_content'
+
     # CRUD for TextContent
-    get "text_contents/new", as: 'new_text_content' 
     resources :text_contents
 
     get "/home" => 'users#home'
