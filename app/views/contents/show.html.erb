@@ -2,13 +2,13 @@
   <hgroup>
     <h1>ID: <%= @content.id %></h1>
     <% if @content.parent %>
-      <h3>in reply to: <%= link_to @content.parent.text, @content.parent %></h3>
+      <h3><%= I18n.t('.in_reply_to') %>: <%= link_to @content.parent.text, @content.parent %></h3>
     <% end %>
     <%= render partial: 'contents/tag_content' %>
   </hgroup>
   <p id="description"><%= @content.description %></p>
   <section>
-    <h4>tags</h4>
+    <h4><%= I18n.t('.tags') %></h4>
     <% @content.tag_list.each do |tag|%>
       <p><%= tag %></p>
     <% end%>

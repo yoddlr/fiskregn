@@ -1,7 +1,7 @@
 <!-- Form for tagging content. Typically to be used from show, edit or new. -->
 <%= form_for @content do |c| %>
   <div class="field">
-    <%= c.label :tag_list, "Tags (separated by commas)" %>
+    <%= c.label :tag_list, "#{I18n.t('.tags')} (#{I18n.t('.separated_by_commas')})"  %>
     <%= c.text_field :tag_list %>
   </div>
   <div class="actions">
