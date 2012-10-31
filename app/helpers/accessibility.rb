@@ -1,9 +1,10 @@
 module Accessibility
 
+  # Intercept ActiveRecord method to enable filtered results. Statically import to applicable models.
   def find_by_sql(*args)
     records = super(*args)
     select = args[0]
-    if (select && select.kind_of?(Arel::SelectManager))
+    if select && select.kind_of?(Arel::SelectManager)
       case select.engine.name
         when 'Location'
           # Apply location access filters here
@@ -13,7 +14,7 @@ module Accessibility
           # Unforeseen generic type filtering here
       end
     end
-    return records
+    records
   end
 
 end

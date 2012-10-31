@@ -11,6 +11,7 @@ class Content < ActiveRecord::Base
 
   acts_as_taggable
 
+  # Static import interception of ActiveRecord methods to enable filtered results
   class << self
     include Accessibility
   end
