@@ -1,7 +1,5 @@
 class Content < ActiveRecord::Base
 
-  include Accessibility
-
   attr_accessible :user, :parent_id, :parent, :locations, :children, :tag_list
 
   belongs_to :user
@@ -12,6 +10,10 @@ class Content < ActiveRecord::Base
   has_and_belongs_to_many :locations
 
   acts_as_taggable
+
+  class << self
+    include Accessibility
+  end
 
   def description
     I18n.t('.content_deleted')
