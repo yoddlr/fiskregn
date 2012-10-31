@@ -32,7 +32,8 @@ group :test, :development do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'guard-rspec' # automatically run tests based on filechange
-  gem 'guard-spork' # speed up testing by providing a test envirionment
+  # speed up testing by providing a test envirionment with spork
+  gem 'guard-spork'  if RUBY_PLATFORM =~ /darwin/i # but not for Per
   # Notifications for guard
   gem 'rb-fsevent', :require => false if RUBY_PLATFORM =~ /darwin/i
   gem 'growl' if RUBY_PLATFORM =~ /darwin/i # notification framework for osx
