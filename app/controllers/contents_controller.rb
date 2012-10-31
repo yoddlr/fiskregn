@@ -1,5 +1,5 @@
 class ContentsController < ApplicationController
-  
+
   # rescue_from ActiveRecord::RecordNotFound, :with => :record_not_found
 
   def edit

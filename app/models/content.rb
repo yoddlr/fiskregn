@@ -1,5 +1,7 @@
 class Content < ActiveRecord::Base
 
+  include Accessibility
+
   attr_accessible :user, :parent_id, :parent, :locations, :children, :tag_list
 
   belongs_to :user
@@ -30,4 +32,5 @@ class Content < ActiveRecord::Base
   def withdraw_from_users_location(user)
     locations.delete(user.location)
   end
+
 end
