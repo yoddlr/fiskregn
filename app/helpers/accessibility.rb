@@ -1,70 +1,12 @@
 module Accessibility
 
-  def new(*args)
-    super(*args)
-    # raise('Adding records not allowed')
-  end
+  def find_by_sql(*args)
+    records = super(*args)
 
-  def all(*args)
-    result = super(*args)
-    result.sample(2)
-  end
+    # Do filtering.
+    records = records.sample(1)
 
-  def find(*args)
-    # super(1)
-    super(*args)
-  end
-
-  def first(*args)
-    raise('No access')
-  end
-
-  def first!(*args)
-    raise('No access')
-  end
-
-  def last(*args)
-    raise('No access')
-  end
-
-  def last!(*args)
-    raise('No access')
-  end
-
-  def exists?(*args)
-    raise('No access')
-  end
-
-  def any?(*args)
-    raise('No access')
-  end
-
-  def many?(*args)
-    raise('No access')
-  end
-
-  def destroy(*args)
-    super(*args)
-  end
-
-  def destroy_all(*args)
-     raise('No access')
-  end
-
-  def delete(*args)
-    super(*args)
-  end
-
-  def delete_all(*args)
-    raise('No access')
-  end
-
-  def update(*args)
-    super(*args)
-  end
-
-  def update_all(*args)
-    raise('No access')
+    return records
   end
 
   def method_missing(name, *args)
