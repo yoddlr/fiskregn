@@ -56,7 +56,6 @@ class ContentsController < ApplicationController
   def tag
     if current_user
       @content = Content.find(params[:id])
-      @tagger = current_user
       # Default tags are the ones that are or are not already there
       tag_list = @content.tag_list
       params.values.each do |value|
