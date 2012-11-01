@@ -4,6 +4,6 @@ class Location < ActiveRecord::Base
 
   # Static import interception of ActiveRecord methods to enable filtered results
   class << self
-    include Accessibility
+    include Accessibility::Location
   end
 end

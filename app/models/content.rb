@@ -13,7 +13,7 @@ class Content < ActiveRecord::Base
 
   # Static import interception of ActiveRecord methods to enable filtered results
   class << self
-    include Accessibility
+    include Accessibility::Content
   end
 
   def description
