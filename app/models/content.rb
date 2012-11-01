@@ -1,6 +1,6 @@
 class Content < ActiveRecord::Base
 
-  attr_accessible :user, :parent_id, :parent, :locations, :children, :tag_list
+  attr_accessible :user, :parent_id, :parent, :locations, :children
 
   belongs_to :user
 
@@ -18,6 +18,23 @@ class Content < ActiveRecord::Base
 
   def description
     I18n.t('.content_deleted')
+  end
+
+  # @deprecated tag_content form requires to call something in model (really?)
+  def tag_strings
+    ''
+  end
+
+  # Can not rely on local attribute for this => retrieve dynamically via ActsAsTaggableOn
+  def tag_list(list = [])
+    taggings = ActsAsTaggableOn::Tagging.find_all_by_taggable_id(id)
+    if taggings
+      taggings.each do |tagging|
+        list << ActsAsTaggableOn::Tag.find(tagging.tag_id).name
+      end
+    end
+    # return empty default or tags retrieved via ActsAsTaggableOn
+    list
   end
 
   def publish_to_location(location)

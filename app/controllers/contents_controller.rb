@@ -56,20 +56,18 @@ class ContentsController < ApplicationController
   def tag
     if current_user
       @content = Content.find(params[:id])
+      @tagger = current_user
       # Default tags are the ones that are or are not already there
       tag_list = @content.tag_list
       params.values.each do |value|
         if value.kind_of?(Hash) && value.keys
           # Tag list embedded with hash key 'tag_list' somewhere in params
-          tag_list = value['tag_list']
+          tag_list << value['tag_strings']
         end
       end
       @content = Content.find(params[:id])
-      # (Re)assign tags to content
-      @content.tag_list = tag_list
-      # Set current user as tagger in the context tags
-      current_user.tag(@content, :with => tag_list, :on => 'tags')
-      @content.save
+      # Set current user as tagger in the context interests
+      current_user.tag(@content, :with => tag_list, :on => 'interest')
       render :action => 'show'
     else
       redirect_to root_path, notice: I18n.t('.must_be_signed_in_to_modify_contents')

@@ -2,7 +2,7 @@
 <%= form_for @content, url: {controller: 'contents', action: 'tag'} do |c| %>
   <div class="field">
     <%= c.label :tag_list, "#{I18n.t('.tags')} (#{I18n.t('.separated_by_commas')})"  %>
-    <%= c.text_field :tag_list %>
+    <%= c.text_field :tag_strings %>
   </div>
   <div class="actions">
     <%= c.submit I18n.t('.submit'), id: 'submit' %>
