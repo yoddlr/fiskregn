@@ -19,6 +19,19 @@ class User < ActiveRecord::Base
   acts_as_tagger
   
   after_create :create_location
+
+  # Thanks: http://stackoverflow.com/questions/3742785/rails-3-devise-current-user-is-not-accessible-in-a-model
+  # Make devise's current_user globally available. Static and ThreadLocal apparently...
+  class << self
+    def current_user=(user)
+      Thread.current[:current_user] = user
+    end
+
+    def current_user
+      Thread.current[:current_user]
+    end
+  end
+
   
   def create_location
     location = Location.new

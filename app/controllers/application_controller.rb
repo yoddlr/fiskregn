@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  before_filter :set_locale
+  before_filter :set_locale, :set_current_user
 
   # Set the default language on every page load, or use url param if present.
   def set_locale
@@ -36,6 +36,13 @@ class ApplicationController < ActionController::Base
 
     locale
   end
+
+  # Thanks: http://stackoverflow.com/questions/3742785/rails-3-devise-current-user-is-not-accessible-in-a-model
+  # Make devise's current_user globally available. Static and ThreadLocal apparently...
+  def set_current_user
+    User.current_user = current_user
+  end
+
 
   protected
 

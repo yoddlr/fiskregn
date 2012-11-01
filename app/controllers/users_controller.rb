@@ -1,5 +1,5 @@
-class UsersController < ApplicationController  
-  
+class UsersController < ApplicationController
+
   def show
     # what the user shows to other users and guest
     @user = User.find(params[:id])
