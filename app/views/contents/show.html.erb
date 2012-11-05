@@ -4,15 +4,9 @@
     <% if @content.parent %>
       <h3><%= I18n.t('.in_reply_to') %>: <%= link_to @content.parent.text, @content.parent %></h3>
     <% end %>
-    <%= render partial: 'contents/tag_content' %>
   </hgroup>
   <p id="description"><%= @content.description %></p>
-  <section>
-    <h4><%= I18n.t('.tags') %></h4>
-    <% @content.tag_list.each do |tag|%>
-      <p><%= tag %></p>
-    <% end%>
-  </section>
+  <%= render partial: 'contents/tag_content' %>
   <section id="replies">
     <h4><%= I18n.t('.replies') %></h4>
     <% if @content.children %>

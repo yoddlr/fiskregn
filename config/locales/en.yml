@@ -1,4 +1,5 @@
 en:
+  add: "Add"
   add_content: "Add content"
   are_you_sure: "Are you sure?"
   back: "Back"
@@ -47,6 +48,7 @@ en:
   password: "password"
   publish: "Publish"
   remember_me: "remember me"
+  remove: "Remove"
   reply: "Reply"
   replies: "Replies"
   resend_confirmation_instructions: "Resend confirmation instructions"

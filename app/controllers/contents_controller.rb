@@ -72,6 +72,24 @@ class ContentsController < ApplicationController
       redirect_to root_path, notice: I18n.t('.must_be_signed_in_to_modify_contents')
     end
   end
+
+  # Remove tags. Currently (5.11-12) as checked in tag_content partial. Actually the tag itself remains - only the
+  # the (tagging) relation between taggable and tag is removed.
+  def untag
+    if current_user
+      @content = Content.find(params[:id])
+      if params[:tag]
+        params[:tag][:remove].each do |tag_name|
+          tag_id = ActsAsTaggableOn::Tag.find_by_name(tag_name).id
+          tagging = ActsAsTaggableOn::Tagging.find_by_tag_id(tag_id)
+          tagging.destroy if tagging.taggable_id == @content.id && tagging.taggable_type == 'Content' && tagging.context == 'interest'
+        end
+      end
+      render :action => 'show', notice: 'Untagging not yet implemented'
+    else
+      redirect_to root_path, notice: I18n.t('.must_be_signed_in_to_modify_contents')
+    end
+  end
   
   def destroy
     if current_user

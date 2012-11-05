@@ -1,4 +1,5 @@
 sv:
+  add: "Lägg till"
   add_content: "Lägg till innehåll"
   are_you_sure: "Är du säker?"
   back: "Tillbaka"
@@ -48,6 +49,7 @@ sv:
   password: "lösenord"
   publish: "Publicera"
   remember_me: "Spara"
+  remove: "Tag bort"
   reply: "Kommentar"
   replies: "Kommentarer"
   resend_confirmation_instructions: "Skicka bekräftelseinstruktioner igen"

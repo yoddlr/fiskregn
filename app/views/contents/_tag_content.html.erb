@@ -1,10 +1,32 @@
-<!-- Form for tagging content. Typically to be used from show, edit or new. -->
-<%= form_for @content, url: {controller: 'contents', action: 'tag'} do |c| %>
-  <div class="field">
-    <%= c.label :tag_list, "#{I18n.t('.tags')} (#{I18n.t('.separated_by_commas')})"  %>
-    <%= c.text_field :tag_strings %>
-  </div>
-  <div class="actions">
-    <%= c.submit I18n.t('.submit'), id: 'submit' %>
-  </div>
-<% end %>
+<!-- Form handling tagging content. Typically to be used from show, edit or new. -->
+<section>
+  <!-- Listing tag(s) -->
+  <h4><%= I18n.t('.tags') %></h4>
+  <% @content.tag_list.each do |tag|%>
+    <h5><%= tag %></h5>
+  <% end%>
+  <!-- Adding tag(s) -->
+  <%= form_for @content, url: {controller: 'contents', action: 'tag'} do |c| %>
+    <div class="field" >
+      <%= I18n.t('.add') %><br>
+      <%= c.label :tag_list, "#{I18n.t('.tags')} (#{I18n.t('.separated_by_commas')})" %>
+      <%= c.text_field :tag_strings %>
+    </div>
+    <div class="actions">
+      <%= c.submit I18n.t('.submit'), id: 'submit' %>
+    </div>
+  <% end %>
+  <!-- Removing tag(s) -->
+  <%= form_for @content, url: {controller: 'contents', action: 'untag'} do |c| %>
+    <div class="checkbox">
+      <%= I18n.t('.remove') %><br>
+      <% @content.tag_list.each do |tag|%>
+        <%= tag %><%= check_box("tag", "remove", {:multiple => true}, tag, nil) %>
+      <% end%>
+    </div>
+    <div class="actions">
+      <!-- Send array of tags to remove in param 'remove'. id 'untag' for potential styling et.c. -->
+      <%= c.submit I18n.t('.submit'), id: 'untag' %>
+    </div>
+  <% end %>
+<section>

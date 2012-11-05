@@ -9,6 +9,7 @@ Fiskregn::Application.routes.draw do
 
     # Tagging of content
     put "contents/:id/tag" => 'contents#tag', as: 'tag_content'
+    put "contents/:id/untag" => 'contents#untag', as: 'untag_content'
 
     # Enabling publishing of (generic) content to a location
     get "contents/:id/publish" => 'contents#publish', as: 'publish_content'
