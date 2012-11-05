@@ -85,7 +85,7 @@ class ContentsController < ApplicationController
           tagging.destroy if tagging.taggable_id == @content.id && tagging.taggable_type == 'Content' && tagging.context == 'interest'
         end
       end
-      render :action => 'show', notice: 'Untagging not yet implemented'
+      render :action => 'show'
     else
       redirect_to root_path, notice: I18n.t('.must_be_signed_in_to_modify_contents')
     end
