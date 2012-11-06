@@ -1,7 +1,8 @@
 When /^I tag the content$/ do
   visit(content_path('sv', @parent_content))
   @tag = 'Taggety-tag'  
-  fill_in :tag_strings, with: @tag
+  fill_in "text_content[tag_strings]", with: @tag
+  save_page
   click_button 'submit'
 end
 
