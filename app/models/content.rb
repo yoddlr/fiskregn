@@ -9,7 +9,7 @@ class Content < ActiveRecord::Base
   
   has_and_belongs_to_many :locations
 
-  acts_as_taggable
+  acts_as_taggable_on :access, :interests
 
   # Static import interception of ActiveRecord methods to enable filtered results
   class << self
@@ -30,11 +30,22 @@ class Content < ActiveRecord::Base
     taggings = ActsAsTaggableOn::Tagging.find_all_by_taggable_id(id)
     if taggings
       taggings.each do |tagging|
+        next unless tagging.context == 'interest'
         list << ActsAsTaggableOn::Tag.find(tagging.tag_id).name
       end
     end
     # return empty default or tags retrieved via ActsAsTaggableOn
     list
+  end
+  
+  def read_access_list
+    access_list unless @accessors
+    @accessors[:readers]
+  end
+  
+  def find_access_list
+    access_list unless @accessors
+    @accessors[:finders]
   end
 
   def publish_to_location(location)
@@ -51,6 +62,46 @@ class Content < ActiveRecord::Base
   
   def withdraw_from_users_location(user)
     locations.delete(user.location)
+  end
+  
+  private
+  
+  def access_list
+    # initialize empty arry to for result
+    @accessors = {}
+    # array for accessors with read access
+    @accessors[:readers] = []
+    # array for accessors with find access
+    @accessors[:finders] = []
+    
+    # get accessors
+    taggings = ActsAsTaggableOn::Tagging.find_all_by_taggable_id(id)
+
+
+    if taggings
+      taggings.each do |tagging|
+        # skip to next tagging if wrong context
+        next unless tagging.context == 'access'
+
+        # refine result in reader and finder lists        
+        if tagging.tagger_type == 'user'
+          if tagging.tag.name == 'read'
+            @accessors[:readers] << User.find(tagging.tagger_id)
+          elsif tagging.tag.name == 'find'
+            @accessors[:finders] << User.find(tagging.tagger_id)
+          end
+        elsif tagging.tagger_type == 'group'
+          if tagging.tag.name == 'read'
+            @accessors[:readers] << Group.find(tagging.tagger_id)
+          elsif tagging.tag.name == 'find'
+            @accessors[:finders] << Group.find(tagging.tagger_id)
+          end
+        else
+          #something is broken
+          raise "No access for type: #{tagging.tagger_type}"
+        end
+      end
+    end
   end
 
 end

@@ -1,3 +1,7 @@
+@content @location
+Feature: Withdraw content from location
+
+
   Scenario: Withdraw content from target wall
     Given I have an account
       And I have signed in

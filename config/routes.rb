@@ -3,6 +3,9 @@ Fiskregn::Application.routes.draw do
   # Localise all and everything
   scope '(:locale)' do
     get "home/index"
+    
+    # current_user's unpublished content
+    get "contents/unpublished" => 'contents#unpublished', as: 'unpublished_content'
   
     # Viewing of generic content
     get "contents/:id" => 'contents#show', as: 'content'
@@ -10,6 +13,10 @@ Fiskregn::Application.routes.draw do
     # Tagging of content
     put "contents/:id/tag" => 'contents#tag', as: 'tag_content'
     put "contents/:id/untag" => 'contents#untag', as: 'untag_content'
+    
+    # Defining access for content
+    put "contents/:id/access" => 'contents#access', as: 'access_content'
+    put "contents/:id/unaccess" => 'contents#unaccess', as: 'unaccess_content'
 
     # Enabling publishing of (generic) content to a location
     get "contents/:id/publish" => 'contents#publish', as: 'publish_content'
@@ -17,6 +24,7 @@ Fiskregn::Application.routes.draw do
     # Enabling withdrawing of (generic) content to a location
     get "contents/:id/withdraw" => 'contents#withdraw', as: 'withdraw_content'
     put "contents/:id/withdraw" => 'contents#withdraw', as: 'withdraw_content'
+    
 
     # CRUD for TextContent
     resources :text_contents

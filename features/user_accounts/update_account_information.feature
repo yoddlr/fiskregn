@@ -1,3 +1,4 @@
+@user
 Feature: Update account information
 
   As a user
@@ -6,8 +7,7 @@ Feature: Update account information
   
   Scenario Outline: Edit information
   
-    Given I have an account
-      And I have signed in
+    Given I have signed in with my account
     When I edit my <info>
       And authenticate with my password
     Then my <info> is updated

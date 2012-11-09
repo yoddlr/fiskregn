@@ -109,4 +109,21 @@ class ContentsController < ApplicationController
   def record_not_found
     redirect_to root_url, alert: I18n.t('.content_not_found') + " content id: #{params[:id]}"
   end
+  
+  def access
+    @content = Content.find(params[:id])
+    redirect_to @content
+  end
+  
+  def unpublished
+    @user = current_user
+    # @contents = @user.contents - content_location.where(:content => @user.contents)
+    # @contents = @user.contents.exists(locations)
+    # @contents = Content.excludes(:locations).where( :locations => {:location_id => nil})
+    # @contents = @user.contents.where(locations: empty?)
+    # select * from contents inner join content_location as cl on cl.content_id!=content.id
+    @contents = @user.contents.where('id NOT IN (SELECT DISTINCT(content_id) FROM contents_locations)')
+    ALog.debug @user
+    ALog.debug @contents
+  end
 end

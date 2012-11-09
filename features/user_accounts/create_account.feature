@@ -1,3 +1,4 @@
+@user
 Feature: Create user account
 
   As a user

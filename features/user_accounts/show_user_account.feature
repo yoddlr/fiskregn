@@ -1,4 +1,4 @@
-@överflödig
+@user
 Feature: Show user account
 
   As a visitor
@@ -6,6 +6,6 @@ Feature: Show user account
   In order to learn more about the user
   
   Scenario: Visit user profile
-    Given a user account
-    When I visit the users profile page
-    Then I see the users public information
+    Given other user's account
+    When I visit the other user's profile page
+    Then I see the other user's public information

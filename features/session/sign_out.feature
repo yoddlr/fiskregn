@@ -1,4 +1,4 @@
-@session
+@session @user
 Feature: Sign out
 
   As a user
@@ -7,7 +7,6 @@ Feature: Sign out
   
   Scenario: Sign out
   
-    Given I have an account
-      And I have signed in
+    Given I have signed in with my account 
     When I sign out
     Then I am not signed in

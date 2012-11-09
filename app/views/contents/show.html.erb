@@ -7,6 +7,7 @@
   </hgroup>
   <p id="description"><%= @content.description %></p>
   <%= render partial: 'contents/tag_content' %>
+  <%= render partial: 'contents/access_content' if current_user == @content.user %>  
   <section id="replies">
     <h4><%= I18n.t('.replies') %></h4>
     <% if @content.children %>

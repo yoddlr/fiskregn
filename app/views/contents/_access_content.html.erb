@@ -1,0 +1,44 @@
+<!-- Form handling accessing content. Typically to be used from show, edit or new. -->
+<section>
+
+  <!-- Listing read access(s) -->
+  <h4><%= I18n.t('.read_access') %></h4>
+  <ul id="read_access_list">
+    <% @content.read_access_list.each do |reader| %>
+      <li><%= reader.email %></li>
+    <% end%>
+  </ul>
+    
+  <!-- Listing read access(s) -->
+  <h4><%= I18n.t('.find_access') %></h4>
+  <ul id="find_access_list">
+    <% @content.find_access_list.each do |finder| %>
+      <li><%= finder.email %></li>
+    <% end%>
+  </ul>
+  
+  <!-- Adding access(s)
+  <%= form_for @content, url: {controller: 'contents', action: 'access'} do |c| %>
+    <div class="field" >
+      <%= I18n.t('.add_read_access') %><br>
+      <%= c.label :read_access_list, "#{I18n.t('.read_access')} (#{I18n.t('.separated_by_commas')})" %>
+      <%= c.text_field :tag_strings %>
+    </div>
+    <div class="actions">
+      <%= c.submit I18n.t('.submit'), id: 'submit' %>
+    </div>
+  <% end %> -->
+  
+  <!-- Removing access(s) 
+  <%= form_for @content, url: {controller: 'contents', action: 'unaccess'} do |c| %>
+    <div class="checkbox">
+      <%= I18n.t('.remove_read_access') %><br>
+      <% @content.read_access_list.each do |access|%>
+        <%= access %><%= check_box("access", "remove", {:multiple => true}, access, nil) %>
+      <% end%>
+    </div>
+    <div class="actions">
+      <%= c.submit I18n.t('.submit'), id: 'unaccess' %>
+    </div>
+  <% end %> -->
+<section>

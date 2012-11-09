@@ -2,9 +2,11 @@
 <section>
   <!-- Listing tag(s) -->
   <h4><%= I18n.t('.tags') %></h4>
-  <% @content.tag_list.each do |tag|%>
-    <h5><%= tag %></h5>
-  <% end%>
+  <ul id="tag_list">
+    <% @content.tag_list.each do |tag|%>
+      <li><%= tag %></li>
+    <% end%>
+  </ul>
   <!-- Adding tag(s) -->
   <%= form_for @content, url: {controller: 'contents', action: 'tag'} do |c| %>
     <div class="field" >

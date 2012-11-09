@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   # Set the default language on every page load, or use url param if present.
   def set_locale
     ActiveRecord::Base.connection.uncached do
-
+      current_locale = params[:locale] || 'en'
       # Update current locale.
       I18n.locale = current_locale
     end

@@ -1,4 +1,4 @@
-@session
+@session @user
 Feature: Sign in
 
   As a user
@@ -7,6 +7,6 @@ Feature: Sign in
   
   Scenario: Sign in
   
-    Given I have an account
-    When I sign in
-    Then I am signed in
+    Given I have an account 
+    When I sign in with my account
+    Then I am signed in with my account
