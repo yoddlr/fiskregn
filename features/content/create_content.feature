@@ -2,7 +2,7 @@
 Feature: Create content
 
   Background:
-    Given I have signed in with my account
+    Given I have signed in with my_account
       And I create content
     
   Scenario: New content has no tags

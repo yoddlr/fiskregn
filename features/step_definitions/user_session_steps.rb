@@ -1,19 +1,21 @@
-Given /^I sign in with my account$/ do
+Given /^I sign in with (.*)$/ do |account|
+  account = eval(account)
   visit('/en/users/sign_in')
-  fill_in 'user_email', with: my_account.email
-  fill_in 'user_password', with: my_account.password
+  fill_in 'user_email', with: account.email
+  fill_in 'user_password', with: account.password
   click_button 'Sign in'
 end
 
-Then /^I am signed in with my account$/ do
+Then /^I am signed in with (.*)$/ do |account|
+  account = eval(account)
   visit('/en')
-  expect(page).to have_content("Signed in as #{my_account.email}")
+  expect(page).to have_content("Signed in as #{account.email}")
 end
 
-Given /^I have signed in with my account$/ do
+Given /^I have signed in with (.*)$/ do |account|
   steps %{
-    Given I sign in with my account
-    And I am signed in with my account
+    Given I sign in with #{account}
+    And I am signed in with #{account}
   }
 end
 

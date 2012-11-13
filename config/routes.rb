@@ -15,8 +15,10 @@ Fiskregn::Application.routes.draw do
     put "contents/:id/untag" => 'contents#untag', as: 'untag_content'
     
     # Defining access for content
-    put "contents/:id/access" => 'contents#access', as: 'access_content'
-    put "contents/:id/unaccess" => 'contents#unaccess', as: 'unaccess_content'
+    put "contents/:id/grant_find_access" => 'contents#grant_find_access', as: 'grant_find_access'
+    put "contents/:id/grant_read_access" => 'contents#grant_read_access', as: 'grant_read_access'
+    put "contents/:id/revoke_find_access" => 'contents#revoke_find_access', as: 'revoke_find_access'
+    put "contents/:id/revoke_read_access" => 'contents#revoke_read_access', as: 'revoke_read_access'
 
     # Enabling publishing of (generic) content to a location
     get "contents/:id/publish" => 'contents#publish', as: 'publish_content'

@@ -110,7 +110,33 @@ class ContentsController < ApplicationController
     redirect_to root_url, alert: I18n.t('.content_not_found') + " content id: #{params[:id]}"
   end
   
-  def access
+  #def access
+    #@content = Content.find(params[:id])
+    #redirect_to @content
+  #end
+
+  def grant_find_access
+    @content = Content.find(params[:id])
+    accessor = User.find_by_email(params[:grant_find_access])
+    # Set submitted user as tagger in the context access
+    accessor.tag(@content, :with => ['find'], :on => 'access')
+    redirect_to @content
+  end
+
+  def revoke_find_access
+    @content = Content.find(params[:id])
+    redirect_to @content
+  end
+  
+  def grant_read_access
+    @content = Content.find(params[:id])
+    accessor = User.find_by_email(params[:grant_read_access])
+    # Set submitted user as tagger in the context access
+    accessor.tag(@content, :with => ['find','read'], :on => 'access')
+    redirect_to @content
+  end
+
+  def revoke_read_access
     @content = Content.find(params[:id])
     redirect_to @content
   end

@@ -38,11 +38,21 @@ class Content < ActiveRecord::Base
     list
   end
   
+  # @deprecated tag_content form requires to call something in model (really?)
+  def read_access_strings
+    ''
+  end
+
   def read_access_list
     access_list unless @accessors
     @accessors[:readers]
   end
   
+  # @deprecated tag_content form requires to call something in model (really?)
+  def find_access_strings
+    ''
+  end
+
   def find_access_list
     access_list unless @accessors
     @accessors[:finders]
@@ -84,13 +94,13 @@ class Content < ActiveRecord::Base
         next unless tagging.context == 'access'
 
         # refine result in reader and finder lists        
-        if tagging.tagger_type == 'user'
+        if tagging.tagger_type == 'User'
           if tagging.tag.name == 'read'
             @accessors[:readers] << User.find(tagging.tagger_id)
           elsif tagging.tag.name == 'find'
             @accessors[:finders] << User.find(tagging.tagger_id)
           end
-        elsif tagging.tagger_type == 'group'
+        elsif tagging.tagger_type == 'Group'
           if tagging.tag.name == 'read'
             @accessors[:readers] << Group.find(tagging.tagger_id)
           elsif tagging.tag.name == 'find'

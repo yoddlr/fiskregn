@@ -1,44 +1,65 @@
 <!-- Form handling accessing content. Typically to be used from show, edit or new. -->
-<section>
+<section id="find_access">
+
+  <!-- List find access(s) -->
+  <h4><%= I18n.t('.find_access') %></h4>
+
+  <!-- Grant find access(s) -->
+  <%= form_tag grant_find_access_path(@content), method: 'put' do %>
+    <div class="field" >
+      <%= label_tag :grant_find_access, "#{I18n.t('.grant_find_access')} (#{I18n.t('.separated_by_commas')})" %>
+      <%= text_field_tag :grant_find_access %>
+    </div>
+    <div class="actions">
+      <%= submit_tag I18n.t('.submit'), id: 'submit_grant_find_access' %>
+    </div>
+  <% end %> 
+
+  <!-- Revoke find access(s) -->
+  <%= form_tag revoke_find_access_path(@content), method: 'put' do %>
+    <div class="checkbox">
+      <%= I18n.t('.revoke_find_access') %>
+      <ul id="find_access_list">
+      <% @content.find_access_list.each do |access|%>
+        <li><%= access.email %><%= check_box_tag(access.id, "remove") %></li>
+      <% end%>
+    </ul>
+    </div>
+    <div class="actions">
+      <%= submit_tag I18n.t('.submit'), id: 'submit_revoke_find_access' %>
+    </div>
+  <% end %>
+</section>
+
+
+<section id="read_access">
 
   <!-- Listing read access(s) -->
   <h4><%= I18n.t('.read_access') %></h4>
-  <ul id="read_access_list">
-    <% @content.read_access_list.each do |reader| %>
-      <li><%= reader.email %></li>
-    <% end%>
-  </ul>
-    
-  <!-- Listing read access(s) -->
-  <h4><%= I18n.t('.find_access') %></h4>
-  <ul id="find_access_list">
-    <% @content.find_access_list.each do |finder| %>
-      <li><%= finder.email %></li>
-    <% end%>
-  </ul>
-  
-  <!-- Adding access(s)
-  <%= form_for @content, url: {controller: 'contents', action: 'access'} do |c| %>
+
+  <!-- Grant read access(s) -->
+  <%= form_tag grant_read_access_path(@content), method: 'put' do %>
     <div class="field" >
-      <%= I18n.t('.add_read_access') %><br>
-      <%= c.label :read_access_list, "#{I18n.t('.read_access')} (#{I18n.t('.separated_by_commas')})" %>
-      <%= c.text_field :tag_strings %>
+      <%= label_tag :grant_read_access, "#{I18n.t('.grant_read_access')} (#{I18n.t('.separated_by_commas')})" %>
+      <%= text_field_tag :grant_read_access %>
     </div>
     <div class="actions">
-      <%= c.submit I18n.t('.submit'), id: 'submit' %>
+      <%= submit_tag I18n.t('.submit'), id: 'submit_grant_read_access' %>
     </div>
-  <% end %> -->
-  
-  <!-- Removing access(s) 
-  <%= form_for @content, url: {controller: 'contents', action: 'unaccess'} do |c| %>
+  <% end %> 
+
+  <!-- Revoke read access(s) -->
+  <%= form_tag revoke_read_access_path(@content), method: 'put' do %>
     <div class="checkbox">
-      <%= I18n.t('.remove_read_access') %><br>
-      <% @content.read_access_list.each do |access|%>
-        <%= access %><%= check_box("access", "remove", {:multiple => true}, access, nil) %>
-      <% end%>
+      <%= I18n.t('.revoke_read_access') %>
+      <ul id="read_access_list">
+        <% @content.read_access_list.each do |access|%>
+          <li><%= access.email %><%= check_box_tag(access.id, "remove") %></li>
+        <% end%>
+      </ul>
     </div>
     <div class="actions">
-      <%= c.submit I18n.t('.submit'), id: 'unaccess' %>
+      <%= submit_tag I18n.t('.submit'), id: 'submit_revoke_read_access' %>
     </div>
-  <% end %> -->
+  <% end %>
 <section>

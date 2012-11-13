@@ -5,7 +5,7 @@ Feature: Edit content
   I want to be able to update content
   
   Scenario: Edit existing content
-    Given I have signed in with my account
+    Given I have signed in with my_account
       And I create content
     When I update the content
     Then the content is updated
