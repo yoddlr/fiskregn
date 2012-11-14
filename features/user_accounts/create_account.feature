@@ -1,4 +1,4 @@
-@user
+@user  @create
 Feature: Create user account
 
   As a user

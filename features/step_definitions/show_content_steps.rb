@@ -1,6 +1,7 @@
 World(Default::TextContents)
 Given /^there is content$/ do
-  text_content = create :text_content, text: 'innehaall'
+  # Note: We define/create the World's Default::TextContents variable @text_content here:
+  text_content
 end
 
 When /^I visit the contents page$/ do
@@ -12,7 +13,10 @@ When /^I visit the page of the reply$/ do
 end
 
 Then /^I see the content$/ do
-  expect(page).to have_content(text_content.text)
+  # Note: We use the World's Default::TextContents::text_content function here:
+
+  # NOTE: As have_content fails to compare the text array with the content on the page, let's fetch the first text part.
+  expect(page).to have_content(text_content.text[0])
 end
 
 Then /^I see my new content$/ do

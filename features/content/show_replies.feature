@@ -1,4 +1,4 @@
-@content @show @pending
+@content @show-replies @pending
 Feature: Show replies
 
   As a user or visitor

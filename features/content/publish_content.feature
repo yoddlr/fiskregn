@@ -1,4 +1,4 @@
-@content @location
+@content @location @pending
 Feature: Publish content
 
   As a user
