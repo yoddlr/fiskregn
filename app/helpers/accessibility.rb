@@ -13,17 +13,18 @@ module Accessibility
       records.each do |record|
         # Always allow find access to owned records
         filtered_records << record if (User.current_user && (record.user_id == User.current_user.id))
-        taggings = []
-        taggings << ActsAsTaggableOn::Tagging.find_by_taggable_id(record.id)
-        taggings.each do |tagging|
-          if (tagging && tagging.taggable_type == 'Content')
-            filtered = tagging.tagger_type == 'User'
-            filtered = filtered && (User.current_user && (tagging.tagger_id == User.current_user.id))
-            if find_tag
+        # No need to bother if nothing has find tag
+        if find_tag
+          taggings = []
+          taggings << ActsAsTaggableOn::Tagging.find_by_taggable_id(record.id)
+          taggings.each do |tagging|
+            if (tagging && tagging.taggable_type == 'Content')
+              filtered = tagging.tagger_type == 'User'
+              filtered = filtered && (User.current_user && (tagging.tagger_id == User.current_user.id))
               filtered = filtered && (tagging.tag_id == find_tag.id)
+              filtered = filtered && (tagging.context == 'access')
+              filtered_records << record if filtered
             end
-            filtered = filtered && (tagging.context == 'access')
-            filtered_records << record if filtered
           end
         end
       end
