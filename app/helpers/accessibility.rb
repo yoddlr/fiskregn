@@ -7,11 +7,27 @@ module Accessibility
     # Generic retrieval for ALL ActiveRecord queries
     def find_by_sql(*args)
       records = super(*args)
+      filtered_records = []
       # Apply content access filters here
-      # records.reject! do |record|
-      #   record.user_id != User.current_user || User.current_user.id
-      # end
-      records
+      find_tag = ActsAsTaggableOn::Tag.find_by_name('find')
+      records.each do |record|
+        # Always allow find access to owned records
+        filtered_records << record if (User.current_user && (record.user_id == User.current_user.id))
+        taggings = []
+        taggings << ActsAsTaggableOn::Tagging.find_by_taggable_id(record.id)
+        taggings.each do |tagging|
+          if (tagging && tagging.taggable_type == 'Content')
+            filtered = tagging.tagger_type == 'User'
+            filtered = filtered && (User.current_user && (tagging.tagger_id == User.current_user.id))
+            if find_tag
+              filtered = filtered && (tagging.tag_id == find_tag.id)
+            end
+            filtered = filtered && (tagging.context == 'access')
+            filtered_records << record if filtered
+          end
+        end
+      end
+      filtered_records
     end
 
     # Return records filtered by tags in interest context
