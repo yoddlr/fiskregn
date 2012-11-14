@@ -1,4 +1,4 @@
-@user
+@user @update
 Feature: Update account information
 
   As a user

@@ -1,4 +1,4 @@
-@user
+@user @show
 Feature: Show user account
 
   As a visitor
