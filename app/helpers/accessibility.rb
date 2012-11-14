@@ -15,8 +15,7 @@ module Accessibility
         filtered_records << record if (User.current_user && (record.user_id == User.current_user.id))
         # No need to bother if nothing has find tag
         if find_tag
-          taggings = []
-          taggings << ActsAsTaggableOn::Tagging.find_by_taggable_id(record.id)
+          taggings = ActsAsTaggableOn::Tagging.find_all_by_taggable_id(record.id)
           taggings.each do |tagging|
             if (tagging && tagging.taggable_type == 'Content')
               filtered = tagging.tagger_type == 'User'
