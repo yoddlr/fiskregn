@@ -47,5 +47,9 @@ module Default
     def my_text_content
       @my_text_content ||= create :text_content, user: my_account
     end
+
+    def other_text_content
+      @other_text_content ||= create :text_content, user: other_account
+    end
   end
 end

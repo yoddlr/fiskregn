@@ -40,6 +40,10 @@ Given /^There is content$/ do
   my_text_content
 end
 
+Given /^the other user have text content$/ do
+  other_text_content
+end
+
 When /^I reply to content$/ do
   visit(content_path('sv', my_text_content))
   click_link 'reply'

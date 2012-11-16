@@ -5,8 +5,7 @@ Feature: Tag content
   I want to be able to tag content
 
   Scenario: Tag existing content
-    Given I have an account
-      And I have signed in
+    Given I have signed in with my_account
       And There is content
     When I tag the content
     Then the content has the tag
