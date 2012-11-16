@@ -24,6 +24,10 @@ When /^I visit the other user's profile page$/ do
   visit(user_path('en', other_account))
 end
 
+When /^I visit the other user's wall$/ do
+  visit(user_path('en', other_account))
+end
+
 Then /^I see the other user's public information$/ do
   expect(page).to have_content(other_account.email)
 end

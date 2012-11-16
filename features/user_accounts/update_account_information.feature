@@ -7,7 +7,7 @@ Feature: Update account information
   
   Scenario Outline: Edit information
   
-    Given I have signed in with my account
+    Given I have signed in with my_account
     When I edit my <info>
       And authenticate with my password
     Then my <info> is updated

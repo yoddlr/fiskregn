@@ -8,5 +8,5 @@ Feature: Sign in
   Scenario: Sign in
   
     Given I have an account 
-    When I sign in with my account
-    Then I am signed in with my account
+    When I sign in with my_account
+    Then I am signed in with my_account

@@ -12,8 +12,8 @@ Feature: Show replies
     
     | reply     | access  |
     | groda     | read    |
-    | troll       | nil     |
-    | 
+    | troll     | nil     |
+    | bengt     | nil     |
     
   
   Scenario: Show accessible replies
