@@ -42,6 +42,31 @@ module Accessibility
       nil
     end
 
+    # True if there is a current user with read access to content
+    def readable?(content)
+      ALog.debug content
+      # Always allow read access to owned records
+      readable = User.current_user && (content.user_id == User.current_user.id)
+      unless readable
+        read_tag = ActsAsTaggableOn::Tag.find_by_name('read')
+        # No need to bother if nothing has read tag
+        readable = content && content.kind_of?(Content) && read_tag
+        if readable
+          taggings = ActsAsTaggableOn::Tagging.find_all_by_taggable_id(content.id)
+          taggings.each do |tagging|
+          readable = tagging && tagging.taggable_type == 'Content'
+            if readable
+              readable = readable && tagging.tagger_type == 'User'
+              readable = readable && (User.current_user && (tagging.tagger_id == User.current_user.id))
+              readable = readable && (tagging.tag_id == find_tag.id)
+              readable = readable && (tagging.context == 'access')
+            end
+          end
+        end
+      end #unless readable
+      readable
+    end
+
     # Read access check
     def restrict_read_access(*args)
       # Raise exception here if read access not allowed
