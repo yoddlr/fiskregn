@@ -44,7 +44,6 @@ module Accessibility
 
     # Read access check
     def restrict_read_access(*args)
-      ALog.debug 'Read access check'
       # Raise exception here if read access not allowed
     end
   end
