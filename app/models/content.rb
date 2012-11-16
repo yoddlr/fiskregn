@@ -73,6 +73,9 @@ class Content < ActiveRecord::Base
   def withdraw_from_users_location(user)
     locations.delete(user.location)
   end
+
+  # Readability on instance level. For ALL methods, declaration AFTER methods in this file.
+  restrict_read_access(Content.instance_methods)
   
   private
   
