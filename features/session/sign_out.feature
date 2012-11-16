@@ -7,6 +7,6 @@ Feature: Sign out
   
   Scenario: Sign out
   
-    Given I have signed in with my account 
+    Given I have signed in with my_account 
     When I sign out
     Then I am not signed in

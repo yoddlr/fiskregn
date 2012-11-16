@@ -37,31 +37,33 @@ Then /^the content is deleted$/ do
 end
 
 Given /^There is content$/ do
-  text_content
+  my_text_content
 end
 
 When /^I reply to content$/ do
-  visit(content_path('sv', text_parent))
+  visit(content_path('sv', my_text_content))
   click_link 'reply'
   fill_in :text, with: new_text_content.text
   click_button 'submit'
 end
 
 Then /^reply has parent content$/ do
-  expect(my_account.contents.last.parent).to eql(text_parent)
+  expect(my_account.contents.last.parent).to eql(my_text_content)
 end
 
 When /^I share content to a user's wall$/ do
-  visit(user_path('sv',@user))
+  visit(user_path('sv',other_account))
   click_link 'add_content'
-  @wall_text = 'Shared to wall'
-  fill_in :text, with: @wall_text
+  save_and_open_page
+  #@wall_text = 'Shared to wall'
+  fill_in :text, with: new_text_content.text
   click_button 'submit'
 end
 
 Then /^the content shows up on the user's wall$/ do
-  visit(user_path('sv',@user))
-  expect(page).to have_content(@wall_text)
+  visit(user_path('sv',other_account))
+  save_and_open_page
+  expect(page).to have_content(new_text_content.text)
 end
 
 When /^I publish content to target$/ do

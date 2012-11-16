@@ -1,4 +1,4 @@
-@location @content
+@location @content @pending
 Feature: Share to location
 
   As a logged in user
@@ -6,8 +6,6 @@ Feature: Share to location
   To a specific location
   
   Scenario: Share to a users wall
-    Given a user account
-      And I have an account
-      And I have signed in
+    Given I have signed in with my_account
     When I share content to a user's wall
     Then the content shows up on the user's wall
