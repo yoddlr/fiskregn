@@ -4,6 +4,13 @@ module Accessibility
   # Accessibility for entity model Content and its subclasses
   module Content
 
+    # 1. All content belong to one or more locations. (if not, it's not findable)
+    # 2. Attribute findable is used ONLY with locations, so a location will
+    #    report number of contents with given tags and is findable.
+    # 3. You can never see a content which is not readable.
+    # 4. Content model does not perform accessibility checks in its functions.
+    #    NOTE: A content is simply not loaded into memory if it is not readable!!!!!!!
+
     # Generic retrieval for ALL ActiveRecord queries
     def find_by_sql(*args)
       records = super(*args)
@@ -40,6 +47,10 @@ module Accessibility
     def find_by_access(access)
       # TODO: Yet to be implemented
       nil
+    end
+
+    def count_items_in_group_with_tags(group_name,tags)
+      # TODO: Return int count with number of items with all of the tags, in the given group.
     end
 
     # True if there is a current user with read access to content
