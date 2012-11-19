@@ -16,7 +16,7 @@ module Accessibility
       records = super(*args)
       filtered_records = []
       # Apply content access filters here
-      find_tag = ActsAsTaggableOn::Tag.find_by_name('find')
+      find_tag = ActsAsTaggableOn::Tag.find_by_name('read')
       records.each do |record|
         # Always allow find access to owned records
         filtered_records << record if (User.current_user && (record.user_id == User.current_user.id))
@@ -47,10 +47,6 @@ module Accessibility
     def find_by_access(access)
       # TODO: Yet to be implemented
       nil
-    end
-
-    def count_items_in_group_with_tags(group_name,tags)
-      # TODO: Return int count with number of items with all of the tags, in the given group.
     end
 
     # True if there is a current user with read access to content
@@ -89,16 +85,98 @@ module Accessibility
 
     # Generic retrieval for ALL ActiveRecord queries
     def find_by_sql(*args)
-      records = super(*args)
-      # Apply location access filters here
-      records
+      super(*args)
     end
 
-        # Return records filtered by accessibility
-    def find_by_access(access)
+    # Return locations which has findable content, or content owned by current_user.
+    def find_by_findable()
+      records = location.all
+
+      filtered_records = []
+      # Apply content access filters here
+      find_tag = ActsAsTaggableOn::Tag.find_by_name('find')
+      records.each do |record|
+        # only include location if it has findable content.
+        record.contents.each do |content|
+          # Always include locations containing owned content.
+          if User.current_user && (content.user_id == User.current_user.id)
+            filtered_records << record
+            # It's enough with one owned content.
+            break
+          end
+
+          # No need to bother if nothing has find tag
+          if find_tag
+            taggings = ActsAsTaggableOn::Tagging.find_all_by_taggable_id(content.id)
+            taggings.each do |tagging|
+              if (tagging && tagging.taggable_type == 'Content')
+                filtered = tagging.tagger_type == 'User'
+                filtered = filtered && (User.current_user && (tagging.tagger_id == User.current_user.id))
+                filtered = filtered && (tagging.tag_id == find_tag.id)
+                filtered = filtered && (tagging.context == 'access')
+
+                # Include location as we have found a findable content in it. :)
+                if filtered
+                  filtered_records << record
+                  # We are happy with only one
+                  break
+                end
+              end
+            end
+          end
+        end
+      end
+
+      filtered_records
+    end
+
+    # Return locations I can publish to.
+    def find_by_publish()
       # TODO: Yet to be implemented
       nil
     end
+
+    # Returns locations with content tagged with the given tags and find-access.
+    # TODO: Support list of tags
+    def find_by_interest(tag)
+      # TODO: Locations can have their own tags, but we ignore this for now.
+
+      records = find_by_findable()
+
+      filtered_records = []
+      # Apply content access filters here
+      find_tag = ActsAsTaggableOn::Tag.find_by_name(tag)
+
+      if find_tag
+        records.each do |record|
+          # only include location if it has tagged content.
+          record.contents.each do |content|
+
+            taggings = ActsAsTaggableOn::Tagging.find_all_by_taggable_id(content.id)
+            taggings.each do |tagging|
+
+              filtered = (tagging.tag_id == find_tag.id)
+              filtered = filtered && (tagging.context == 'interest')
+
+              # Include location as we have found a findable content in it. :)
+              if filtered
+                filtered_records << record
+                # We are happy with only one
+                break
+              end
+            end
+          end
+        end
+      end
+
+      filtered_records
+    end
+
+    # NOTE: Should be in location.rb
+    #def count_items_in_group_with_tags(group_name,tags)
+    #  # TODO: Return int count with number of items with all of the tags, in the given group.
+    #end
+
   end
 
 end

@@ -31,6 +31,7 @@ module Default
       @text ||= Faker::Lorem.sentences(sentence_count = 3, supplemental = false)
     end
 
+    # TODO: Remove? You can't create content without an owner
     def text_content
       @text_content ||= create :text_content
     end

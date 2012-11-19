@@ -109,9 +109,17 @@ describe TextContentsController do
         end
         
         it "does not update content if owned by other user" do
-          content = create :text_content
+          other_user = FactoryGirl.create(:user)
+          sign_in other_user
+
+          content = create :text_content, user: other_user
+          @user.tag(content, :with => ['read'], :on => 'access')
+
+          sign_out other_user
+          sign_in @user
+
           new_text = 'new text string'
-          put :update,id:content, text_content: { text: new_text }
+          put :update, id:content, text_content: { text: new_text }
           content.reload
           expect(content.text).to_not eq new_text
         end
@@ -134,8 +142,16 @@ describe TextContentsController do
         end
         
         it "can only be deleted by owner" do
+          other_user = FactoryGirl.create(:user)
+          sign_in other_user
+
           text = 'Text to delete'
-          content = create :text_content, text: text
+          content = create :text_content,  text: text, user: other_user
+          @user.tag(content, :with => ['read'], :on => 'access')
+
+          sign_out other_user
+          sign_in @user
+
           delete :destroy, id:content.id
           expect(Content.find(content).text).to eq text
         end
@@ -160,8 +176,16 @@ describe TextContentsController do
         end
         
         it "can only be deleted by owner" do
+          other_user = FactoryGirl.create(:user)
+          sign_in other_user
+
           text = 'Text to delete'
-          content = create :text_content, text: text
+          content = create :text_content,  text: text, user: other_user
+          @user.tag(content, :with => ['read'], :on => 'access')
+
+          sign_out other_user
+          sign_in @user
+
           child = create :text_content, parent: content
           delete :destroy, id:content.id
           expect(Content.find(content).text).to eq text
@@ -190,8 +214,17 @@ describe TextContentsController do
 
       describe 'DELETE #destroy' do
         it "should redirect away from delete content" do
-          @content = create :text_content
-          delete :destroy, id: @content.id
+          other_user = FactoryGirl.create(:user)
+          user = FactoryGirl.create(:user)
+          sign_in other_user
+
+          content = create :text_content, user: @user
+          user.tag(content, :with => ['read'], :on => 'access')
+
+          sign_out other_user
+          sign_in user
+
+          delete :destroy, id: content.id
         end
       end
     end

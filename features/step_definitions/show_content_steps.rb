@@ -1,7 +1,17 @@
 World(Default::TextContents)
+World(Default::Users)
 Given /^there is content$/ do
   # Note: We define/create the World's Default::TextContents variable @text_content here:
+  # Note: Must tag my_account so it have find and read access to the text_content.
+
+  # By some fantastic ruby logic, eval() will convert the 'my_account' string into the object my_account
+  steps %{
+    Given I sign in with my_account
+    And I am signed in with my_account
+  }
+
   text_content
+  my_account.tag(text_content, :with => ['find','read'], :on => 'access')
 end
 
 When /^I visit the contents page$/ do

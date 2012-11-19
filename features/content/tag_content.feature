@@ -7,5 +7,5 @@ Feature: Tag content
   Scenario: Tag existing content
     Given I have signed in with my_account
       And There is content
-    When I tag the content
-    Then the content has the tag
+    When I tag my_text_content
+    Then my_text_content has the tag
