@@ -16,19 +16,6 @@ class Content < ActiveRecord::Base
     include Accessibility::Content
   end
 
-  # Private and non-existing methods subjected to read access check
-  def method_missing(method_name, *args)
-    if Content.readable?(self)
-      # With read access go ahead and make method call
-      eval("#{method_name(*args)}")
-    else
-      raise "Attempted read access violation for #{self}"
-    end
-  end
-
-  # All methods private to enable read access check
-  # private
-
   def description
     I18n.t('.content_deleted')
   end
