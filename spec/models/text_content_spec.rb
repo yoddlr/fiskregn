@@ -22,13 +22,4 @@ describe TextContent do
       expect(@tagged.tag_list.include?(@tag)).to be true
     end
   end
-
-  describe 'Access' do
-    it "has no access" do
-      @creator = build(:user, password: 'taggaDAG11', password_confirmation: 'taggaDAG11')
-      @created = create :text_content, :text => 'oiugouigiogu'
-      @no_access = build(:user, password: 'taggaDAG11', password_confirmation: 'taggaDAG11')
-      expect(Content.all.include?(@created)).to be false
-    end
-  end
 end

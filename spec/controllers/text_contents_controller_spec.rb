@@ -113,7 +113,7 @@ describe TextContentsController do
           sign_in other_user
 
           content = create :text_content, user: other_user
-          @user.tag(content, :with => ['read'], :on => 'access')
+          @user.tag(content, :with => ['find','read'], :on => 'access')
 
           sign_out other_user
           sign_in @user
@@ -147,7 +147,7 @@ describe TextContentsController do
 
           text = 'Text to delete'
           content = create :text_content,  text: text, user: other_user
-          @user.tag(content, :with => ['read'], :on => 'access')
+          @user.tag(content, :with => ['find','read'], :on => 'access')
 
           sign_out other_user
           sign_in @user
@@ -181,7 +181,7 @@ describe TextContentsController do
 
           text = 'Text to delete'
           content = create :text_content,  text: text, user: other_user
-          @user.tag(content, :with => ['read'], :on => 'access')
+          @user.tag(content, :with => ['find','read'], :on => 'access')
 
           sign_out other_user
           sign_in @user
@@ -225,6 +225,67 @@ describe TextContentsController do
           sign_in user
 
           delete :destroy, id: content.id
+        end
+      end
+    end
+
+    describe 'Access' do
+      before :each do
+        @owner = create :user
+        @content = create :text_content, user: @owner
+      end
+      context "owner of content" do
+        before :each do
+          sign_in @owner
+        end
+        after :each do
+          sign_out @owner
+        end
+        it "has find access" do
+          # TODO: Should return location of content
+          pending
+        end
+        it "has read access" do
+          Content.find(@content).description[0] == @content.description[0]
+        end
+      end
+      context "other user than owner of content" do
+        before :each do
+          @other_user = create :user
+          sign_in @other_user
+        end
+        after :each do
+          sign_out @other_user
+        end
+        context "without access" do
+          it "has no find access" do
+            ALog.debug @content
+            Content.find(@content)
+
+            #expect(Content.all).to_not include @content
+          end
+          it "has no read access" do
+            pending {expect(Content.all).to_not include @content}
+          end
+        end
+        context "with find access" do
+          before :each do
+            pending 'set access'
+          end
+          it "has find access" do
+            pending
+          end
+          it "has no read access" do
+            pending
+          end
+        end
+        context "with read access" do
+          it "has find access" do
+
+          end
+          it "has read access" do
+
+          end
         end
       end
     end
