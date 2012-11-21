@@ -82,27 +82,27 @@ module Accessibility
     # Generic retrieval for ALL ActiveRecord queries
     def find_by_sql(*args)
       super(*args)
-      filtered_records = []
-      find_tag = ActsAsTaggableOn::Tag.find_by_name('read')
-      records.each do |record|
-      # Always allow find access to owned records
-      filtered_records << record if (User.current_user && (record.user_id == User.current_user.id))
-      # No need to bother if nothing has read tag
-      if find_tag
-        taggings = ActsAsTaggableOn::Tagging.find_all_by_taggable_id(record.id)
-        taggings.each do |tagging|
-          if (tagging && tagging.taggable_type == 'Location')
-            # TODO: All groups of which user is member
-            filtered = tagging.tagger_type == 'User'
-            filtered = filtered && (User.current_user && (tagging.tagger_id == User.current_user.id))
-            filtered = filtered && (tagging.tag_id == find_tag.id)
-            filtered = filtered && (tagging.context == 'access')
-            filtered_records << record if filtered
-          end
-        end
-      end
-      filtered_records
-      end
+#       filtered_records = []
+#       find_tag = ActsAsTaggableOn::Tag.find_by_name('read')
+#       records.each do |record|
+#       # Always allow find access to owned records
+#       filtered_records << record if (User.current_user && (record.user_id == User.current_user.id))
+#       # No need to bother if nothing has read tag
+#       if find_tag
+#         taggings = ActsAsTaggableOn::Tagging.find_all_by_taggable_id(record.id)
+#         taggings.each do |tagging|
+#           if (tagging && tagging.taggable_type == 'Location')
+#             # TODO: All groups of which user is member
+#             filtered = tagging.tagger_type == 'User'
+#             filtered = filtered && (User.current_user && (tagging.tagger_id == User.current_user.id))
+#             filtered = filtered && (tagging.tag_id == find_tag.id)
+#             filtered = filtered && (tagging.context == 'access')
+#             filtered_records << record if filtered
+#           end
+#         end
+#       end
+#       filtered_records
+#       end
     end
 
     # Find all readable locations with findable content
