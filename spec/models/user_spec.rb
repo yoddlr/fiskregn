@@ -43,4 +43,12 @@ describe User do
   describe "Location" do
     pending
   end
+  describe "current_user" do
+
+    it "returns given user" do
+      @user = create :user
+      User.stub(:current_user).and_return(@user)
+      expect(User.current_user).to eq @user
+    end
+  end
 end

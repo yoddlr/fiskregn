@@ -232,21 +232,21 @@ describe TextContentsController do
     describe 'Access' do
       before :each do
         @owner = create :user
-        @content = create :text_content, user: @owner
+        @content = create :text_content, user: @owner, text: 'Dumheter'
       end
       context "owner of content" do
         before :each do
-          sign_in @owner
-        end
-        after :each do
-          sign_out @owner
+          User.stub(:current_user).and_return(@owner)
         end
         it "has find access" do
-          # TODO: Should return location of content
-          pending
+          ids = []
+          Content.all.each do |content|
+            ids << content.id
+          end
+          expect(ids).to include @content.id
         end
         it "has read access" do
-          Content.find(@content).description[0] == @content.description[0]
+          expect(Content.find(@content.id).description).to eq @content.description
         end
       end
       context "other user than owner of content" do
@@ -259,16 +259,19 @@ describe TextContentsController do
         end
         context "without access" do
           it "has no find access" do
-            ALog.debug @content
-            Content.find(@content)
-
-            #expect(Content.all).to_not include @content
+            ids = []
+            Content.all.each do |content|
+              ids << content.id
+            end
+            expect(ids).to_not include @content.id
           end
           it "has no read access" do
-            pending {expect(Content.all).to_not include @content}
+            expect{
+              Content.find(@content.id)
+            }.to raise_error(ActiveRecord::RecordNotFound)
           end
         end
-        context "with find access" do
+        context "with only find access" do
           before :each do
             pending 'set access'
           end
