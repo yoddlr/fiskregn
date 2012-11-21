@@ -102,6 +102,7 @@ module Accessibility
         end
       end
       filtered_records
+      end
     end
 
     # Find all readable locations with findable content
@@ -211,7 +212,6 @@ module Accessibility
       end
       filtered_records
     end
-
   end
 
 end
