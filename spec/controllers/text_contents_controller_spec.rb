@@ -249,6 +249,7 @@ describe TextContentsController do
           expect(Content.find(@content.id).description).to eq @content.description
         end
       end
+
       context "other user than owner of content" do
         before :each do
           @other_user = create :user
@@ -273,21 +274,29 @@ describe TextContentsController do
         end
         context "with only find access" do
           before :each do
-            pending 'set access'
+            @other_user.tag(@content, with: ['find'], on: 'access')
           end
           it "has find access" do
-            pending
+            pending "Needs working locations"
           end
           it "has no read access" do
-            pending
+            expect{
+              Content.find(@content.id)
+            }.to raise_error(ActiveRecord::RecordNotFound)
           end
         end
         context "with read access" do
-          it "has find access" do
+          before :each do
+            @other_user.tag(@content, with: ['read'], on: 'access')
+          end
 
+          it "has find access" do
+            pending 'Neads find method'
           end
           it "has read access" do
-
+            ALog.debug "other user with read access has read access"
+            ALog.debug "Contents: #{Content.count}"
+            expect(Content.find(@content.id).description).to eql @content.description
           end
         end
       end
