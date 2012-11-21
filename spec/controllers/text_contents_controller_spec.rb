@@ -253,10 +253,7 @@ describe TextContentsController do
       context "other user than owner of content" do
         before :each do
           @other_user = create :user
-          sign_in @other_user
-        end
-        after :each do
-          sign_out @other_user
+          User.stub(:current_user).and_return(@other_user)
         end
         context "without access" do
           it "has no find access" do
