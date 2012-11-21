@@ -47,7 +47,7 @@ module Accessibility
           end
         end
       end
-      filtered_records.uniq!
+      filtered_records
     end
 
     # Return records filtered by tags in interest context
@@ -101,7 +101,7 @@ module Accessibility
 #           end
 #         end
 #       end
-#       filtered_records.uniq!
+#       filtered_records
 #       end
     end
 
