@@ -27,7 +27,7 @@ end
 gem 'jquery-rails'
 
 group :test, :development do
-  gem 'mysql2'
+  gem 'sqlite3'
   gem 'faker'
   gem 'rspec-rails'
   gem 'factory_girl_rails'
