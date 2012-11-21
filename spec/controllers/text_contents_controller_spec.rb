@@ -56,7 +56,7 @@ describe TextContentsController do
           it "saves the new text content" do
             expect{
               post :create, text_content: @reply
-            }.to change{ Content.all.count}.by(1)
+            }.to change{ Content.count}.by(1)
           end
           
           it "has one parent" do
