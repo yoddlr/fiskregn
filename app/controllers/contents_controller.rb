@@ -149,7 +149,5 @@ class ContentsController < ApplicationController
     # @contents = @user.contents.where(locations: empty?)
     # select * from contents inner join content_location as cl on cl.content_id!=content.id
     @contents = @user.contents.where('id NOT IN (SELECT DISTINCT(content_id) FROM contents_locations)')
-    ALog.debug @user
-    ALog.debug @contents
   end
 end

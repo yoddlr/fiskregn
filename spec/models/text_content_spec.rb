@@ -85,8 +85,6 @@ describe TextContent do
           pending 'Neads find method'
         end
         it "has read access" do
-          ALog.debug "other user with read access has read access"
-          ALog.debug "Contents: #{Content.count}"
           expect(Content.find(@content.id).description).to eql @content.description
         end
       end
