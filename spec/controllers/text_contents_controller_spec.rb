@@ -268,12 +268,15 @@ describe TextContentsController do
             expect(ids).to_not include @content.id
           end
           it "has no read access" do
-            pending {
-              expect(Content.all).to_not include @content
-            }
+            #pending {
+              #expect(Content.all).to_not include @content
+            #}
+            expect{
+              Content.find(@content.id)
+            }.to raise_error(ActiveRecord::RecordNotFound)
           end
         end
-        context "with find access" do
+        context "other user with only find access" do
           before :each do
             pending 'set access'
           end
@@ -284,7 +287,7 @@ describe TextContentsController do
             pending
           end
         end
-        context "with read access" do
+        context "other user with read access" do
           it "has find access" do
 
           end
