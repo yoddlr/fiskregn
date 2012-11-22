@@ -51,8 +51,8 @@ When /^I visit my unpublished content$/ do
 end
 
 Then /^it does not show up on target wall$/ do
-  visit(user_path('sv',@target_user))
-  expect(page).to_not have_content(@target_text)
+  visit(user_path('sv',other_account))
+  expect(page).to_not have_content(my_text_content.description[0])
 end
 
 When /^I visit the content page$/ do

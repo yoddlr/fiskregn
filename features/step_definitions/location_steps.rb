@@ -3,8 +3,7 @@ When /^I visit the user's wall$/ do
 end
 
 Then /^I see the other user's content$/ do
-  # header = page.find('h1')
-  expect(page).to have_content(other_text_content)
+  expect(page).to have_content(other_text_content[0])
 end
 
 Then /^I visit my location$/ do

@@ -40,7 +40,7 @@ Given /^There is content$/ do
   my_text_content
 end
 
-Given /^the other user have text content$/ do
+Given /^the other user has text content$/ do
   other_text_content
 end
 
@@ -58,8 +58,7 @@ end
 When /^I share content to a user's wall$/ do
   visit(user_path('sv',other_account))
   click_link 'add_content'
-  save_and_open_page
-  #@wall_text = 'Shared to wall'
+  # save_and_open_page
   fill_in :text, with: new_text_content.text
   click_button 'submit'
 end
@@ -71,24 +70,24 @@ Then /^the content shows up on the user's wall$/ do
 end
 
 When /^I publish content to target$/ do
-  @target_user = FactoryGirl.create :user, email: 'target@user.com'
-  @target_text = 'target text'
-  @target_content = FactoryGirl.create :text_content, user: my_account, text: @target_text
-  visit(content_path('sv',@target_content))
+  # Initialisation in case never used before
+  other_account
+  my_text_content
+  # Then do the actual job
+  visit(content_path('sv',my_text_content))
   click_link 'publish'
-  page.select(@target_user.email, :from => "contents_location")
+  page.select(other_account.email, :from => "contents_location")
   click_button 'submit'
 end
 
 Then /^it shows up on target wall$/ do
-  # FIXME: Implement this one and "the content shows up on the user's wall" as one single parameterised step
-  visit(user_path('sv',@target_user))
-  expect(page).to have_content(@target_text)
+  visit(user_path('sv',other_account))
+  expect(page).to have_content(my_text_content.description[0])
 end
 
 When /^I withdraw content from target$/ do
-  visit(content_path('sv',@target_content))
+  visit(content_path('sv',my_text_content))
   click_link 'withdraw'
-  page.select(@target_user.email, :from => "contents_location")
+  page.select(other_account.email, :from => "contents_location")
   click_button 'submit'
 end
