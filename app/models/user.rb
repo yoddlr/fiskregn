@@ -28,7 +28,8 @@ class User < ActiveRecord::Base
   # The groups in which the member is an admin.
   has_and_belongs_to_many :admin_groups,
     join_table: "admins_groups",
-    foreign_key: "admin_id"
+    foreign_key: "admin_id",
+    class_name: "Group"
 
   # Identifies user who tags as part of the acts-as-taggable-on gem
   acts_as_tagger
