@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(:version => 20121123140223) do
     t.string  "owner_type"
   end
 
-  create_table "memebers_groups", :force => true do |t|
+  create_table "members_groups", :force => true do |t|
     t.integer "member_id"
     t.integer "group_id"
   end
