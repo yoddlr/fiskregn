@@ -13,7 +13,8 @@ class User < ActiveRecord::Base
   validates :password, confirmation: true, length: {minimum: 6}, format: {with: /.*(^[A-z]+.*[0-9]+.*$)|(^[0-9]+.*[A-z]+.*$)/}
   
   has_many :contents
-  has_one :location
+  has_one :location, :as => :owner
+  has_many :groups
 
   # Identifies user who tags as part of the acts-as-taggable-on gem
   acts_as_tagger
@@ -35,7 +36,8 @@ class User < ActiveRecord::Base
   
   def create_location
     location = Location.new
-    location.user_id = self.id
+    location.owner_id = self.id
+    location.owner_type = 'user'
     location.save
   end
 end

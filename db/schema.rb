@@ -11,7 +11,12 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121105081936) do
+ActiveRecord::Schema.define(:version => 20121123140223) do
+
+  create_table "admins_groups", :force => true do |t|
+    t.integer "admin_id"
+    t.integer "group_id"
+  end
 
   create_table "contents", :force => true do |t|
     t.string   "text"
@@ -27,8 +32,20 @@ ActiveRecord::Schema.define(:version => 20121105081936) do
     t.integer "location_id"
   end
 
+  create_table "groups", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "locations", :force => true do |t|
-    t.integer "user_id"
+    t.integer "owner_id"
+    t.string  "owner_type"
+  end
+
+  create_table "memebers_groups", :force => true do |t|
+    t.integer "member_id"
+    t.integer "group_id"
   end
 
   create_table "taggings", :force => true do |t|

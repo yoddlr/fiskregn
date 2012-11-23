@@ -1,4 +1,4 @@
 require 'spec_helper'
 
-describe Location do
+describe Group do
 end
