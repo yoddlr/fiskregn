@@ -37,7 +37,7 @@ class User < ActiveRecord::Base
   def create_location
     location = Location.new
     location.owner_id = self.id
-    location.owner_type = 'user'
+    location.owner_type = 'User'
     location.save
   end
 end

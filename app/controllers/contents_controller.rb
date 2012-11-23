@@ -16,16 +16,13 @@ class ContentsController < ApplicationController
       @content = Content.find(params[:id])
       if params[:contents]
         # Second time around - having selected location in contents publication form
-        ALog.debug 'Second time around'
         @content.publish_to_location(Location.find(params[:contents][:location]))
         redirect_to content_path(@content), notice: I18n.t('.content_published')
       else
-        ALog.debug 'first time'
         # First time around
         # Enable publication of this content to locations
         @locations = Location.all # - @content.locations
         @action = 'publish'
-        ALog.debug @locations
       end
     else
       redirect_to root_path, notice: I18n.t('.must_be_signed_in_to_modify_contents')

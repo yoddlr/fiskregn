@@ -11,7 +11,7 @@ class Group < ActiveRecord::Base
   def create_location
     location = Location.new
     location.owner_id = self.id
-    location.owner_type = 'group'
+    location.owner_type = 'Group'
     location.save
   end
 end
