@@ -14,7 +14,8 @@ class User < ActiveRecord::Base
   
   has_many :contents
   has_one :location, :as => :owner
-  has_many :groups
+
+  has_and_belongs_to_many :groups
 
   # Identifies user who tags as part of the acts-as-taggable-on gem
   acts_as_tagger
