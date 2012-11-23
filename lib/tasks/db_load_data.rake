@@ -22,5 +22,11 @@ namespace :db do
         end
       end
     end
+    puts 'Done adding content'
+    puts 'Creating 10 groups and adding 10 random users to each'
+    10.times do
+      group = Group.create(name: Faker::Lorem.words(1)[0])
+      group.members << User.all.sample(10)
+    end
   end
 end
