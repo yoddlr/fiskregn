@@ -15,7 +15,20 @@ class User < ActiveRecord::Base
   has_many :contents
   has_one :location, :as => :owner
 
-  has_and_belongs_to_many :groups
+  # A user can have a relatioship with a group on two levels.
+  # A user can be a member of a group,
+  # And a user can also be a group administrator.
+  # These relationships are maintaned separately in separate tables
+
+  # the groups the user is a member of.
+  has_and_belongs_to_many :groups,
+    join_table: "members_groups",
+    foreign_key: "member_id"
+
+  # The groups in which the member is an admin.
+  has_and_belongs_to_many :admin_groups,
+    join_table: "admins_groups",
+    foreign_key: "admin_id"
 
   # Identifies user who tags as part of the acts-as-taggable-on gem
   acts_as_tagger
