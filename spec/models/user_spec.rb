@@ -4,6 +4,11 @@ describe User do
   it "has a valid factory" do
     expect(build :user).to be_valid
   end
+
+  it "is a member of _omni group" do
+    new_user = create :user
+    expect(new_user.groups).to include(Group.find_by_name('_omni'))
+  end
   
   describe 'validations' do
     
@@ -12,11 +17,11 @@ describe User do
     end
     
     describe 'Email' do
-      it "requires an email" do
+      it "is required" do
         @user.email = nil
         expect(@user).to_not be_valid
       end
-      it "is unique" do
+      it "must be unique" do
         previous_user = create :user
         @user.email = previous_user.email
         expect(@user).to_not be_valid

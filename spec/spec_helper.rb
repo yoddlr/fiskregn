@@ -48,6 +48,9 @@ Spork.prefork do
     # We like factory girls
     config.include FactoryGirl::Syntax::Methods
   end
+
+  # Seed test database
+  load "#{Rails.root}/db/seeds.rb"
 end
 
 Spork.each_run do
