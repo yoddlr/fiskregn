@@ -30,7 +30,7 @@ Given /^I am a member of (.*)$/ do |group|
   pending # express the regexp above with the code you wish you had
 end
 
-Given /^I publish (.*) to (.*)$/ do |content,group|
+Given /^I publish (.*) to group (.*)$/ do |content,group|
   pending # express the regexp above with the code you wish you had
 end
 
