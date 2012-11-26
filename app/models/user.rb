@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
   # Identifies user who tags as part of the acts-as-taggable-on gem
   acts_as_tagger
   
-  after_create :create_location
+  after_create :create_location, :add_to_omni_group
 
   # Thanks: http://stackoverflow.com/questions/3742785/rails-3-devise-current-user-is-not-accessible-in-a-model
   # Make devise's current_user globally available. Static and ThreadLocal apparently...
@@ -54,5 +54,10 @@ class User < ActiveRecord::Base
     location.owner_id = self.id
     location.owner_type = 'User'
     location.save
+  end
+
+  # User as part of all users
+  def add_to_omni_group
+    groups << Group.find_by_name('_omni')
   end
 end
