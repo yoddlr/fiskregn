@@ -23,30 +23,54 @@ module Accessibility
 
   # Accessibility for entity model Content and its subclasses
   module Content
+
     # Generic retrieval for ALL ActiveRecord queries
     def find_by_sql(*args)
+      # start = Time.now.usec
       records = super(*args)
+      # ALog.debug 'Retrieval in usecs'
+      # ALog.debug Time.now.usec - start
       filtered_records = []
-      # Apply content access filters here
-      find_tag = ActsAsTaggableOn::Tag.find_by_name('read')
-      records.each do |record|
-        # Always allow find access to owned records
-        filtered_records << record if (User.current_user && (record.user_id == User.current_user.id))
-        # No need to bother if nothing has read tag
-        if find_tag
-          taggings = ActsAsTaggableOn::Tagging.find_all_by_taggable_id(record.id)
-          taggings.each do |tagging|
-            if (tagging && tagging.taggable_type == 'Content')
-              # TODO: All groups of which user is member
-              filtered = tagging.tagger_type == 'User'
-              filtered = filtered && (User.current_user && (tagging.tagger_id == User.current_user.id))
-              filtered = filtered && (tagging.tag_id == find_tag.id)
-              filtered = filtered && (tagging.context == 'access')
-              filtered_records << record if filtered
+      user = User.current_user
+      # Nothing unless signed in
+      if user
+        user_groups = []
+        Group.all.each do |group|
+          user_groups << group if group.members.include?(user)
+        end
+        find_tag = ActsAsTaggableOn::Tag.find_by_name('read')
+        records.each do |record|
+          # Always allow find access to owned records
+          filtered_records << record if (record.user_id == user.id)
+          # No need to bother if nothing has read tag
+          if find_tag
+            taggings = ActsAsTaggableOn::Tagging.find_all_by_taggable_id(record.id)
+            taggings.each do |tagging|
+              if (tagging && tagging.taggable_type == 'Content')
+                filtered = tagging.tag_id == find_tag.id
+                filtered = filtered && (tagging.context == 'access')
+                if filtered
+                  if tagging.tagger_type == 'User'
+                    # Access as individual user?
+                    filtered_records << record if tagging.tagger_id == user.id
+                  elsif tagging.tagger_type == 'Group'
+                    # Access as member of a group
+                    group_access = false
+                    user_groups.each do |user_group|
+                      group_access = tagging.tagger_id == user_group.id
+                      # No need to check all user's group
+                      break if group_access
+                    end
+                    filtered_records << record if group_access
+                  end
+                end
+              end
             end
           end
         end
       end
+      # ALog.debug 'Retrieval + filtering in usecs'
+      # ALog.debug Time.now.usec - start
       filtered_records.uniq
     end
 
