@@ -1,7 +1,8 @@
 class Group < ActiveRecord::Base
   attr_accessible :name
 
-  validates :name, presence: true, uniqueness: true
+  # Initial underscore in name is reserved for special groups, e.g. '_omni'
+  validates :name, presence: true, uniqueness: true, format: {without: /^_/}
 
   has_and_belongs_to_many :admins, 
     join_table: "admins_groups",
