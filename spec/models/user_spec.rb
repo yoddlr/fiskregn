@@ -40,9 +40,29 @@ describe User do
       end
     end
   end
-  describe "Location" do
-    pending
+
+  describe "Users location" do
+    before :each do
+      @user = create :user
+    end
+
+    it "exists" do
+      expect(@user.location).to be_a Location
+    end
+
+    it "is owned by user" do
+      expect(@user.location.owner).to eq @user
+    end
+
+    it "owner has read access" do
+      pending "Read and write access for locations not working yet"
+    end
+
+    it "owner has write access" do
+      pending "Read and write access for locations not working yet"
+    end
   end
+
   describe "current_user" do
 
     it "returns given user" do

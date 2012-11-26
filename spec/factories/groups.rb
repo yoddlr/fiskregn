@@ -2,6 +2,10 @@
 
 FactoryGirl.define do
   factory :group do
-    name "en grupp"
+   sequence :name do
+     "#{Faker::Name.first_name}'s group" 
+   end
+   members {|members| [members.association(:user)]}
+   admins {|admins| [admins.association(:user)]}
   end
 end
