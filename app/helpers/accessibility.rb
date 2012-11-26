@@ -41,7 +41,11 @@ module Accessibility
         find_tag = ActsAsTaggableOn::Tag.find_by_name('read')
         records.each do |record|
           # Always allow find access to owned records
-          filtered_records << record if (record.user_id == user.id)
+          if (record.user_id == user.id)
+            filtered_records << record
+            # Owned => no need to bother further with this record
+            next
+          end
           # No need to bother if nothing has read tag
           if find_tag
             taggings = ActsAsTaggableOn::Tagging.find_all_by_taggable_id(record.id)
@@ -58,7 +62,7 @@ module Accessibility
                     group_access = false
                     user_groups.each do |user_group|
                       group_access = tagging.tagger_id == user_group.id
-                      # No need to check all user's group
+                      # One found => no need to check all user's group
                       break if group_access
                     end
                     filtered_records << record if group_access
