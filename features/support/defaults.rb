@@ -53,4 +53,14 @@ module Default
       @other_text_content ||= create :text_content, user: other_account
     end
   end
+
+  module Groups
+    def my_admin_group
+      @my_admin_group ||= create :group, admins: [my_account], members: [my_account]
+    end
+
+    def my_group
+      @my_group ||= create :group, admins: [other_account], members: [my_account]
+    end
+  end
 end
