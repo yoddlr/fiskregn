@@ -85,7 +85,11 @@ GEM
     guard-rspec (2.1.0)
       guard (>= 1.1)
       rspec (~> 2.11)
+<<<<<<< HEAD
     guard-spork (1.2.2)
+=======
+    guard-spork (1.2.3)
+>>>>>>> Add some location test for group, and user model
       childprocess (>= 0.2.3)
       guard (>= 1.1)
       spork (>= 0.8.4)
