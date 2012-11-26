@@ -11,14 +11,19 @@ namespace :db do
     puts "Login password for all users 'abc123'"
     100.times do
       user = FactoryGirl::create :user
+      print '.'
     end
+    puts
     puts 'Done adding users'
     puts 'Creating 10 groups and adding 10 random users to each'
     10.times do
       group = Group.create(name: Faker::Lorem.words(1)[0])
       group.members << User.all.sample(10)
+      print '.'
     end
+    puts
     puts 'Done adding groups'
+    print 'Adding read access'
     User.all.each do |user|
       10.times do
         content = TextContent.create text: Faker::Lorem.sentences(sentence_count = 1, supplemental = false), user: user
@@ -31,6 +36,8 @@ namespace :db do
           greader.tag(content, :with => ['read'], :on => 'access')
         end
       end
+      print '.'
     end
+    puts
   end
 end
