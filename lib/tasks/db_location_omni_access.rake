@@ -5,9 +5,9 @@ require 'rake'
 
 namespace :db do
   task :location_omni_access => :environment do
-    omni_groups = Group.find_by_name('_omni')
+    omni_group = Group.find_by_name('_omni')
     Location.all.each do |location|
-      omni_groups.tag(location, :with => ['read'], :on => 'access')
+      omni_group.tag(location, :with => ['read'], :on => 'access')
     end
   end
 end
