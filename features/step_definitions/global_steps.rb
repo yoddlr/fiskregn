@@ -6,7 +6,7 @@ When /^I visit the global wall$/ do
   visit('/')
 end
 
-Then /^I get a list of all users$/ do
-  user_list = page.all('#users li')
-  expect(user_list.length).to eql User.all.count
+Then /^I get a list of all locations$/ do
+  location_list = page.all('#locations li')
+  expect(location_list.length).to eql Location.all.count
 end

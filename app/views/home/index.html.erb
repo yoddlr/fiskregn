@@ -1,7 +1,13 @@
 <h1>Home#index</h1>
 
-<ul id="users">
-<% @users.each do |user| %>
-  <li><%= link_to user.email, user_path(user) %></li>
+<ul id="locations">
+<% @locations.each do |location| %>
+  <li>
+  <% if location.owner_type == 'User' %>
+    <%= link_to User.find(location.owner_id).name, user_path(location.owner) %>
+  <% elsif location.owner_type == 'Group' %>
+     <%= link_to Group.find(location.owner_id).name, group_path(location.owner) %>
+  <% end %>
+  </li>
 <% end %>
 </ul>
