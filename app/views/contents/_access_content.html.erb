@@ -21,7 +21,7 @@
       <%= I18n.t('.revoke_find_access') %>
       <ul id="find_access_list">
       <% @content.find_access_list.each do |access|%>
-        <li><%= access.email %><%= check_box_tag(access.id, "remove") %></li>
+        <li><%= access.name %><%= check_box_tag(access.id, "remove") %></li>
       <% end%>
     </ul>
     </div>
@@ -54,7 +54,7 @@
       <%= I18n.t('.revoke_read_access') %>
       <ul id="read_access_list">
         <% @content.read_access_list.each do |access|%>
-          <li><%= access.email %><%= check_box_tag(access.id, "remove") %></li>
+          <li><%= access.name %><%= check_box_tag(access.id, "remove") %></li>
         <% end%>
       </ul>
     </div>

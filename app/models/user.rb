@@ -48,7 +48,11 @@ class User < ActiveRecord::Base
     end
   end
 
-  
+  # Keeping common interface as location owner together with group
+  def name
+    email
+  end
+
   def create_location
     location = Location.new
     location.owner_id = self.id
