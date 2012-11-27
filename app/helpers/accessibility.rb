@@ -169,7 +169,7 @@ module Accessibility
       records.each do |record|
         record.contents.each do |content|
           # Always include locations containing owned content
-          if User.current_user && (content.user_id == User.current_user.id)
+          if user && (content.user_id == user.id)
             filtered_records << record
             # It's enough with one owned content.
             break
@@ -181,7 +181,7 @@ module Accessibility
               if (tagging && tagging.taggable_type == 'Content')
                 # TODO: All groups of which user is member
                 filtered = tagging.tagger_type == 'User'
-                filtered = filtered && (User.current_user && (tagging.tagger_id == User.current_user.id))
+                filtered = filtered && (user && (tagging.tagger_id == user.id))
                 filtered = filtered && (tagging.tag_id == find_tag.id)
                 filtered = filtered && (tagging.context == 'access')
 
