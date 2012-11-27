@@ -179,7 +179,6 @@ module Accessibility
             taggings = ActsAsTaggableOn::Tagging.find_all_by_taggable_id(content.id)
             taggings.each do |tagging|
               if (tagging && tagging.taggable_type == 'Content')
-                # TODO: All groups of which user is member
                 filtered = tagging.tagger_type == 'User'
                 filtered = filtered && (user && (tagging.tagger_id == user.id))
                 filtered = filtered && (tagging.tag_id == find_tag.id)
