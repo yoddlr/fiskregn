@@ -14,7 +14,7 @@ class Group < ActiveRecord::Base
     class_name: "User",
     association_foreign_key: "member_id"
 
-  has_one :location, :as => :owner
+  has_one :location, :as => :owner, :dependent => :destroy
 
   # Identifies user who tags as part of the acts-as-taggable-on gem
   acts_as_tagger

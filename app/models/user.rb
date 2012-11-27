@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
   validates :password, confirmation: true, length: {minimum: 6}, format: {with: /.*(^[A-z]+.*[0-9]+.*$)|(^[0-9]+.*[A-z]+.*$)/}
   
   has_many :contents
-  has_one :location, :as => :owner
+  has_one :location, :as => :owner, :dependent => :destroy
 
   # A user can have a relatioship with a group on two levels.
   # A user can be a member of a group,
