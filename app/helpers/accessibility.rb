@@ -123,7 +123,11 @@ module Accessibility
 
       records.each do |record|
         # Always allow find access to owned records
-        filtered_records << record if (user && (record.owner == user.id))
+        if (user && (record.owner.id == user.id))
+          filtered_records << record
+          # Owned => no need to bother further with this record
+          next
+        end
         # No need to bother if nothing has read tag
         if find_tag
           taggings = ActsAsTaggableOn::Tagging.find_all_by_taggable_id(record.id)
@@ -157,6 +161,7 @@ module Accessibility
     def find_by_content
       # All readable locations
       records = Location.all
+      user = User.current_user
       filtered_records = []
       # Find tag for Content - not Location
       find_tag = ActsAsTaggableOn::Tag.find_by_name('find')

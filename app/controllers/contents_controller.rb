@@ -109,11 +109,6 @@ class ContentsController < ApplicationController
   def record_not_found
     redirect_to root_url, alert: I18n.t('.content_not_found') + " content id: #{params[:id]}"
   end
-  
-  #def access
-    #@content = Content.find(params[:id])
-    #redirect_to @content
-  #end
 
   def grant_find_access
     @content = Content.find(params[:id])
