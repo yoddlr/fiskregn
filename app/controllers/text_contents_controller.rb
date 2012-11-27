@@ -75,7 +75,7 @@ class TextContentsController < ContentsController
       end
     elsif current_user
       # signed in user does not own content
-      redirect_to root_path, notice: I18n.t('.only_owner_allowed_to_modify_contents')      
+      redirect_to root_path, notice: I18n.t('.only_owner_allowed_to_delete_contents')      
     else
       # not signed in
       redirect_to root_path, notice: I18n.t('.must_be_signed_in_to_delete_contents')
