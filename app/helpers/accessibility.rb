@@ -83,7 +83,7 @@ module Accessibility
     # @param interests as an array of interests
     def find_by_interest(interests)
       # Fetch all readable
-      records = Content.all
+      records = all
       filtered_records = []
 
       interests.each do |interest|
@@ -160,7 +160,7 @@ module Accessibility
     # Find all readable locations with findable content
     def find_by_content
       # All readable locations
-      records = Location.all
+      records = all
       user = User.current_user
       filtered_records = []
       # Find tag for Content - not Location
@@ -235,7 +235,7 @@ module Accessibility
     # Find all locations with publication access
     def find_by_publish
       # All readable locations
-      records = Location.all
+      records = all
       filtered_records = []
 
       find_tag = ActsAsTaggableOn::Tag.find_by_name('publish')
