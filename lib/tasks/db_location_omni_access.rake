@@ -6,7 +6,10 @@ require 'rake'
 namespace :db do
   task :location_omni_access => :environment do
     omni_group = Group.find_by_name('_omni')
-    Location.all.each do |location|
+    # Need raw SQL since Location is subjected to access control
+    sql = 'SELECT * FROM Locations'
+    locations = ActiveRecord::Base.connection.execute(sql)
+    locations.each do |location|
       omni_group.tag(location, :with => ['read'], :on => 'access')
     end
   end
