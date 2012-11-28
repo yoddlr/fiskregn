@@ -30,10 +30,10 @@ namespace :db do
         content.publish_to_location(user.location)
         # Give some random users and groups read access to the new content
         User.all.sample(10).each do |reader|
-          reader.tag(content, :with => ['read'], :on => 'access')
+          reader.tag(content, :with => ['find','read'], :on => 'access')
         end
         Group.all.sample(2).each do |greader|
-          greader.tag(content, :with => ['read'], :on => 'access')
+          greader.tag(content, :with => ['find','read'], :on => 'access')
         end
       end
       print '.'
