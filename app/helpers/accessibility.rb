@@ -159,40 +159,41 @@ module Accessibility
 
     # Find all readable locations with findable content
     def find_by_content
-      # All readable locations
-      records = all
       user = User.current_user
       filtered_records = []
-      # Find tag for Content - not Location
-      find_tag = ActsAsTaggableOn::Tag.find_by_name('find')
+      user_groups = []
+      tag = ActsAsTaggableOn::Tag.find_by_name('find')
+      location_hashes = []
 
-      records.each do |record|
-        record.contents.each do |content|
-          # Always include locations containing owned content
-          if user && (content.user_id == user.id)
-            filtered_records << record
-            # It's enough with one owned content.
-            break
-          end
-          # No need to bother if nothing has find tag
-          if find_tag
-            taggings = ActsAsTaggableOn::Tagging.find_all_by_taggable_id(content.id)
-            taggings.each do |tagging|
-              if (tagging && tagging.taggable_type == 'Content')
-                filtered = tagging.tagger_type == 'User'
-                filtered = filtered && (user && (tagging.tagger_id == user.id))
-                filtered = filtered && (tagging.tag_id == find_tag.id)
-                filtered = filtered && (tagging.context == 'access')
+      # Omni is the default group even for non-logged in users
+      user_groups << Group.find_by_name('_omni')
 
-                # Include location as we have found a findable content in it. :)
-                if filtered
-                  filtered_records << record
-                  # We are happy with only one
-                  break
-                end
-              end
-            end
-          end
+      if user
+        Group.all.each do |group|
+          user_groups << group if group.members.include?(user)
+        end
+      end
+
+      # Retrieve all locations containing content where user's group(s) have find access
+      user_groups.each do |user_group|
+        sql = "SELECT DISTINCT location_id FROM contents_locations WHERE content_id IN (SELECT taggable_id FROM taggings WHERE taggable_type='Content' AND tag_id=#{tag.id} AND context='access' AND tagger_type='Group' AND tagger_id=#{user_group.id})"
+        location_hashes += ActiveRecord::Base.connection.execute(sql)
+      end
+
+      if user
+        # Retrieve all locations where user has find access
+        sql = "SELECT DISTINCT location_id FROM contents_locations WHERE content_id IN (SELECT taggable_id FROM taggings WHERE taggable_type='Content' AND tag_id=#{tag.id} AND context='access' AND tagger_type='User' AND tagger_id=#{user.id})"
+        location_hashes += ActiveRecord::Base.connection.execute(sql)
+      end
+
+      # No need to retrieve location object more than once
+      location_hashes.uniq_by! {|hash| hash['location_id'] }
+
+      location_hashes.each do |hash|
+        # Location containing findable content may not be readable
+        if exists?(hash['location_id'])
+          # We want to return objects, not values from a hash map
+          filtered_records << find(hash['location_id'])
         end
       end
       filtered_records
@@ -265,5 +266,4 @@ module Accessibility
       filtered_records
     end
   end
-
 end
