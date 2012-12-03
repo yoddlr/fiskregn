@@ -163,39 +163,42 @@ module Accessibility
       filtered_records = []
       user_groups = []
       tag = ActsAsTaggableOn::Tag.find_by_name('find')
-      location_hashes = []
-
-      # Omni is the default group even for non-logged in users
-      user_groups << Group.find_by_name('_omni')
-
-      if user
-        Group.all.each do |group|
-          user_groups << group if group.members.include?(user)
+      if tag
+        # No need to bother without any find tags
+        location_hashes = []
+  
+        # Omni is the default group even for non-logged in users
+        user_groups << Group.find_by_name('_omni')
+  
+        if user
+          Group.all.each do |group|
+            user_groups << group if group.members.include?(user)
+          end
         end
-      end
-
-      # Retrieve all locations containing content where user's group(s) have find access
-      user_groups.each do |user_group|
-        sql = "SELECT DISTINCT location_id FROM contents_locations WHERE content_id IN (SELECT taggable_id FROM taggings WHERE taggable_type='Content' AND tag_id=#{tag.id} AND context='access' AND tagger_type='Group' AND tagger_id=#{user_group.id})"
-        location_hashes += ActiveRecord::Base.connection.execute(sql)
-      end
-
-      if user
-        # Retrieve all locations where user has find access
-        sql = "SELECT DISTINCT location_id FROM contents_locations WHERE content_id IN (SELECT taggable_id FROM taggings WHERE taggable_type='Content' AND tag_id=#{tag.id} AND context='access' AND tagger_type='User' AND tagger_id=#{user.id})"
-        location_hashes += ActiveRecord::Base.connection.execute(sql)
-      end
-
-      # No need to retrieve location object more than once
-      location_hashes.uniq_by! {|hash| hash['location_id'] }
-
-      location_hashes.each do |hash|
-        # Location containing findable content may not be readable
-        if exists?(hash['location_id'])
-          # We want to return objects, not values from a hash map
-          filtered_records << find(hash['location_id'])
+  
+        # Retrieve all locations containing content where user's group(s) have find access
+        user_groups.each do |user_group|
+          sql = "SELECT DISTINCT location_id FROM contents_locations WHERE content_id IN (SELECT taggable_id FROM taggings WHERE taggable_type='Content' AND tag_id=#{tag.id} AND context='access' AND tagger_type='Group' AND tagger_id=#{user_group.id})"
+          location_hashes += ActiveRecord::Base.connection.execute(sql)
         end
-      end
+  
+        if user
+          # Retrieve all locations where user has find access
+          sql = "SELECT DISTINCT location_id FROM contents_locations WHERE content_id IN (SELECT taggable_id FROM taggings WHERE taggable_type='Content' AND tag_id=#{tag.id} AND context='access' AND tagger_type='User' AND tagger_id=#{user.id})"
+          location_hashes += ActiveRecord::Base.connection.execute(sql)
+        end
+  
+        # No need to retrieve location object more than once
+        location_hashes.uniq_by! {|hash| hash['location_id'] }
+  
+        location_hashes.each do |hash|
+          # Location containing findable content may not be readable
+          if exists?(hash['location_id'])
+            # We want to return objects, not values from a hash map
+            filtered_records << find(hash['location_id'])
+          end
+        end
+      end # No need to bother without any find tags
       filtered_records
     end
 
@@ -209,60 +212,80 @@ module Accessibility
       interests.each do |interest|
         # Interest for Content - not Location
         find_tag = ActsAsTaggableOn::Tag.find_by_name(interest)
-        records.each do |record|
-          record.contents.each do |content|
-            # No need to bother if nothing has find tag
-            if find_tag
-              taggings = ActsAsTaggableOn::Tagging.find_all_by_taggable_id(content.id)
-              taggings.each do |tagging|
-                if (tagging && tagging.taggable_type == 'Content')
-                  filtered = (tagging.tag_id == find_tag.id)
-                  filtered = filtered && (tagging.context == 'interest')
-                  if filtered
-                    filtered_records << record
-                    # We are happy with only one
-                    break
+        if find_tag
+          # No need to bother without any find tags
+          records.each do |record|
+            record.contents.each do |content|
+              # No need to bother if nothing has find tag
+              if find_tag
+                taggings = ActsAsTaggableOn::Tagging.find_all_by_taggable_id(content.id)
+                taggings.each do |tagging|
+                  if (tagging && tagging.taggable_type == 'Content')
+                    filtered = (tagging.tag_id == find_tag.id)
+                    filtered = filtered && (tagging.context == 'interest')
+                    if filtered
+                      filtered_records << record
+                      # We are happy with only one
+                      break
+                    end
                   end
                 end
               end
             end
           end
         end
-      end
+      end # No need to bother without any find tags
       filtered_records
     end
 
     # Find all locations with publication access
     def find_by_publish
-      # All readable locations
-      records = all
+      user = User.current_user
       filtered_records = []
+      user_groups = []
+      tag = ActsAsTaggableOn::Tag.find_by_name('publish')
 
-      find_tag = ActsAsTaggableOn::Tag.find_by_name('publish')
-      records.each do |record|
-        # Always publication access to owned locations
-        if User.current_user && (record.user_id == User.current_user.id)
-          filtered_records << record
-        end
-        # No need to bother if nothing has publication access
-        if find_tag
-          taggings = ActsAsTaggableOn::Tagging.find_all_by_taggable_id(record.id)
-          taggings.each do |tagging|
-            if (tagging && tagging.taggable_type == 'Location')
-              # TODO: All groups of which user is member
-              filtered = tagging.tagger_type == 'User'
-              filtered = filtered && (User.current_user && (tagging.tagger_id == User.current_user.id))
-              filtered = filtered && (tagging.tag_id == find_tag.id)
-              filtered = filtered && (tagging.context == 'access')
-              if filtered
-                filtered_records << record
-                # Publication access OK => straight to next location record
-                break
-              end
-            end
+      # Always allow find access to owned location
+      if user
+        filtered_records << user.location
+      end
+
+      if tag
+        # No need to bother without any publication tags
+        location_hashes = []
+  
+        # Omni is the default group even for non-logged in users
+        user_groups << Group.find_by_name('_omni')
+  
+        if user
+          Group.all.each do |group|
+            user_groups << group if group.members.include?(user)
           end
         end
-      end
+  
+        # Retrieve all locations where user's group(s) have publication access
+        user_groups.each do |user_group|
+          sql = "SELECT DISTINCT id AS location_id FROM locations WHERE id IN (SELECT taggable_id FROM taggings WHERE taggable_type='Location' AND tag_id=#{tag.id} AND context='access' AND tagger_type='Group' AND tagger_id=#{user_group.id})"
+          location_hashes += ActiveRecord::Base.connection.execute(sql)
+        end
+  
+        if user
+          # Retrieve all locations where user has publication access
+          sql = "SELECT DISTINCT id AS location_id FROM locations WHERE id IN (SELECT taggable_id FROM taggings WHERE taggable_type='Location' AND tag_id=#{tag.id} AND context='access' AND tagger_type='User' AND tagger_id=#{user.id})"
+          location_hashes += ActiveRecord::Base.connection.execute(sql)
+        end
+  
+        # No need to retrieve location object more than once
+        location_hashes.uniq_by! {|hash| hash['location_id'] }
+  
+        location_hashes.each do |hash|
+          # Location containing findable content may not be readable
+          if exists?(hash['location_id'])
+            # We want to return objects, not values from a hash map
+            filtered_records << find(hash['location_id'])
+          end
+        end
+      end # No need to bother without any publication tags
       filtered_records
     end
   end
