@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121123140223) do
+ActiveRecord::Schema.define(:version => 20121204173528) do
 
   create_table "admins_groups", :force => true do |t|
     t.integer "admin_id"
@@ -64,6 +64,14 @@ ActiveRecord::Schema.define(:version => 20121123140223) do
   create_table "tags", :force => true do |t|
     t.string "name"
   end
+
+  create_table "topics", :force => true do |t|
+    t.string  "name",     :null => false
+    t.integer "place_id", :null => false
+    t.integer "topic_id", :null => false
+  end
+
+  add_index "topics", ["place_id", "topic_id"], :name => "index_topics_on_place_id_and_topic_id", :unique => true
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
