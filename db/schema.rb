@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121204173528) do
+ActiveRecord::Schema.define(:version => 20121204200751) do
 
   create_table "admins_groups", :force => true do |t|
     t.integer "admin_id"
@@ -32,6 +32,13 @@ ActiveRecord::Schema.define(:version => 20121204173528) do
     t.integer "location_id"
   end
 
+  create_table "contents_topics", :force => true do |t|
+    t.integer "content_id", :null => false
+    t.integer "topic_id",   :null => false
+  end
+
+  add_index "contents_topics", ["content_id", "topic_id"], :name => "index_contents_topics_on_content_id_and_topic_id", :unique => true
+
   create_table "groups", :force => true do |t|
     t.string   "name"
     t.datetime "created_at", :null => false
@@ -42,6 +49,13 @@ ActiveRecord::Schema.define(:version => 20121204173528) do
     t.integer "owner_id"
     t.string  "owner_type"
   end
+
+  create_table "locations_topics", :force => true do |t|
+    t.integer "location_id", :null => false
+    t.integer "topic_id",    :null => false
+  end
+
+  add_index "locations_topics", ["location_id", "topic_id"], :name => "index_locations_topics_on_location_id_and_topic_id", :unique => true
 
   create_table "members_groups", :force => true do |t|
     t.integer "member_id"
@@ -66,12 +80,8 @@ ActiveRecord::Schema.define(:version => 20121204173528) do
   end
 
   create_table "topics", :force => true do |t|
-    t.string  "name",     :null => false
-    t.integer "place_id", :null => false
-    t.integer "topic_id", :null => false
+    t.string "name", :null => false
   end
-
-  add_index "topics", ["place_id", "topic_id"], :name => "index_topics_on_place_id_and_topic_id", :unique => true
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false

@@ -9,6 +9,17 @@ class Content < ActiveRecord::Base
   
   has_and_belongs_to_many :locations
 
+  # The only reason to use this instead of has_and_belongs_to_many is when
+  # the location_topics table has extra columns, like 'approved' in place_users.
+  #
+  # See http://stackoverflow.com/questions/4924156/habtm-and-accepts-nested-attributes-for
+  # has_many :content_topics, :foreign_key => "content_id"
+  # has_many :topics, :through => :content_topics
+  #
+  has_and_belongs_to_many :topics
+
+
+  # TODO: Remove
   acts_as_taggable_on :access, :interests
 
   # Static import interception of ActiveRecord methods to enable filtered results
