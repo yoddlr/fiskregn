@@ -20,10 +20,10 @@ describe TextContent do
       expect(@content.topics.include?(@topic)).to be_true
     end
 
-    it "Find content by topic" do
+    it "Find content by topic name" do
       @content.add_topic @topic
 
-      result = Content.find_by_topic @topic.name
+      result = Content.find_by_topic_name @topic.name
       ALog.debug result
 
       expect(result.include?(@content)).to be_true
@@ -35,20 +35,25 @@ describe TextContent do
       @owner = create :user
       @content = create :text_content, user: @owner, text: 'Dumheter'
     end
+
     context "owner of content" do
+      
       before :each do
         User.stub(:current_user).and_return(@owner)
       end
-      it "has find access" do
+
+      it "can find all owned content" do
         ids = []
         Content.all.each do |content|
           ids << content.id
         end
         expect(ids).to include @content.id
       end
+
       it "has read access" do
         expect(Content.find(@content.id).description).to eq @content.description
       end
+
     end
 
     context "other user than owner of content" do

@@ -61,6 +61,7 @@ describe Group do
       expect(@group.members.exists?(new_member)).to be_true
     end
   end
+
   describe "Admins" do
     it "Group can have an admin" do
       new_admin = create :user
@@ -80,10 +81,10 @@ describe Group do
 
       expect(@group.topics.include?(@topic)).to be_true
     end
-    it "Finds group by topic" do
+    it "Finds group by topic name" do
       @group.add_topic @topic
 
-      result = Group.find_by_topic @topic.name
+      result = Group.find_by_topic_name @topic.name
 
       expect(result.include?(@group)).to be_true
     end

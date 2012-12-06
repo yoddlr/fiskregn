@@ -18,6 +18,8 @@ class Content < ActiveRecord::Base
   #
   has_and_belongs_to_many :topics
 
+  # Provides methods for adding, removing and finding by topics
+  include TopicsHelper
 
   # TODO: Remove
   acts_as_taggable_on :access, :interests
@@ -32,17 +34,17 @@ class Content < ActiveRecord::Base
   end
 
   # Topics instead of tags
-  def add_topic(topic)
-    self.topics << topic
-  end
+  #def add_topic(topic)
+    #self.topics << topic
+  #end
 
-  def remove_topic(topic)
-    self.topics.delete topic
-  end
+  #def remove_topic(topic)
+    #self.topics.delete topic
+  #end
 
-  def self.find_by_topic(topic_name)
-    self.joins(:topics).where(:topics =>{name: topic_name})
-  end
+  #def self.find_by_topic(topic_name)
+    #self.joins(:topics).where(:topics =>{name: topic_name})
+  #end
   
   # @deprecated tag_content form requires to call something in model (really?)
   def read_access_strings

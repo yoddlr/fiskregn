@@ -24,6 +24,9 @@ class Group < ActiveRecord::Base
 
   after_create :create_location
 
+  # Provide topic methods
+  include TopicsHelper
+
   def create_location
     location = Location.new
     location.owner_id = self.id
@@ -31,15 +34,4 @@ class Group < ActiveRecord::Base
     location.save
   end
 
-  def add_topic(topic)
-    self.topics << topic
-  end
-
-  def remove_topic(topic)
-    self.topics.delete topic
-  end
-
-  def self.find_by_topic(topic_name)
-    self.joins(:topics).where(:topics => {name: topic_name})
-  end
 end
