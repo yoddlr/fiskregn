@@ -16,6 +16,9 @@ class Group < ActiveRecord::Base
 
   has_one :location, :as => :owner, :dependent => :destroy
 
+  # Groups can be tagged
+  has_and_belongs_to_many :topics
+
   # Identifies user who tags as part of the acts-as-taggable-on gem
   acts_as_tagger
 
@@ -26,5 +29,17 @@ class Group < ActiveRecord::Base
     location.owner_id = self.id
     location.owner_type = 'Group'
     location.save
+  end
+
+  def add_topic(topic)
+    self.topics << topic
+  end
+
+  def remove_topic(topic)
+    self.topics.delete topic
+  end
+
+  def self.find_by_topic(topic_name)
+    self.joins(:topics).where(:topics => {name: topic_name})
   end
 end

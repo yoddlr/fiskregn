@@ -68,4 +68,24 @@ describe Group do
       expect(@group.admins.exists?(new_admin)).to be_true
     end
   end
+
+  describe "Topics" do
+
+    before :each do
+      @topic = create :topic
+      @group = create :group
+    end
+    it "Can haz topics" do
+      @group.add_topic @topic
+
+      expect(@group.topics.include?(@topic)).to be_true
+    end
+    it "Finds group by topic" do
+      @group.add_topic @topic
+
+      result = Group.find_by_topic @topic.name
+
+      expect(result.include?(@group)).to be_true
+    end
+  end
 end

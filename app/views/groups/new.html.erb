@@ -1,0 +1,6 @@
+<h1>New group</h1>
+<%= form_for @group do |g| %>
+  <p><%= g.label I18n.t('.name') %><br />
+    <%= g.text_field :name %></p>
+  <p><%= g.submit I18n.t('create_group') %></p>
+<% end %>
