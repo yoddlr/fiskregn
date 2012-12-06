@@ -19,9 +19,6 @@ class Group < ActiveRecord::Base
   # Groups can be tagged with topics
   has_and_belongs_to_many :topics
 
-  # Identifies user who tags as part of the acts-as-taggable-on gem
-  #acts_as_tagger
-
   after_create :create_location
 
   # Provide topic methods

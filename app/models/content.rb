@@ -21,30 +21,9 @@ class Content < ActiveRecord::Base
   # Provides methods for adding, removing and finding by topics
   include TopicsHelper
 
-  # TODO: Remove
-  #acts_as_taggable_on :access, :interests
-
-  # Static import interception of ActiveRecord methods to enable filtered results
-  #class << self
-    #include Accessibility::Content
-  #end
-
   def description
     I18n.t('.content_deleted')
   end
-
-  # Topics instead of tags
-  #def add_topic(topic)
-    #self.topics << topic
-  #end
-
-  #def remove_topic(topic)
-    #self.topics.delete topic
-  #end
-
-  #def self.find_by_topic(topic_name)
-    #self.joins(:topics).where(:topics =>{name: topic_name})
-  #end
   
   # @deprecated tag_content form requires to call something in model (really?)
   def read_access_strings

@@ -4,8 +4,6 @@ gem 'rails', '3.2.8'
 gem 'devise'
 gem 'rails-i18n'
 
-gem 'acts-as-taggable-on'
-
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 

@@ -30,9 +30,6 @@ class User < ActiveRecord::Base
     join_table: "admins_groups",
     foreign_key: "admin_id",
     class_name: "Group"
-
-  # Identifies user who tags as part of the acts-as-taggable-on gem
-  #acts_as_tagger
   
   after_create :create_location, :add_to_omni_group
 
