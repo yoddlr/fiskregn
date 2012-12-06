@@ -9,17 +9,24 @@ describe TextContent do
   describe "Location" do
   end
 
-  describe 'Tag list' do
-    it "has a tag list" do
-      @untagged = create :text_content
-      expect(@untagged.tag_list.empty?).to be true
+  describe 'Topics' do
+    before :each do
+      @content = create :text_content
+      @topic = create :topic
     end
-    it "it accepts tags" do
-      @tagger = build(:user, password: 'taggaDAG11', password_confirmation: 'taggaDAG11')
-      @tagged = create :text_content
-      @tag = 'Taggety-tag'
-      @tagger.tag(@tagged, :with => @tag, :on => 'interest')
-      expect(@tagged.tag_list.include?(@tag)).to be true
+
+    it "Can haz topics" do
+      @content.add_topic(@topic)
+      expect(@content.topics.include?(@topic)).to be_true
+    end
+
+    it "Find content by topic" do
+      @content.add_topic @topic
+
+      result = Content.find_by_topic @topic.name
+      ALog.debug result
+
+      expect(result.include?(@content)).to be_true
     end
   end
 

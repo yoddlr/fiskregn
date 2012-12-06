@@ -23,30 +23,25 @@ class Content < ActiveRecord::Base
   acts_as_taggable_on :access, :interests
 
   # Static import interception of ActiveRecord methods to enable filtered results
-  class << self
-    include Accessibility::Content
-  end
+  #class << self
+    #include Accessibility::Content
+  #end
 
   def description
     I18n.t('.content_deleted')
   end
 
-  # @deprecated tag_content form requires to call something in model (really?)
-  def tag_strings
-    ''
+  # Topics instead of tags
+  def add_topic(topic)
+    self.topics << topic
   end
 
-  # Can not rely on local attribute for this => retrieve dynamically via ActsAsTaggableOn
-  def tag_list(list = [])
-    taggings = ActsAsTaggableOn::Tagging.find_all_by_taggable_id(id)
-    if taggings
-      taggings.each do |tagging|
-        next unless tagging.context == 'interest'
-        list << ActsAsTaggableOn::Tag.find(tagging.tag_id).name
-      end
-    end
-    # return empty default or tags retrieved via ActsAsTaggableOn
-    list
+  def remove_topic(topic)
+    self.topics.delete topic
+  end
+
+  def self.find_by_topic(topic_name)
+    self.joins(:topics).where(:topics =>{name: topic_name})
   end
   
   # @deprecated tag_content form requires to call something in model (really?)
