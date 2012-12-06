@@ -22,7 +22,7 @@ class Content < ActiveRecord::Base
   include TopicsHelper
 
   # TODO: Remove
-  acts_as_taggable_on :access, :interests
+  #acts_as_taggable_on :access, :interests
 
   # Static import interception of ActiveRecord methods to enable filtered results
   #class << self

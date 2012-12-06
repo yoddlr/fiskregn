@@ -20,7 +20,7 @@ class Group < ActiveRecord::Base
   has_and_belongs_to_many :topics
 
   # Identifies user who tags as part of the acts-as-taggable-on gem
-  acts_as_tagger
+  #acts_as_tagger
 
   after_create :create_location
 

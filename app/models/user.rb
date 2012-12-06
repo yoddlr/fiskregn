@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
     class_name: "Group"
 
   # Identifies user who tags as part of the acts-as-taggable-on gem
-  acts_as_tagger
+  #acts_as_tagger
   
   after_create :create_location, :add_to_omni_group
 

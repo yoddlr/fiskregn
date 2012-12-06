@@ -65,7 +65,7 @@ class TextContentsController < ContentsController
       else
         # Virtual suicide - drop all class specific data of this object, and revert type
         @content.text = nil
-        @content.tag_list.clear
+        @content.topics.clear
         @content.type = nil
         if @content.save
           redirect_to root_url, notice: I18n.t('.content_deleted')
