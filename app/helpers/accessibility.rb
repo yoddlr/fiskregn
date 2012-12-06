@@ -175,28 +175,30 @@ module Accessibility
             user_groups << group if group.members.include?(user)
           end
         end
-  
+
         # Retrieve all locations containing content where user's group(s) have find access
         user_groups.each do |user_group|
           sql = "SELECT DISTINCT location_id FROM contents_locations WHERE content_id IN (SELECT taggable_id FROM taggings WHERE taggable_type='Content' AND tag_id=#{tag.id} AND context='access' AND tagger_type='Group' AND tagger_id=#{user_group.id})"
           location_hashes += ActiveRecord::Base.connection.execute(sql)
         end
-  
+
         if user
           # Retrieve all locations where user has find access
           sql = "SELECT DISTINCT location_id FROM contents_locations WHERE content_id IN (SELECT taggable_id FROM taggings WHERE taggable_type='Content' AND tag_id=#{tag.id} AND context='access' AND tagger_type='User' AND tagger_id=#{user.id})"
           location_hashes += ActiveRecord::Base.connection.execute(sql)
         end
-  
+
         # No need to retrieve location object more than once
         location_hashes.uniq_by! {|hash| hash['location_id'] }
-  
+
+        locations = []
         location_hashes.each do |hash|
-          # Location containing findable content may not be readable
-          if exists?(hash['location_id'])
-            # We want to return objects, not values from a hash map
-            filtered_records << find(hash['location_id'])
-          end
+          locations << hash['location_id']
+        end
+
+        # All readable locations containing findable contents are OK
+        all.each do |location|
+          filtered_records << location if locations.include?(location.id)
         end
       end # No need to bother without any find tags
       filtered_records
