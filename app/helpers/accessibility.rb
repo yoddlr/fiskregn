@@ -204,18 +204,21 @@ module Accessibility
       filtered_records
     end
 
-    # Returns locations with content tagged with the given tags and find-access.
+    # Returns locations with content tagged with the given tags and find-access,
+    # or readable locations tagged with the given tags.
     # @param interests as an array of interests
     def find_by_interest(interests)
-      # TODO: Locations can have their own tags, but we ignore this for now.
       user = User.current_user
       filtered_records = []
       interest_ids = []
       user_groups = []
-      tag = ActsAsTaggableOn::Tag.find_by_name('find')
+      # Find tag used for content
+      find_tag = ActsAsTaggableOn::Tag.find_by_name('find')
+      # Read tag used for locations
+      read_tag = ActsAsTaggableOn::Tag.find_by_name('read')
 
-      if tag
-        # No need to bother without any find tags
+      if find_tag || read_tag
+        # No need to bother without neither findability nor readability
         location_hashes = []
 
         # Omni is the default group even for non-logged in users
@@ -229,9 +232,9 @@ module Accessibility
 
         interests.each do |interest|
           # Interest for Content - not Location
-          find_tag = ActsAsTaggableOn::Tag.find_by_name(interest)
-          if find_tag
-            interest_ids << find_tag.id
+          interest_tag = ActsAsTaggableOn::Tag.find_by_name(interest)
+          if interest_tag
+            interest_ids << interest_tag.id
           end
         end
 
@@ -239,14 +242,20 @@ module Accessibility
           # No need to bother if interests don't even exist
           # Retreive locations for group findable content and matching interest(s)
           user_groups.each do |user_group|
+            # Locations with matching interests
+            sql = "SELECT DISTINCT id AS location_id FROM locations WHERE id IN (SELECT taggable_id FROM taggings WHERE taggable_type='Location' AND tag_id=#{read_tag.id} AND context='access' AND tagger_type='Group' AND tagger_id=#{user_group.id}) AND id IN (SELECT taggable_id FROM taggings WHERE taggable_type='Location' AND tag_id IN (#{interest_ids.to_s.gsub(/[(\[\])]/,"")}) AND context='interest' AND tagger_type='Group' AND tagger_id=#{user_group.id})"
+            location_hashes += ActiveRecord::Base.connection.execute(sql)
             # Locations for group findable content and matching interest(s)
-            sql = "SELECT DISTINCT location_id FROM contents_locations WHERE content_id IN (SELECT taggable_id FROM taggings WHERE taggable_type='Content' AND tag_id=#{tag.id} AND context='access' AND tagger_type='Group' AND tagger_id=#{user_group.id}) AND content_id IN (SELECT taggable_id FROM taggings WHERE taggable_type='Content' AND tag_id IN (#{interest_ids.to_s.gsub(/[(\[\])]/,"")}) AND context='interest' AND tagger_type='Group' AND tagger_id=#{user_group.id})"
+            sql = "SELECT DISTINCT location_id FROM contents_locations WHERE content_id IN (SELECT taggable_id FROM taggings WHERE taggable_type='Content' AND tag_id=#{find_tag.id} AND context='access' AND tagger_type='Group' AND tagger_id=#{user_group.id}) AND content_id IN (SELECT taggable_id FROM taggings WHERE taggable_type='Content' AND tag_id IN (#{interest_ids.to_s.gsub(/[(\[\])]/,"")}) AND context='interest' AND tagger_type='Group' AND tagger_id=#{user_group.id})"
             location_hashes += ActiveRecord::Base.connection.execute(sql)
           end
 
           if user
+            # Locations with matching interests
+            sql = "SELECT DISTINCT id AS location_id FROM locations WHERE id IN (SELECT taggable_id FROM taggings WHERE taggable_type='Location' AND tag_id=#{read_tag.id} AND context='access' AND tagger_type='User' AND tagger_id=#{user.id}) AND id IN (SELECT taggable_id FROM taggings WHERE taggable_type='Location' AND tag_id IN (#{interest_ids.to_s.gsub(/[(\[\])]/,"")}) AND context='interest' AND tagger_type='User' AND tagger_id=#{user.id})"
+            location_hashes += ActiveRecord::Base.connection.execute(sql)
             # Locations for user findable content and matching interest(s
-            sql = "SELECT DISTINCT location_id FROM contents_locations WHERE content_id IN (SELECT taggable_id FROM taggings WHERE taggable_type='Content' AND tag_id=#{tag.id} AND context='access' AND tagger_type='User' AND tagger_id=#{user.id}) AND content_id IN (SELECT taggable_id FROM taggings WHERE taggable_type='Content' AND tag_id IN (#{interest_ids.to_s.gsub(/[(\[\])]/,"")}) AND context='interest' AND tagger_type='User' AND tagger_id=#{user.id})"
+            sql = "SELECT DISTINCT location_id FROM contents_locations WHERE content_id IN (SELECT taggable_id FROM taggings WHERE taggable_type='Content' AND tag_id=#{find_tag.id} AND context='access' AND tagger_type='User' AND tagger_id=#{user.id}) AND content_id IN (SELECT taggable_id FROM taggings WHERE taggable_type='Content' AND tag_id IN (#{interest_ids.to_s.gsub(/[(\[\])]/,"")}) AND context='interest' AND tagger_type='User' AND tagger_id=#{user.id})"
             location_hashes += ActiveRecord::Base.connection.execute(sql)
           end
 
