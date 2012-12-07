@@ -1,15 +1,15 @@
-# Adding 30 users, each with 30 content items with read access for 3 random users
+# Adding 100 users, each with 10 content items with read access for 10 random users
 # Login password for all users 'abc123'
 # Run like: 'rake db:load_data'
-# NOTE: Large count => huge a task and rake is an inefficient tool => minutes or hours!
+# NOTE: This is huge a task and rake is an inefficient tool => minutes or hours!
 
 require 'rake'
 
-# Count may be given as param - otherwise default to 3
+# Count may be given as param - otherwise default to 10
 count = ARGV[1].to_i
 if !(count)
-  puts "Usage: rake db:load_data count (default count = 3)"
-  count = '3'.to_i
+  puts "Usage: rake db:load_data count (default count = 10)"
+  count = '10'.to_i
 end
 
 countcount = 10*count
