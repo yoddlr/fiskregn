@@ -5,18 +5,27 @@
 
 require 'rake'
 
+# Count may be given as param - otherwise default to 10
+count = ARGV[1].to_i
+if !(count)
+  puts "Usage: rake db:load_data count (default count = 10)"
+  count = '10'.to_i
+end
+
+countcount = 10*count
+
 namespace :db do
   task :load_data => :environment do
-    puts 'Adding 100 users, each with 100 content items with read access for 10 random users'
+    puts "Adding #{countcount} users, each with #{countcount} content items with read access for #{count} random users"
     puts "Login password for all users 'abc123'"
-    100.times do
+    countcount.times do
       user = FactoryGirl::create :user
       print '.'
     end
     puts
     puts 'Done adding users'
-    puts 'Creating 10 groups and adding 10 random users to each'
-    10.times do
+    puts "Creating #{count} groups and adding #{count} random users to each"
+    count.times do
       group = Group.create(name: Faker::Lorem.words(1)[0])
       group.members << User.all.sample(10)
       print '.'
@@ -25,14 +34,14 @@ namespace :db do
     puts 'Done adding groups'
     print 'Adding read access'
     User.all.each do |user|
-      10.times do
+      count.times do
         content = TextContent.create text: Faker::Lorem.sentences(sentence_count = 1, supplemental = false), user: user
         content.publish_to_location(user.location)
-        # Give some random users and groups read access to the new content
-        User.all.sample(10).each do |reader|
+        Give some random users and groups read access to the new content
+        User.all.sample(count).each do |reader|
           reader.tag(content, :with => ['find','read'], :on => 'access')
         end
-        Group.all.sample(2).each do |greader|
+        Group.all.sample(count/3).each do |greader|
           greader.tag(content, :with => ['find','read'], :on => 'access')
         end
       end
