@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121204200751) do
+ActiveRecord::Schema.define(:version => 20121207150721) do
 
   create_table "admins_groups", :force => true do |t|
     t.integer "admin_id"
@@ -61,6 +61,20 @@ ActiveRecord::Schema.define(:version => 20121204200751) do
     t.integer "member_id"
     t.integer "group_id"
   end
+
+  create_table "readables_groups", :force => true do |t|
+    t.integer "readable_id", :null => false
+    t.integer "group_id",    :null => false
+  end
+
+  add_index "readables_groups", ["readable_id", "group_id"], :name => "index_readables_groups_on_readable_id_and_group_id", :unique => true
+
+  create_table "readables_users", :force => true do |t|
+    t.integer "readable_id", :null => false
+    t.integer "user_id",     :null => false
+  end
+
+  add_index "readables_users", ["readable_id", "user_id"], :name => "index_readables_users_on_readable_id_and_user_id", :unique => true
 
   create_table "taggings", :force => true do |t|
     t.integer  "tag_id"

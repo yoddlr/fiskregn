@@ -6,6 +6,14 @@ class Content < ActiveRecord::Base
 
   belongs_to :parent, :class_name => 'Content'
   has_many :children, :class_name => 'Content', :foreign_key => :parent_id
+
+  has_and_belongs_to_many :readers,
+    join_table: "readables_users",
+    class_name: "User"
+
+  has_and_belongs_to_many :reader_groups,
+    join_table: "readables_groups",
+    class_name: "Group"
   
   has_and_belongs_to_many :locations
 
