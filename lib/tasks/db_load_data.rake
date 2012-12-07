@@ -37,7 +37,7 @@ namespace :db do
       count.times do
         content = TextContent.create text: Faker::Lorem.sentences(sentence_count = 1, supplemental = false), user: user
         content.publish_to_location(user.location)
-        Give some random users and groups read access to the new content
+        # Give some random users and groups read access to the new content
         User.all.sample(count).each do |reader|
           reader.tag(content, :with => ['find','read'], :on => 'access')
         end
