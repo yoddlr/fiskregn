@@ -91,4 +91,19 @@ describe User do
       expect(@user.readables.include?(@content)).to be_true
     end
   end
+
+  describe "Publishable Locations" do
+    before :each do
+      @user = create :user
+      @group = create :group
+      @location = @group.location
+
+      @location.publishers << @user
+      @location.save
+    end
+
+    it "lists the locations the user can publish to" do
+      expect(@user.publishable_locations.include?(@location)).to be_true
+    end
+  end
 end
