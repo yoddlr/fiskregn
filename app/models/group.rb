@@ -15,7 +15,10 @@ class Group < ActiveRecord::Base
     association_foreign_key: "member_id"
   
   # Can access content as reader_group
-  has_and_belongs_to_many :readables, class_name: "Content"
+  has_and_belongs_to_many :readables,
+    join_table: "readables_groups",
+    association_foreign_key: "readable_id",
+    class_name: "Content"
 
   has_one :location, :as => :owner, :dependent => :destroy
 

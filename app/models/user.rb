@@ -32,7 +32,10 @@ class User < ActiveRecord::Base
     class_name: "Group"
 
   # Can access content as a reader
-  has_and_belongs_to_many :readables, class_name: "Content"
+  has_and_belongs_to_many :readables,
+    join_table: "readables_users",
+    association_foreign_key: "readable_id",
+    class_name: "Content"
 
   after_create :create_location, :add_to_omni_group
 
