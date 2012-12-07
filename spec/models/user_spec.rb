@@ -76,4 +76,19 @@ describe User do
       expect(User.current_user).to eq @user
     end
   end
+  
+  describe "Readables" do
+    before :each do
+      @user = create :user
+      @content = create :text_content
+
+      # Give @user readaccess to content
+      @content.readers << @user
+      @content.save
+    end
+
+    it "lists accessible content as a readable" do
+      expect(@user.readables.include?(@content)).to be_true
+    end
+  end
 end

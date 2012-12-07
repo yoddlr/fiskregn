@@ -102,4 +102,32 @@ describe TextContent do
       end
     end
   end
+
+  describe "Reader groups" do
+    before :each do
+      @content = create :text_content
+      @group = create :group
+
+      @group.readables << @content
+      @group.save
+    end
+
+    it "lists groups that have read access as reader_groups" do
+      expect(@content.reader_groups.include?(@group)).to be_true
+    end
+  end
+
+  describe "Readers" do
+    before :each do
+      @content = create :text_content
+      @user = create :user
+
+      @user.readables << @content
+      @user.save
+    end
+
+    it "lists users that have read access as readers" do
+      expect(@content.readers.include?(@user)).to be_true
+    end
+  end
 end

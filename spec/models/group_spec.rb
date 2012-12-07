@@ -89,4 +89,19 @@ describe Group do
       expect(result.include?(@group)).to be_true
     end
   end
+
+  describe "Readables" do
+    before :each do
+      @group = create :group
+      @content = create :text_content
+
+      # Give @group readaccess to content
+      @content.reader_groups << @group
+      @content.save
+    end
+
+    it "lists accessible content as a readable" do
+      expect(@group.readables.include?(@content)).to be_true
+    end
+  end
 end
