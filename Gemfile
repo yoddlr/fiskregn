@@ -6,6 +6,10 @@ gem 'rails-i18n'
 
 gem 'acts-as-taggable-on'
 
+# Needed globally for data creation
+gem 'faker'
+gem 'factory_girl_rails'
+
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
@@ -28,9 +32,7 @@ gem 'jquery-rails'
 
 group :test, :development do
   gem 'sqlite3'
-  gem 'faker'
   gem 'rspec-rails'
-  gem 'factory_girl_rails'
   gem 'guard-rspec' # automatically run tests based on filechange
   # speed up testing by providing a test envirionment with spork
   gem 'guard-spork'  if RUBY_PLATFORM =~ /darwin/i # but not for Per
