@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121207150721) do
+ActiveRecord::Schema.define(:version => 20121207163206) do
 
   create_table "admins_groups", :force => true do |t|
     t.integer "admin_id"
@@ -56,6 +56,25 @@ ActiveRecord::Schema.define(:version => 20121207150721) do
     t.integer "owner_id"
     t.string  "owner_type"
   end
+
+  create_table "locations_publish_groups", :force => true do |t|
+    t.integer "location_id",      :null => false
+    t.integer "publish_group_id", :null => false
+  end
+
+  create_table "locations_publishers", :force => true do |t|
+    t.integer "location_id",  :null => false
+    t.integer "publisher_id", :null => false
+  end
+
+  add_index "locations_publishers", ["location_id", "publisher_id"], :name => "index_locations_publishers_on_location_id_and_publisher_id", :unique => true
+
+  create_table "locs_pub_groups", :force => true do |t|
+    t.integer "location_id",      :null => false
+    t.integer "publish_group_id", :null => false
+  end
+
+  add_index "locs_pub_groups", ["location_id", "publish_group_id"], :name => "index_locs_pub_groups_on_location_id_and_publish_group_id", :unique => true
 
   create_table "members_groups", :force => true do |t|
     t.integer "member_id"

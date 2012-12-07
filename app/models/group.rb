@@ -22,6 +22,13 @@ class Group < ActiveRecord::Base
 
   has_one :location, :as => :owner, :dependent => :destroy
 
+  # Access to a location as a publish_group
+  has_and_belongs_to_many :publishable_locations,
+    join_table: "locs_pub_groups",
+    foreign_key: "publish_group_id",
+    association_foreign_key: "location_id",
+    class_name: "Location"
+
   # Groups can be tagged with topics
   has_and_belongs_to_many :topics
 

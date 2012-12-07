@@ -39,6 +39,13 @@ class User < ActiveRecord::Base
 
   after_create :create_location, :add_to_omni_group
 
+  # Access to a location as a publisher
+  has_and_belongs_to_many :publishable_locations,
+    join_table: "locations_publishers",
+    foreign_key: "publisher_id",
+    association_foreign_key: "location_id",
+    class_name: "Location"
+
   # Thanks: http://stackoverflow.com/questions/3742785/rails-3-devise-current-user-is-not-accessible-in-a-model
   # Make devise's current_user globally available. Static and ThreadLocal apparently...
   class << self
