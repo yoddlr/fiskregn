@@ -45,17 +45,17 @@ ActiveRecord::Schema.define(:version => 20121204200751) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "groups_topics", :force => true do |t|
+    t.integer "group_id", :null => false
+    t.integer "topic_id", :null => false
+  end
+
+  add_index "groups_topics", ["group_id", "topic_id"], :name => "index_groups_topics_on_group_id_and_topic_id", :unique => true
+
   create_table "locations", :force => true do |t|
     t.integer "owner_id"
     t.string  "owner_type"
   end
-
-  create_table "locations_topics", :force => true do |t|
-    t.integer "location_id", :null => false
-    t.integer "topic_id",    :null => false
-  end
-
-  add_index "locations_topics", ["location_id", "topic_id"], :name => "index_locations_topics_on_location_id_and_topic_id", :unique => true
 
   create_table "members_groups", :force => true do |t|
     t.integer "member_id"
